@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/KMGMs.unity
+    guid: 682755d60c5a5174e8521b4ba9060c8e
+  - enabled: 1
+    path: Assets/Scenes/KMHH/Scenes/KMHH.unity
+    guid: c9e24ed3316a91e4390ef300492bda75
+  - enabled: 1
+    path: Assets/Scenes/KMHH/Scenes/KMHH_Result.unity
+    guid: ef29bde08e68cf04999d96db149439be
+  m_configObjects: {}
