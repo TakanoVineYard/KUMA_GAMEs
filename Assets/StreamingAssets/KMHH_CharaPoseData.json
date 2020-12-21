@@ -1,0 +1,92 @@
+{
+	"KmhhCharaPoseArray": [
+		{
+			"id": "0000",
+			"eye": "U",
+			"hand_LSide": "UL",
+			"hand_RSide": "UR",
+			"leg_LSide": "DL",
+			"leg_RSide": "DR"
+		},
+		{
+			"id": "0001",
+			"eye": "L",
+			"hand_LSide": "L",
+			"hand_RSide": "L",
+			"leg_LSide": "D",
+			"leg_RSide": "D"
+		},
+		{
+			"id": "0002",
+			"eye": "R",
+			"hand_LSide": "R",
+			"hand_RSide": "R",
+			"leg_LSide": "D",
+			"leg_RSide": "D"
+		},
+		{
+			"id": "0003",
+			"eye": "DL",
+			"hand_LSide": "DL",
+			"hand_RSide": "DL",
+			"leg_LSide": "D",
+			"leg_RSide": "DR"
+		},
+		{
+			"id": "0004",
+			"eye": "DR",
+			"hand_LSide": "DR",
+			"hand_RSide": "DR",
+			"leg_LSide": "DL",
+			"leg_RSide": "D"
+		},
+		{
+			"id": "0005",
+			"eye": "UL",
+			"hand_LSide": "UL",
+			"hand_RSide": "UL",
+			"leg_LSide": "D",
+			"leg_RSide": "D"
+		},
+		{
+			"id": "0006",
+			"eye": "UR",
+			"hand_LSide": "UR",
+			"hand_RSide": "UR",
+			"leg_LSide": "D",
+			"leg_RSide": "D"
+		},
+		{
+			"id": "0007",
+			"eye": "U",
+			"hand_LSide": "U",
+			"hand_RSide": "U",
+			"leg_LSide": "D",
+			"leg_RSide": "D"
+		},
+		{
+			"id": "0008",
+			"eye": "D",
+			"hand_LSide": "D",
+			"hand_RSide": "D",
+			"leg_LSide": "D",
+			"leg_RSide": "D"
+		},
+		{
+			"id": "",
+			"eye": "",
+			"hand_LSide": "",
+			"hand_RSide": "",
+			"leg_LSide": "",
+			"leg_RSide": ""
+		},
+		{
+			"id": "",
+			"eye": "",
+			"hand_LSide": "",
+			"hand_RSide": "",
+			"leg_LSide": "",
+			"leg_RSide": ""
+		}
+	]
+}

@@ -1,0 +1,74 @@
+{
+	"infoArray": [
+			{
+				"id": "0000",
+				"categoryA": "Hoge",
+				"categoryB": "Nya",
+				"categoryC": "Wan",
+				"categoryD": "Pu"
+			},
+			{
+				"id": "0001",
+				"categoryA": "Nya",
+				"categoryB": "Wan",
+				"categoryC": "Pu",
+				"categoryD": "Hoge"
+			},
+			{
+				"id": "0002",
+				"categoryA": "Wan",
+				"categoryB": "Pu",
+				"categoryC": "Hoge",
+				"categoryD": "Nya"
+			},
+			{
+				"id": "0003",
+				"categoryA": "Pu",
+				"categoryB": "Hoge",
+				"categoryC": "Nya",
+				"categoryD": "Wan"
+			},
+			{
+				"id": "0004",
+				"categoryA": "PuriPuri",
+				"categoryB": "MuraMura",
+				"categoryC": "UhoUho",
+				"categoryD": "PiyoPiyo"
+			},
+			{
+				"id": "0005",
+				"categoryA": "MuraMura",
+				"categoryB": "UhoUho",
+				"categoryC": "PiyoPiyo",
+				"categoryD": "PuriPuri"
+			},
+			{
+				"id": "0006",
+				"categoryA": "UhoUho",
+				"categoryB": "PiyoPiyo",
+				"categoryC": "PuriPuri",
+				"categoryD": "MuraMura"
+			},
+			{
+				"id": "0007",
+				"categoryA": "PiyoPiyo",
+				"categoryB": "PuriPuri",
+				"categoryC": "MuraMura",
+				"categoryD": "UhoUho"
+			},
+			{
+				"id": "",
+				"categoryA": "",
+				"categoryB": "",
+				"categoryC": "",
+				"categoryD": ""
+			},
+			{
+				"id": "",
+				"categoryA": "",
+				"categoryB": "",
+				"categoryC": "",
+				"categoryD": ""
+			}
+		]
+}

@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Button_Arrows
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 0
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings:
+    - serializedVersion: 3
+      m_BuildTarget: DefaultTexturePlatform
+      m_MaxTextureSize: 2048
+      m_ResizeAlgorithm: 0
+      m_TextureFormat: 4
+      m_TextureCompression: 1
+      m_CompressionQuality: 50
+      m_CrunchedCompression: 0
+      m_AllowsAlphaSplitting: 0
+      m_Overridden: 0
+      m_AndroidETC2FallbackOverride: 0
+      m_ForceMaximumCompressionQuality_BC6H_BC7: 0
+    packingSettings:
+      serializedVersion: 2
+      padding: 8
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 0
+      enableTightPacking: 0
+    variantMultiplier: 1
+    packables:
+    - {fileID: 102900000, guid: 8be7e48e1fc8d184dbb838903ff95900, type: 3}
+    totalSpriteSurfaceArea: 2097152
+    bindAsDefault: 1
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: a6009bf2691e6c74699af4cfed7ff973, type: 3}
+  - {fileID: 21300000, guid: 76ba3fa3cac353a489c30ee14a337eda, type: 3}
+  - {fileID: 21300000, guid: 68d6f5d351de7b14b984e321af589677, type: 3}
+  - {fileID: 21300000, guid: c624ab3ac8855924f99cdf0499cc9f31, type: 3}
+  - {fileID: 21300000, guid: 6577497b7bdac9f41a2dec4abfe903c0, type: 3}
+  - {fileID: 21300000, guid: a49b041c4c111bc4fba3746c6d13efb8, type: 3}
+  - {fileID: 21300000, guid: 02387c4fd81b5244caeec8b0a6f922e9, type: 3}
+  - {fileID: 21300000, guid: 68ec89ef07e50f2489ee08adf894f205, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - Arrow_R
+  - Arrow_U
+  - Arrow_L
+  - Arrow_DR
+  - Arrow_D
+  - Arrow_UL
+  - Arrow_UR
+  - Arrow_DL
+  m_Tag: Button_Arrows
+  m_IsVariant: 0
