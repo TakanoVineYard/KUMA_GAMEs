@@ -1,15 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI; //テキスト使うなら必要？
 
 //using static KMHH_ScoreManager; //スコアスクリプトを使う
 //using static KMHH_CharaAnimationManager; //キャラのアニメーション管理を使う
-using static KMHH_PlayerInputManager;
-
 using UnityEngine.SceneManagement; //シーン切り替え
-
-using static KMGMs_SoundManager;
 
 /// <summary>
 /// ゲーム内の時間にまつわる操作を管理する
@@ -19,8 +13,115 @@ public class KMHH_TimeManager : MonoBehaviour
 {
     public static bool debugTextSwitch = true; //デバッグテキストのオンオフ
 
+    // ゲームの現在の状態を表す。
+    public enum GameState
+    {
+        // 起動直後の状態(switchStartMethod == true && gameFinish == false)
+        Boot,
+        // カウントダウン中(gameStart == false && gameFinish == false)
+        CountDown,
+        // ゲーム中(gameStart == true && gameFinish == false)
+        Playing,
+        // ゲーム終了(gameStart == false && gameFinish == true)
+        Finish,
+    }
+    private static GameState currentState = GameState.Boot;
 
-    public static bool switchStartMethod = true; //ゲーム自体開始のスイッチ
+    // GameStateに応じた処理をまとめる
+    private abstract class TMState
+    {
+        public virtual void Update(KMHH_TimeManager tm) { }
+    }
+    private static TMState tmState;
+
+    private static void SetState(GameState gameState)
+    {
+        switch (gameState)
+        {
+            case GameState.Boot:
+                tmState = new StateBoot();
+                break;
+            case GameState.CountDown:
+                break;
+            case GameState.Playing:
+                break;
+            case GameState.Finish:
+                break;
+        }
+    }
+
+
+    private class StateBoot : TMState
+    {
+        public override void Update(KMHH_TimeManager tm)
+        {
+            tm.dayHourNum = System.DateTime.Now.Hour;
+
+            Debug.Log(tm.dayHourNum + "時なう");
+            //今何時?
+            if ((tm.dayHourNum > 6) && (tm.dayHourNum <= 16))
+            {
+                tm.kmhhSkyDomeObj.GetComponent<Renderer>().sharedMaterial = tm.mat_KMHHSkyDome[0];
+            }
+            else if ((tm.dayHourNum > 16) && (tm.dayHourNum <= 18))
+            {
+                tm.kmhhSkyDomeObj.GetComponent<Renderer>().sharedMaterial = tm.mat_KMHHSkyDome[1];
+            }
+            else
+            {
+                tm.kmhhSkyDomeObj.GetComponent<Renderer>().sharedMaterial = tm.mat_KMHHSkyDome[2];
+
+            }
+
+
+            tm.countDown_Obj = GameObject.Find("ui_KMHH_CountDown_Obj");
+            tm.countDown_Animator = tm.countDown_Obj.GetComponentInChildren<Animator>();
+
+            Debug.Log("Updateのなかのさいしょのようい");
+            // switchStartMethod = false; //ゲーム自体開始のスイッチ
+            getDeltaTime = 0.0f; //時間経過取得の大元
+            gameCurrentTime = 0.0f; //現在の時間
+            tm.gameStandbyTime = 1.0f; //スタンバイの時間
+            tm.gameTimePast = 0.0f; //時間の経過
+            tm.gameTimePastInt = 0;  //時間の経過のInt化
+            tm.gameFinishTime = 0.0f; //ゲーム終了時の時間を記録
+            anserTime = 0.0f; //回答時のカレントタイム。
+            recordAnserTime = 0.0f; //回答時のカレントタイム。
+            tm.idleTime = 0.0f; //待機時のカレントタイム。
+            editTimeScale = 1.0f; //キャラの動き時間のスケール
+            questionStatus = false; //出題状態かどうか
+            switchIdle = false; //条件 Idleのスイッチ
+            switchQuestion = false; //条件 Questionのスイッチ
+            questionNumOfTimes = 0;  //出題回数
+
+            Time.timeScale = 1.0f;
+
+            tm.countDownStartTrigger = true;
+
+            KMHH_CharaAnimationManager.ChangeQuestionBodyParts();
+
+            //            countDownEffObj_3 = GameObject.Find("eff_KMHH_CountDown_3");
+            //            countDownEffObj_2 = GameObject.Find("eff_KMHH_CountDown_2");
+            //            countDownEffObj_1 = GameObject.Find("eff_KMHH_CountDown_1");
+            //            countDownEffObj_0 = GameObject.Find("eff_KMHH_CountDown_Start");
+            //            countDownEffObj_Fin = GameObject.Find("eff_KMHH_CountDown_Finish");
+            tm.GameSceneChangeWallObj = GameObject.Find("eff_SceneChange");
+
+
+            KMHH_GameSceneChangeWallAnimator = tm.GameSceneChangeWallObj.GetComponentInChildren<Animator>();  //シーンチェンジアニメーター
+
+
+            tm.upDateGameTimerObj = GameObject.Find("ui_GameTimer"); //ゲーム時間経過用オブジェクト拾ってくるぜ  
+
+            tm.upDateGameTimerText.text = tm.gameSetTime.ToString(); //　時間制限をテキスト更新
+
+
+            debugGameTimerObj = GameObject.Find("Debug_CountTimer");
+
+            debugGameTimeText = debugGameTimerObj.GetComponentInChildren<Text>();
+        }
+    }
+
     public static float getDeltaTime = 0.0f; //時間経過取得の大元
     public static float gameCurrentTime = 0.0f; //現在の時間
     public float gameStandbyTime = 1.0f; //スタンバイの時間
@@ -33,9 +134,6 @@ public class KMHH_TimeManager : MonoBehaviour
 
     float idleTime = 0.0f; //待機時のカレントタイム。
 
-
-    public static bool gameStart = false; //ゲームがスタートしているかの判定
-    public static bool gameFinish = false; //ゲームが終了しているかの判定
 
     public static float editTimeScale = 1.0f; //キャラの動き時間のスケール
 
@@ -169,6 +267,11 @@ public class KMHH_TimeManager : MonoBehaviour
         "待機時間:" + idleTime.ToString("f2")  + "\n";
         */
         ///////////////////////////////////////////////////////////////////
+
+        if (tmState != null)
+        {
+            tmState.Update();
+        }
 
         if ((switchStartMethod == true) && (gameFinish == false))
         {
