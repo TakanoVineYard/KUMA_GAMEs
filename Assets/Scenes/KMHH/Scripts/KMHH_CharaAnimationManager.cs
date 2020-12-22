@@ -321,7 +321,6 @@ public class KmhhCharacterInfoAll
     public KmhhCharaPoseInfo[] KmhhCharaPoseArray;
 }
 
-/*
 ////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////
@@ -331,18 +330,16 @@ public class KmhhCharacterInfoAll
     /// <returns></returns> 
     public void GetCharaJSON() {
 
-
         //ファイルのロード（ポーズ情報）
-        var jsonCharaData = Resources.Load<TextAsset>("JSONData/KMHH_CharaPoseData.json");
-
-        string jsonCharaDataText = jsonCharaData.text;
-
+        var jsonCharaData = Resources.Load<TextAsset>("JSONData/KMHH_CharaPoseData");
         //配列メンバ持ってるクラスの継承　
-        kmhhCInfoAll = JsonUtility.FromJson<KmhhCharacterInfoAll>(jsonCharaDataText);
+        kmhhCInfoAll = JsonUtility.FromJson<KmhhCharacterInfoAll>(jsonCharaData.text);
 
     }
     
-    */
+
+
+/*
 ////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////
@@ -390,5 +387,6 @@ var request = UnityWebRequest.Get(path);
 
     }
 
+    */
 }
 
