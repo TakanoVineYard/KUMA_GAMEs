@@ -797,6 +797,16 @@
       <Name>ToonyColorsPro.Editor</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
+    <ProjectReference Include="AH_AssemblyDefinition.csproj">
+      <Project>{b2a92af6-440e-0020-a329-70ec392fc6d2}</Project>
+      <Name>AH_AssemblyDefinition</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="Heureka_GlobalAssemblyDefinition.csproj">
+      <Project>{5e206757-530b-5df7-dbe3-e49b217ac768}</Project>
+      <Name>Heureka_GlobalAssemblyDefinition</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
