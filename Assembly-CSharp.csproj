@@ -36,14 +36,14 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets\ExternalResources\KMHH\Scripts\KMHH_CharaAnimationManager.cs" />
+     <Compile Include="Assets\ExternalResources\KMHH\Scripts\KMHH_PlayerInputManager.cs" />
+     <Compile Include="Assets\ExternalResources\KMHH\Scripts\KMHH_ScoreManager.cs" />
+     <Compile Include="Assets\ExternalResources\KMHH\Scripts\KMHH_ScoreResultManager.cs" />
      <Compile Include="Assets\Resources\Scripts\KMGMs_MainManager.cs" />
      <Compile Include="Assets\Resources\Scripts\KMGMs_SoundManager.cs" />
+     <Compile Include="Assets\Resources\Scripts\KMHH_TimeManager.cs" />
      <Compile Include="Assets\Resources\Scripts\SingletonMonoBehaviour.cs" />
-     <Compile Include="Assets\Scenes\KMHH\Scripts\KMHH_CharaAnimationManager.cs" />
-     <Compile Include="Assets\Scenes\KMHH\Scripts\KMHH_PlayerInputManager.cs" />
-     <Compile Include="Assets\Scenes\KMHH\Scripts\KMHH_ScoreManager.cs" />
-     <Compile Include="Assets\Scenes\KMHH\Scripts\KMHH_ScoreResultManager.cs" />
-     <Compile Include="Assets\Scenes\KMHH\Scripts\KMHH_TimeManager.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
@@ -95,7 +95,6 @@
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders Generated\Examples\SG2\Vertex Color Albedo.shader" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shader Templates 2\Modules\Module_MatCap.txt" />
      <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Oswald-Bold - OFL.txt" />
-     <None Include="Assets\Fantasy Skybox FREE\Readme.txt" />
      <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Anton OFL.txt" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders Generated\Examples\Default\HSV.shader" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders Generated\Examples\Default\Old School.shader" />
@@ -777,16 +776,6 @@
       <Name>Assembly-CSharp-firstpass</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="AH_AssemblyDefinition.csproj">
-      <Project>{b2a92af6-440e-0020-a329-70ec392fc6d2}</Project>
-      <Name>AH_AssemblyDefinition</Name>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
-    <ProjectReference Include="Heureka_GlobalAssemblyDefinition.csproj">
-      <Project>{5e206757-530b-5df7-dbe3-e49b217ac768}</Project>
-      <Name>Heureka_GlobalAssemblyDefinition</Name>
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-    </ProjectReference>
     <ProjectReference Include="ToonyColorsPro2.Demo.csproj">
       <Project>{359cb889-c6fb-f3d8-07a3-aca9ba793d13}</Project>
       <Name>ToonyColorsPro2.Demo</Name>
@@ -797,6 +786,11 @@
       <Name>ToonyColorsPro.Demo.Editor</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
+    <ProjectReference Include="AH_AssemblyDefinition.csproj">
+      <Project>{b2a92af6-440e-0020-a329-70ec392fc6d2}</Project>
+      <Name>AH_AssemblyDefinition</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
     <ProjectReference Include="ToonyColorsPro.Runtime.csproj">
       <Project>{e4f3502d-f8f3-12b3-c047-be5e0281f149}</Project>
       <Name>ToonyColorsPro.Runtime</Name>
@@ -805,6 +799,11 @@
     <ProjectReference Include="ToonyColorsPro.Editor.csproj">
       <Project>{1585873c-f615-5a48-03b5-fb44d9b9c795}</Project>
       <Name>ToonyColorsPro.Editor</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="Heureka_GlobalAssemblyDefinition.csproj">
+      <Project>{5e206757-530b-5df7-dbe3-e49b217ac768}</Project>
+      <Name>Heureka_GlobalAssemblyDefinition</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
   </ItemGroup>
