@@ -12366,7 +12366,7 @@ MonoBehaviour:
   gameStandbyTime: 1
   kmhhQuestionSpan: 5
   kmhhIdleSpan: 1
-  gameSetTime: 10
+  gameSetTime: 60
   upDateGameTimerText: {fileID: 910977169}
   countDown_Obj: {fileID: 1646747125}
   countDown_Animator: {fileID: 1646747127}
@@ -25449,7 +25449,7 @@ PrefabInstance:
     - target: {fileID: 8655493043438092433, guid: e066a4c9b36a64e468927bf691b20d72,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -264.35468
+      value: -264.35464
       objectReference: {fileID: 0}
     - target: {fileID: 8655493043438092433, guid: e066a4c9b36a64e468927bf691b20d72,
         type: 3}
