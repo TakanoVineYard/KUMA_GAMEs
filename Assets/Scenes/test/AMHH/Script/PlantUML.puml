@@ -1,6 +1,0 @@
-@startuml
- 
-Foo -> Bar : メッセージ
-Foo <-- Bar : レスポンス
- 
-@enduml

@@ -55,6 +55,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Cleaner\Editor\AssetCollector.cs" />
+     <Compile Include="Assets\Cleaner\Editor\AssetReferenceCollection.cs" />
+     <Compile Include="Assets\Cleaner\Editor\ClassReferenceCollection.cs" />
+     <Compile Include="Assets\Cleaner\Editor\CollectionData.cs" />
+     <Compile Include="Assets\Cleaner\Editor\FindUnusedAssetsWindow.cs" />
+     <Compile Include="Assets\Cleaner\Editor\ShaderReferenceCollection.cs" />
      <Compile Include="Assets\Editor\CustomSearchReplace.cs" />
      <Compile Include="Assets\Editor\InspectorLocker.cs" />
  <Reference Include="UnityEngine">

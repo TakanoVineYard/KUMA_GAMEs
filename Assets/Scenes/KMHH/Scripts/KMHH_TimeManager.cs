@@ -175,6 +175,8 @@ public class KMHH_TimeManager : MonoBehaviour
             dayHourNum = System.DateTime.Now.Hour;
 
             Debug.Log(dayHourNum+"時なう");
+
+
           //今何時?
             if ((dayHourNum > 6)&&(dayHourNum<=16))
             {
@@ -238,6 +240,9 @@ public class KMHH_TimeManager : MonoBehaviour
 
             debugGameTimeText = debugGameTimerObj.GetComponentInChildren<Text>();
 
+            debugTextSwitch = true;
+            DebugTextOnOff();
+
         }
 
         getDeltaTime += Time.deltaTime;
@@ -248,7 +253,6 @@ public class KMHH_TimeManager : MonoBehaviour
         //カウントダウン中
         if ((gameStart == false)&&(gameFinish == false))
         {
-            Debug.Log("うんち:");
 
             if(getDeltaTime < 0.1f){
                 if(countDownStartTrigger){
