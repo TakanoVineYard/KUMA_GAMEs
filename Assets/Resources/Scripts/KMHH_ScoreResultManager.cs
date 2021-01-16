@@ -10,8 +10,11 @@ using static KMGMs_SoundManager;
 public class KMHH_ScoreResultManager : MonoBehaviour
 {
 
+    public int KmhhHighScore = 0; // スコア変数
     public GameObject resultMaxComboObj;
     public GameObject resultScoreTextObj;
+    public GameObject resultHighScoreTextObj;
+    public GameObject resultHighScoreMarkObj;
     public GameObject resultScoreExcellentObj;
     public GameObject resultScoreGreatObj;
     public GameObject resultScoreGoodObj;
@@ -21,6 +24,7 @@ public class KMHH_ScoreResultManager : MonoBehaviour
 
     TextMeshProUGUI resultMaxComboText;
     TextMeshProUGUI resultScoreText;
+    TextMeshProUGUI resultHighScoreText;
     TextMeshProUGUI resultScoreExcellent;
     TextMeshProUGUI resultScoreGreat;
     TextMeshProUGUI resultScoreGood;
@@ -28,9 +32,13 @@ public class KMHH_ScoreResultManager : MonoBehaviour
     TextMeshProUGUI resultScorePoor;
     TextMeshProUGUI resultScoreMiss;
 
+    bool HighsScoreSwitch = false;
+
     // Start is called before the first frame update
     public void Start()
     {
+        // スコアのロード
+        KmhhHighScore = PlayerPrefs.GetInt("KMHH_HighScore", 0);
         /*
         resultMaxComboObj = GameObject.Find("ResultMaxCombo");
         resultScoreTextObj = GameObject.Find("ResultScore");
@@ -43,6 +51,7 @@ public class KMHH_ScoreResultManager : MonoBehaviour
 
 */
         resultMaxComboText = resultMaxComboObj.GetComponent<TextMeshProUGUI>();
+        resultHighScoreText = resultHighScoreTextObj.GetComponent<TextMeshProUGUI>();
         resultScoreText = resultScoreTextObj.GetComponent<TextMeshProUGUI>();
         resultScoreExcellent = resultScoreExcellentObj.GetComponent<TextMeshProUGUI>();
         resultScoreGreat = resultScoreGreatObj.GetComponent<TextMeshProUGUI>();
@@ -50,6 +59,7 @@ public class KMHH_ScoreResultManager : MonoBehaviour
         resultScoreNotGood = resultScoreNotGoodObj.GetComponent<TextMeshProUGUI>();
         resultScorePoor = resultScorePoorObj.GetComponent<TextMeshProUGUI>();
         resultScoreMiss = resultScoreMissObj.GetComponent<TextMeshProUGUI>();
+
 
         resultMaxComboText.text =  "<bounce>" + KMHH_ScoreManager.maxCombo.ToString();
         resultScoreText.text = "<bounce>" + ((int)KMHH_ScoreManager.totalScore).ToString();
@@ -60,8 +70,46 @@ public class KMHH_ScoreResultManager : MonoBehaviour
         resultScorePoor.text = "<bounce>" + KMHH_ScoreManager.scorePoor.ToString();
         resultScoreMiss.text = "<bounce>" + KMHH_ScoreManager.scoreMiss.ToString();
 
+        HighsScoreSwitch = true;
+
+        resultHighScoreMarkObj.SetActive(false);
+    }
+    public void Update()
+    {
+
+        if (HighsScoreSwitch)
+        {
+
+
+            KmhhHighScore = PlayerPrefs.GetInt("KMHH_HighScore", 0);
+
+            KMHH_ScoreSave((int)KMHH_ScoreManager.totalScore);
+
+            resultHighScoreText.text = "<bounce>" + KmhhHighScore.ToString();
+            Debug.Log("ハイスコア:" + KmhhHighScore);
+            HighsScoreSwitch = false;
+
+        }
     }
 
+
+    public void KMHH_ScoreSave(int score)
+    {
+        if (KmhhHighScore <= score)
+        {
+            // スコアを保存
+            PlayerPrefs.SetInt("KMHH_HighScore", score);
+            PlayerPrefs.Save();
+
+            Debug.Log("ハイスコアセーブ" + score);
+
+            resultHighScoreMarkObj.SetActive(true);
+
+            KmhhHighScore = score;
+            
+        }
+
+    }
 
     ////////
     public void BackToKMGMs()
@@ -83,6 +131,7 @@ public class KMHH_ScoreResultManager : MonoBehaviour
 
             SceneManager.LoadScene("KMHH");
         Debug.Log("hogehoge");
+        HighsScoreSwitch = true;
     }
 
     public void DerayMoveKMGMs()
@@ -92,6 +141,7 @@ public class KMHH_ScoreResultManager : MonoBehaviour
 
         
             SceneManager.LoadScene("KMGMs");
+        HighsScoreSwitch = true;
     }
 
 }
