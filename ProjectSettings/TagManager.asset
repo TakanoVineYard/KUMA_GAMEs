@@ -13,11 +13,11 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - 3D_Back
+  - 2D_Back
+  - 3D_Front
+  - 2D_Front
+  - UI_Tap
   - 
   - 
   - 
@@ -38,6 +38,21 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: UI_Tap
+    uniqueID: 2980867883
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: 3D_Back
+    uniqueID: 2441164885
+    locked: 0
+  - name: 2D_Back
+    uniqueID: 837654559
+    locked: 0
+  - name: 3D_Front
+    uniqueID: 2692837669
+    locked: 0
+  - name: 2D_Front
+    uniqueID: 123785375
     locked: 0

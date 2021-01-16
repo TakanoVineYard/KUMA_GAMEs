@@ -60,6 +60,9 @@ public class KMHH_TimeManager : MonoBehaviour
     GameObject upDateGameTimerObj; //ゲームタイマーオブジェクト入れ
     public Text upDateGameTimerText; //ゲームタイマー数値をいれるテキスト
 
+
+    public static TextMeshProUGUI textReadyPose; //出題時、待機時のテキスト表示
+
     public static GameObject debugGameTimerObj; //デバッグ用タイマーオブジェクト入れ
     public static Text debugGameTimeText; //デバッグ用タイマーオブジェクトテキスト入れ
 
@@ -103,8 +106,10 @@ public class KMHH_TimeManager : MonoBehaviour
 
     public Material[] mat_KMHHSkyDome;
     int dayHourNum; //何時か拾う
-                    ////////////////////////////////////////////////////////////////////
-                    ////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////
+
+
     void Start()
     {
 
@@ -258,6 +263,8 @@ public class KMHH_TimeManager : MonoBehaviour
             debugTextSwitch = true;
             DebugTextOnOff();
 
+
+            textReadyPose = GameObject.Find("ui_KMHH_Text_Ready_Pose").GetComponentInChildren<TextMeshProUGUI>(); //
         }
 
         getDeltaTime += Time.deltaTime;
@@ -295,6 +302,7 @@ public class KMHH_TimeManager : MonoBehaviour
                 {
                     if (getDeltaTime != gameTimePast)
                     {
+                        kmhh_AudioSources[5].Play();　//本ゲームの愉快なBGM流す
                         countDownTrigger3 = true;
                         Debug.Log("3");
                         countDown_Animator.CrossFadeInFixedTime("anm_UI_KMHH_CountDown3", 0.0f);
@@ -368,7 +376,7 @@ public class KMHH_TimeManager : MonoBehaviour
             {
                 Time.timeScale = editTimeScale;
             }
-            else if(debugSpeedUpONOFF == false)
+            else if (debugSpeedUpONOFF == false)
             {
                 Time.timeScale = 1.0f;
             }
@@ -515,6 +523,7 @@ public class KMHH_TimeManager : MonoBehaviour
     /// <returns></returns> 
     public void setQuestion()
     {
+        textReadyPose.text = "{size}POSE!";
         idleTime = 0.0f;
         questionStatus = true;
 
@@ -535,6 +544,8 @@ public class KMHH_TimeManager : MonoBehaviour
     public static void setIdle()
 
     {
+        textReadyPose.text = "{size}<wave a=0.5>READY...";
+
         if (switchStartMethod)
         {
             return;
@@ -557,6 +568,7 @@ public class KMHH_TimeManager : MonoBehaviour
     /// <returns>成否で分岐</returns> 
     public static void setEmotion(bool anserResult)
     {
+        textReadyPose.text = "";
         questionStatus = false;
         switchIdle = false;
         switchQuestion = false;
@@ -572,6 +584,7 @@ public class KMHH_TimeManager : MonoBehaviour
     /// <returns></returns> 
     public void setFinish()
     {
+        textReadyPose.text = "";
         anserTime = 0.0f;
         questionStatus = false;
         switchIdle = false;
@@ -654,7 +667,7 @@ public class KMHH_TimeManager : MonoBehaviour
         {
             debugSpeedUpONOFFText.text = ("SpeedUp On");
         }
-        else if(debugSpeedUpONOFF == false)
+        else if (debugSpeedUpONOFF == false)
         {
 
             debugSpeedUpONOFFText.text = ("SpeedUp Off");
