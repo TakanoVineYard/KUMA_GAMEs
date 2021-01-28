@@ -58,10 +58,9 @@ public static void AnserResultCollect()
     {
 
 
-        KMHH_SoundManager.soundCollect();
 
     if(KMHH_TimeManager.editTimeScale <= 3.0f){ //速度頭打ち
-    KMHH_TimeManager.editTimeScale += 0.05f; 
+    KMHH_TimeManager.editTimeScale += 0.025f; 
     }
     KMHH_ScoreManager.AddAnserResult(true);     //不正解で回答結果更新
 

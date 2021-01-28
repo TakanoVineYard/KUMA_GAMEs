@@ -14,7 +14,7 @@ public class KMHH_ScoreManager : MonoBehaviour
 {
 
     public static int comboCountNum = 0; //コンボを数える
-    public static float baseScore = 100.0f; //ベースの計算スコア
+    public static float baseScore = 100.0f; //ベースの計算スコア　　レベル上がるとこっちもあがる
     public static float totalScore = 0.0f;　//合計スコア
 
 
@@ -150,7 +150,7 @@ public class KMHH_ScoreManager : MonoBehaviour
             var kmhhParticleMain = eff_KMHH_ParticleSystem.main;
 
           kmhhParticleMain.startSpeed  = 1.0f + comboCountNum*0.5f; 
-          kmhhParticleMain.startSize  = 0.5f + comboCountNum*0.5f; 
+          kmhhParticleMain.startSize  = 0.5f + comboCountNum*0.25f; 
           kmhhParticleMain.gravityModifier = 0.1f - comboCountNum*0.01f;
           
           ParticleSystemObjRot +=  0.001f;//Mathf.Sin(comboCountNum*0.0001f);
@@ -173,7 +173,6 @@ public class KMHH_ScoreManager : MonoBehaviour
             if (anserResult)
             {
             comboCountNum++;
-            KMHH_SoundManager.soundCollect();
 
         }
             if(comboCountNum > maxCombo)　　//もしコンボが最大だったら
@@ -270,7 +269,7 @@ public class KMHH_ScoreManager : MonoBehaviour
         }
 
         if (comboCountNum != 0){
-          totalScore += baseScore * coefficient * comboCountNum;
+          totalScore += (((baseScore + (int)(KMHH_TimeManager.kmhhQuestionSpan - anserTimeRange)) * coefficient * comboCountNum));
 
         }
 

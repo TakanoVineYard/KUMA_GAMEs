@@ -73,10 +73,13 @@ public class KMHH_ScoreResultManager : MonoBehaviour
         HighsScoreSwitch = true;
 
         resultHighScoreMarkObj.SetActive(false);
+
+        //スコアリセット(デバッグ時)
+        //PlayerPrefs.DeleteKey("KMHH_HighScore");
+
     }
     public void Update()
     {
-
         if (HighsScoreSwitch)
         {
 

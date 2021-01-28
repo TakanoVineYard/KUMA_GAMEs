@@ -9,6 +9,7 @@ using System.Runtime;
 using System;  //enumつかう
 using static KMHH_TimeManager;
 using UnityEngine.Networking;
+using TMPro; //TextMeshPro用
 
 public class KMHH_CharaAnimationManager : MonoBehaviour
 {
@@ -32,7 +33,7 @@ public class KMHH_CharaAnimationManager : MonoBehaviour
     public static Text partsInfoText;
 
     public static GameObject indicateBodyPartsSpeechBubble;
-
+    public static GameObject bodyPart_ChangeTextObj;
     public static Animator kmhhSpeechBubbleAnimator;
 
     //public static GameObject indicateBodyPartEye;
@@ -40,6 +41,11 @@ public class KMHH_CharaAnimationManager : MonoBehaviour
     //public static GameObject indicateBodyPartRsideHand;
     //public static GameObject indicateBodyPartLsideLeg;
     //public static GameObject indicateBodyPartRsideLeg;
+
+    public static TextMeshProUGUI kmhhLevelText;
+
+
+    public static AudioSource[] kmhh_CharaPoseChangeSound;
 
 
     ////////////////////////////////////////////////////////////////////
@@ -54,6 +60,8 @@ public class KMHH_CharaAnimationManager : MonoBehaviour
         GetCharaJSON();
         indicateBodyPartsSpeechBubble = GameObject.Find("ui_KMHH_SpeechBubble");
         kmhhSpeechBubbleAnimator = indicateBodyPartsSpeechBubble.GetComponentInChildren<Animator>();
+
+        bodyPart_ChangeTextObj = GameObject.Find("ui_BodyPart_ChangeText");
 
         //indicateBodyPartEye = GameObject.Find("ui_BodyPart_Eye");
         //indicateBodyPartLsideHand = GameObject.Find("ui_BodyPart_LsideHand");
@@ -71,6 +79,12 @@ public class KMHH_CharaAnimationManager : MonoBehaviour
         partsInfoTextObj = GameObject.Find("Debug_PartsInfo");
         partsInfoText = partsInfoTextObj.GetComponentInChildren<Text>();
 
+        kmhhLevelText = GameObject.Find("ui_KMHH_Level").GetComponentInChildren<TextMeshProUGUI>();
+
+
+
+
+        kmhh_CharaPoseChangeSound = gameObject.GetComponents<AudioSource>();
     }
 
 
@@ -84,6 +98,11 @@ public class KMHH_CharaAnimationManager : MonoBehaviour
     public static void ChangeQuestionBodyParts()
     {
 
+
+        if (KMHH_TimeManager.gameStart == true)
+        {
+        kmhh_CharaPoseChangeSound[6].Play();
+        }
         int oldBodyPartNum = randomBodyPartNum;
 
         while (oldBodyPartNum == randomBodyPartNum)
@@ -91,6 +110,7 @@ public class KMHH_CharaAnimationManager : MonoBehaviour
             randomBodyPartNum = UnityEngine.Random.Range(0, 4);　　//0～4用意した分でランダム数値取り出し
         }
         indicateBodyPartsSpeechBubble.SetActive(true); //　吹き出し出す
+        bodyPart_ChangeTextObj.SetActive(true);
 
         switch (randomBodyPartNum)
         {
@@ -121,7 +141,7 @@ public class KMHH_CharaAnimationManager : MonoBehaviour
                 kmhhSpeechBubbleAnimator.CrossFadeInFixedTime("anm_UI_BodyPart_RsideLeg_On", 0.0f);
                 break;
         }
-
+        
 
         //bodyPartsText_Debug.text = "";//"ぼでぃぱーつ\n選択待ち...";
 
@@ -153,11 +173,40 @@ public class KMHH_CharaAnimationManager : MonoBehaviour
     public static void ChangeCharaState()
     {
 
-        //indicateBodyPartsSpeechBubble.SetActive(false); //　吹き出しけす
+        int poseselectrandom = UnityEngine.Random.Range(0, 5);
+        kmhh_CharaPoseChangeSound[poseselectrandom].Play();
 
+        //indicateBodyPartsSpeechBubble.SetActive(false); //　吹き出しけす
         //hideBodyParts();
 
-        randomPoseNum = UnityEngine.Random.Range(0, 7);  //0～用意した分でランダム数値取り出し
+
+        if (KMHH_ScoreManager.comboCountNum < 5)
+        {
+            randomPoseNum = UnityEngine.Random.Range(0, 8);  //0～用意した分でランダム数値取り出し
+            Debug.Log("Level 1");
+
+            KMHH_ScoreManager.baseScore = 100.0f;
+        }
+        else if ((KMHH_ScoreManager.comboCountNum >= 5) && (KMHH_ScoreManager.comboCountNum < 10))
+        {
+            randomPoseNum = UnityEngine.Random.Range(9, 20);  //0～用意した分でランダム数値取り出し
+            Debug.Log("Level 2");
+
+            KMHH_ScoreManager.baseScore = 150.0f;
+        }
+        else if ((KMHH_ScoreManager.comboCountNum >= 10) && (KMHH_ScoreManager.comboCountNum < 15))
+        {
+            randomPoseNum = UnityEngine.Random.Range(21, 39);  //0～用意した分でランダム数値取り出し
+            Debug.Log("Level 3");
+            KMHH_ScoreManager.baseScore = 200.0f;
+        }
+        else if (KMHH_ScoreManager.comboCountNum >= 15)
+        {
+            randomPoseNum = UnityEngine.Random.Range(0, 39);  //0～用意した分でランダム数値取り出し
+            Debug.Log("Level 3");
+
+            KMHH_ScoreManager.baseScore = 250.0f;
+        }
 
         //情報テキスト更新
         partsInfoText.text = ("PartsInfo" + '\n' +
@@ -231,6 +280,11 @@ public class KMHH_CharaAnimationManager : MonoBehaviour
             {
                 ChangeQuestionBodyParts();　//お題の体パーツを決める
             }
+            else
+            {
+                bodyPart_ChangeTextObj.SetActive(false); //変更なしなのでChange文字けす
+            }
+
         }
 
         randomPoseNum = UnityEngine.Random.Range(0, 9);
@@ -239,6 +293,12 @@ public class KMHH_CharaAnimationManager : MonoBehaviour
         //Debug.Log("アイドルIDナンバー:"+NumID.PadLeft(3,'0'));
 
         KMHH_CharaAnimator.CrossFadeInFixedTime("armature|anm_kmhh_idle_" + (NumID.PadLeft(3, '0')), 0.175f);
+
+
+        if (KMHH_ScoreManager.comboCountNum == 0)
+        {
+            kmhhLevelText.text = "<wave a =0.5>LEVEL <size=125><color=#008000>1</color></size>";
+        }
 
 
     }
@@ -258,18 +318,26 @@ public class KMHH_CharaAnimationManager : MonoBehaviour
             switch (KMHH_ScoreManager.anserResultStatus)
             {
                 case "Excellent":
+
+                    KMHH_SoundManager.soundCollectExcellent();
                     KMHH_CharaAnimator.CrossFadeInFixedTime("armature|anm_kmhh_Emo_Excellent", 0.175f);
                     break;
                 case "Great":
+
+                    KMHH_SoundManager.soundCollectGreat();
                     KMHH_CharaAnimator.CrossFadeInFixedTime("armature|anm_kmhh_Emo_Great", 0.175f);
                     break;
                 case "Good":
+                    KMHH_SoundManager.soundCollectGood();
                     KMHH_CharaAnimator.CrossFadeInFixedTime("armature|anm_kmhh_Emo_Good", 0.175f);
                     break;
                 case "NotGood":
+                    KMHH_SoundManager.soundCollectNotGoodBad();
                     KMHH_CharaAnimator.CrossFadeInFixedTime("armature|anm_kmhh_Emo_NotGood", 0.175f);
                     break;
                 case "Poor":
+                    KMHH_SoundManager.soundCollectPoor();
+                
                     KMHH_CharaAnimator.CrossFadeInFixedTime("armature|anm_kmhh_Emo_Poor", 0.175f);
                     break;
                 case "Miss(Button)":
@@ -282,6 +350,24 @@ public class KMHH_CharaAnimationManager : MonoBehaviour
             KMHH_CharaAnimator.CrossFadeInFixedTime("armature|anm_kmhh_Emo_Bad", 0.175f);
 
         }
+
+        switch (KMHH_ScoreManager.comboCountNum)
+        {
+            case 0:
+                kmhhLevelText.text = "<wave a =0.5>LEVEL <size=125><color=#008000>1</color></size>";
+                break;
+            case 5:
+                kmhhLevelText.text = "<wave a =0.5>LEVEL <size=125><color=blue>2</color></size>";
+                break;
+            case 10:
+                kmhhLevelText.text = "<wave a =0.5>LEVEL <size=125><color=red>3</color></size>";
+                break;
+            case 15:
+                kmhhLevelText.text = "<wave a =0.5><size=55>LEVEL </size><size=120><rainb><cspace=-0.01em>MAX</cspace></rainb></size>";
+                break;
+            
+        }
+
 
     }
     ////////////////////////////////////////////////////////////////////
