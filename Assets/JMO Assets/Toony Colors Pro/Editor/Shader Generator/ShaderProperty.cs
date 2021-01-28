@@ -1858,6 +1858,15 @@ namespace ToonyColorsPro
 					}
 					break;
 
+					case "vertex_normal":
+					{
+						imp = new Imp_LocalNormal(shaderProperty);
+						var channels = GetAssociatedDataString(associatedData, "swizzle", null);
+						if (!string.IsNullOrEmpty(channels))
+							(imp as Imp_LocalNormal).Channels = channels;
+					}
+					break;
+
 					case "world_position":
 					{
 						imp = new Imp_WorldPosition(shaderProperty);

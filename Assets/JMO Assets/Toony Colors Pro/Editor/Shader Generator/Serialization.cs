@@ -173,6 +173,24 @@ namespace ToonyColorsPro
 							{
 								return string.Format("\"{0}\"", @object);
 							}
+							
+							// unity vectors: prevent printing values with commas
+							if (type == typeof(Vector2))
+							{
+								var v2 = (Vector2) @object;
+								return string.Format(CultureInfo.InvariantCulture, "({0}, {1})", v2.x, v2.y);
+							}
+							if (type == typeof(Vector3))
+							{
+								var v3 = (Vector3) @object;
+								return string.Format(CultureInfo.InvariantCulture, "({0}, {1}, {2})", v3.x, v3.y, v3.z);
+							}
+							if (type == typeof(Vector4))
+							{
+								var v4 = (Vector4) @object;
+								return string.Format(CultureInfo.InvariantCulture, "({0}, {1}, {2}, {3})", v4.x, v4.y, v4.z, v4.w);
+							}
+							
 							//value type: just return the toString version
 							return string.Format(CultureInfo.InvariantCulture, "{0}", @object);
 						};

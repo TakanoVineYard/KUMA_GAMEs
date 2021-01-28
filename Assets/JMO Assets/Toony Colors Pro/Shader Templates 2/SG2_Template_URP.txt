@@ -1,5 +1,5 @@
 // Toony Colors Pro+Mobile 2
-// (c) 2014-2020 Jean Moreno
+// (c) 2014-2021 Jean Moreno
 
 #NAME=Default (Universal Pipeline)
 #ID=TEMPLATE_URP
@@ -32,6 +32,7 @@ AlbedoHSV
 Normal Mapping
 Texture Blending
 Triplanar
+Vertex Displacement
 
 # stylization:
 NdotL Stylization
@@ -90,6 +91,8 @@ sngl	lbl="Make Ambient Optional"		kw=AMBIENT_SHADER_FEATURE	tt="Will make ambien
 dd_end
 
 dd_start	lbl="SURFACE"
+---
+[[MODULE:FEATURES:Vertex Displacement]]
 ---
 [[MODULE:FEATURES:AlbedoHSV]]
 ---
@@ -155,11 +158,13 @@ dd_end
 dd_start	lbl="OPTIONS"
 ---
 sngl		lbl="Disable Shadow Receiving"			kw=DISABLE_SHADOW_RECEIVING
-sngl		lbl="Disable Shadow Casting"				kw=DISABLE_SHADOW_CASTING
+sngl		lbl="Disable Shadow Casting"			kw=DISABLE_SHADOW_CASTING
 sngl		lbl="Disable Additional Lights"			kw=DISABLE_ADDITIONAL_LIGHTS
-sngl		lbl="Enable Fog"							kw=FOG
+sngl		lbl="Enable SSAO"						kw=SSAO
+sngl		lbl="Enable Fog"						kw=FOG
 sngl		lbl="Enable Lightmaps"					kw=ENABLE_LIGHTMAP
 sngl		lbl="Disable Dynamic Batching"			kw=DISABLE_BATCHING				tt="Disable dynamic batching support for this shader"
+sngl		lbl="Enable Depth Normals Pass"			kw=ENABLE_DEPTH_NORMALS_PASS
 sngl		lbl="Enable Meta Pass"					kw=ENABLE_META_PASS				tt="Enable meta pass: it is needed to be able to bake lighting but can prevent SRP Batcher compatibility."
 space	space=4
 subh	lbl="GPU Instancing Options"
@@ -205,10 +210,12 @@ float3		Max Light Intensity				lighting, imp(constant, default = (1.0, 1.0, 1.0)
 
 [[MODULE:PROPERTIES_NEW:Specular]]
 [[MODULE:PROPERTIES_NEW:Rim Lighting]]
-/// IF GLOSSY_REFLECTIONS
-	header		Reflection Probes
+/// IF GLOSSY_REFLECTIONS || PLANAR_REFLECTION
+	header		Reflections
 	color		Reflection Color			lighting, imp(color, label = "Color", default = (1, 1, 1, 1))
+	/// IF GLOSSY_REFLECTIONS
 	float		Reflection Smoothness		lighting, imp(range, label = "Smoothness", default = 0.5, min = 0, max = 1)
+	///
 ///
 /// IF EMISSION
 	header		Emission
@@ -222,6 +229,7 @@ float3		Max Light Intensity				lighting, imp(constant, default = (1.0, 1.0, 1.0)
 [[MODULE:PROPERTIES_NEW:Reflection]]
 [[MODULE:PROPERTIES_NEW:MatCap]]
 [[MODULE:PROPERTIES_NEW:Custom Ambient]]
+[[MODULE:PROPERTIES_NEW:Vertex Displacement]]
 [[MODULE:PROPERTIES_NEW:Normal Mapping]]
 [[MODULE:PROPERTIES_NEW:Triplanar]]
 [[MODULE:PROPERTIES_NEW:Texture Blending]]
@@ -426,8 +434,10 @@ Shader "@%SHADER_NAME%@"
 		[Toggle(TCP2_REFLECTIONS)] _UseReflections ("Enable Reflections", Float) = 0
 	///
 ///
-/// IF GLOSSY_REFLECTIONS
+/// IF GLOSSY_REFLECTIONS || PLANAR_REFLECTION
 		[[PROP:Reflection Color]]
+///
+/// IF GLOSSY_REFLECTIONS
 		[[PROP:Reflection Smoothness]]
 ///
 		[[MODULE:PROPERTIES_BLOCK:Reflection]]
@@ -447,6 +457,7 @@ Shader "@%SHADER_NAME%@"
 	#end_not_empty_block
 		[TCP2Separator]
 	#end_not_empty
+		[[MODULE:PROPERTIES_BLOCK:Vertex Displacement]]
 		[[MODULE:PROPERTIES_BLOCK:Triplanar]]
 		[[MODULE:PROPERTIES_BLOCK:Normal Mapping]]
 		[[MODULE:PROPERTIES_BLOCK:Texture Blending]]
@@ -682,15 +693,17 @@ Shader "@%SHADER_NAME%@"
 			[[SAMPLE_CUSTOM_PROPERTIES]]
 			[[SAMPLE_SHADER_PROPERTIES]]
 
-			[[MODULE:VERTEX:VertExmotion:LWRP(v.vertex, v.normal, v.tangent.xyz)]]
+			[[MODULE:VERTEX:VertExmotion:LWRP(v.vertex, v.normal, v.tangent)]]
 			[[MODULE:VERTEX:CurvedWorld(v.vertex, v.normal, v.tangent)]]
 
+			[[MODULE:VERTEX:Vertex Displacement(v.vertex)]]
 	/// IF HOOK_VERTEX_POSITION
 			v.vertex.xyz = [[SAMPLE_VALUE_SHADER_PROPERTY:Vertex Position]];
 	///
 	/// IF HOOK_VERTEX_POSITION_WORLD || APPLY_WORLD_POSITION || USE_WORLD_POSITION_FRAGMENT
 			float3 worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
 	///
+			[[MODULE:VERTEX:Vertex Displacement:WORLD(worldPos)]]
 	/// IF HOOK_VERTEX_POSITION_WORLD
 			worldPos.xyz = [[SAMPLE_VALUE_SHADER_PROPERTY:Vertex Position World]];
 	///
@@ -876,15 +889,17 @@ Shader "@%SHADER_NAME%@"
 				[[SAMPLE_CUSTOM_PROPERTIES]]
 				[[SAMPLE_SHADER_PROPERTIES]]
 
-				[[MODULE:VERTEX:VertExmotion:LWRP(v.vertex, v.normal, v.tangent.xyz)]]
+				[[MODULE:VERTEX:VertExmotion:LWRP(v.vertex, v.normal, v.tangent)]]
 				[[MODULE:VERTEX:CurvedWorld(v.vertex, v.normal, v.tangent)]]
 
+				[[MODULE:VERTEX:Vertex Displacement(v.vertex)]]
 	/// IF HOOK_VERTEX_POSITION
 				v.vertex.xyz = [[SAMPLE_VALUE_SHADER_PROPERTY:Vertex Position]];
 	///
 	/// IF HOOK_VERTEX_POSITION_WORLD || APPLY_WORLD_POSITION || USE_WORLD_POSITION_FRAGMENT || USE_WORLD_POSITION_VERTEX
 				float3 worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
 	///
+				[[MODULE:VERTEX:Vertex Displacement:WORLD(worldPos)]]
 	/// IF HOOK_VERTEX_POSITION_WORLD
 				worldPos.xyz = [[SAMPLE_VALUE_SHADER_PROPERTY:Vertex Position World]];
 	///
@@ -1031,12 +1046,14 @@ Shader "@%SHADER_NAME%@"
 				[[MODULE:VERTEX:VertExmotion(v.vertex, v.normal, v.tangent)]]
 				[[MODULE:VERTEX:CurvedWorld(v.vertex, v.normal, v.tangent)]]
 
+				[[MODULE:VERTEX:Vertex Displacement(v.vertex)]]
 	/// IF HOOK_VERTEX_POSITION
 				v.vertex.xyz = [[SAMPLE_VALUE_SHADER_PROPERTY:Vertex Position]];
 	///
 	/// IF HOOK_VERTEX_POSITION_WORLD || APPLY_WORLD_POSITION || USE_WORLD_POSITION_FRAGMENT || USE_WORLD_POSITION_VERTEX
 				float3 worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
 	///
+				[[MODULE:VERTEX:Vertex Displacement:WORLD(worldPos)]]
 	/// IF HOOK_VERTEX_POSITION_WORLD
 				worldPos.xyz = [[SAMPLE_VALUE_SHADER_PROPERTY:Vertex Position World]];
 	///
@@ -1185,7 +1202,6 @@ Shader "@%SHADER_NAME%@"
 
 			// -------------------------------------
 			// Material keywords
-			//#pragma shader_feature _ALPHATEST_ON
 /// IF DISABLE_SHADOW_RECEIVING
 			#pragma multi_compile _RECEIVE_SHADOWS_OFF
 /// ELSE
@@ -1200,6 +1216,9 @@ Shader "@%SHADER_NAME%@"
 			#pragma multi_compile _ _ADDITIONAL_LIGHT_SHADOWS
 			#pragma multi_compile _ _SHADOWS_SOFT
 			#pragma multi_compile _ _MIXED_LIGHTING_SUBTRACTIVE
+/// IF SSAO
+			#pragma multi_compile _ _SCREEN_SPACE_OCCLUSION
+///
 
 			// -------------------------------------
 /// IF ENABLE_LIGHTMAP
@@ -1223,6 +1242,7 @@ Shader "@%SHADER_NAME%@"
 			// Toony Colors Pro 2 keywords
 	#start_not_empty_block
 			[[MODULE:SHADER_FEATURES_BLOCK:Specular]]
+			[[MODULE:SHADER_FEATURES_BLOCK:Vertex Displacement]]
 			[[MODULE:SHADER_FEATURES_BLOCK:Rim Lighting]]
 /// IF (GLOSSY_REFLECTIONS || REFLECTION_CUBEMAP || PLANAR_REFLECTION) && REFLECTION_SHADER_FEATURE
 			#pragma shader_feature TCP2_REFLECTIONS
@@ -1239,6 +1259,7 @@ Shader "@%SHADER_NAME%@"
 			[[MODULE:SHADER_FEATURES_BLOCK:Sketch]]
 			[[MODULE:SHADER_FEATURES_BLOCK:NdotL Stylization]]
 			[[MODULE:SHADER_FEATURES_BLOCK:Wind]]
+			[[MODULE:SHADER_FEATURES_BLOCK:Water]]
 			[[MODULE:SHADER_FEATURES_BLOCK:Dissolve]]
 			[[MODULE:SHADER_FEATURES_BLOCK:Vertical Fog]]
 	#end_not_empty_block
@@ -1353,14 +1374,17 @@ Shader "@%SHADER_NAME%@"
 				output.[[INPUT_VALUE:uvLM]] = input.uvLM.xy * unity_LightmapST.xy + unity_LightmapST.zw;
 ///
 
-				[[MODULE:VERTEX:VertExmotion:LWRP(input.vertex, input.normal, input.tangent.xyz)]]
+				[[MODULE:VERTEX:VertExmotion:LWRP(input.vertex, input.normal, input.tangent)]]
 				[[MODULE:VERTEX:CurvedWorld(input.vertex, input.normal, input.tangent)]]
+
+				[[MODULE:VERTEX:Vertex Displacement(input.vertex)]]
 /// IF HOOK_VERTEX_POSITION
 				input.vertex.xyz = [[SAMPLE_VALUE_SHADER_PROPERTY:Vertex Position]];
 ///
 /// IF HOOK_VERTEX_POSITION_WORLD || APPLY_WORLD_POSITION || USE_WORLD_POSITION_FRAGMENT || USE_WORLD_POSITION_VERTEX
 				float3 worldPos = mul(unity_ObjectToWorld, input.vertex).xyz;
 ///
+				[[MODULE:VERTEX:Vertex Displacement:WORLD(worldPos)]]
 /// IF HOOK_VERTEX_POSITION_WORLD
 				worldPos.xyz = [[SAMPLE_VALUE_SHADER_PROPERTY:Vertex Position World]];
 ///
@@ -1642,6 +1666,15 @@ Shader "@%SHADER_NAME%@"
 /// ELSE
 				half occlusion = 1;
 ///
+
+/// IF SSAO
+			#if defined(_SCREEN_SPACE_OCCLUSION)
+				float2 normalizedScreenSpaceUV = GetNormalizedScreenSpaceUV(input.positionCS);
+				AmbientOcclusionFactor aoFactor = GetScreenSpaceAmbientOcclusion(normalizedScreenSpaceUV);
+				occlusion = min(occlusion, aoFactor.indirectAmbientOcclusion);
+			#endif
+///
+
 				half3 indirectDiffuse = bakedGI;
 #ENABLE_IMPL: float3 bakedGI, lbl = "Special/Indirect Diffuse", help = "The raw indirect diffuse color, as calculated by Unity."
 /// IF AMBIENT_SHADER_FEATURE
@@ -1866,13 +1899,13 @@ Shader "@%SHADER_NAME%@"
 	///
 				half3 reflections = half3(0, 0, 0);
 
-				// world reflection
+				// World reflection
 				half reflectionRoughness = 1 - [[VALUE:Reflection Smoothness]];
 				half3 reflectVector = reflect(-viewDirWS, normalWS);
 				half3 indirectSpecular = GlossyEnvironmentReflection(reflectVector, reflectionRoughness, occlusion);
 				half reflectionRoughness4 = max(pow(reflectionRoughness, 4), 6.103515625e-5);
 				float surfaceReductionRefl = 1.0 / (reflectionRoughness4 + 1.0);
-				reflections += indirectSpecular * surfaceReductionRefl * [[VALUE:Reflection Color]];
+				reflections += indirectSpecular * surfaceReductionRefl;
 
 				[[MODULE:FRAGMENT:Reflection(reflections, normalWS, viewDirWS, ndvRaw, input.[[INPUT_VALUE:screenPosition]], normalTS)]]
 
@@ -1887,6 +1920,9 @@ Shader "@%SHADER_NAME%@"
 	#start_not_empty_block
 				[[MODULE:FRAGMENT:Reflection(reflections, normalWS, viewDirWS, ndvRaw, input.[[INPUT_VALUE:screenPosition]], normalTS)]]
 	#end_not_empty_block
+	/// IF PLANAR_REFLECTION
+				reflections *= [[VALUE:Reflection Color]];
+	///
 				color.rgb += reflections;
 	#end_not_empty
 ///
@@ -1995,8 +2031,12 @@ Shader "@%SHADER_NAME%@"
 				float4 positionCS     : SV_POSITION;
 /// IF CURVED_WORLD || USE_WORLD_NORMAL_FRAGMENT
 				float3 normal         : NORMAL;
+/// ELIF ENABLE_DEPTH_NORMALS_PASS
+			#if defined(DEPTH_NORMALS_PASS)
+				float3 normalWS : TEXCOORD0;
+			#endif
 ///
-				[[INPUT_STRUCT_SEMANTICS:0]]
+				[[INPUT_STRUCT_SEMANTICS:1]]
 #INPUT_VARIABLES
 /// IF USE_VERTEX_COLORS_FRAG
 				half4 vertexColor;
@@ -2082,14 +2122,17 @@ Shader "@%SHADER_NAME%@"
 				[[SAMPLE_CUSTOM_PROPERTIES]]
 				[[SAMPLE_SHADER_PROPERTIES]]
 
-				[[MODULE:VERTEX:VertExmotion:LWRP(input.vertex, input.normal, input.tangent.xyz)]]
+				[[MODULE:VERTEX:VertExmotion:LWRP(input.vertex, input.normal, input.tangent)]]
 				[[MODULE:VERTEX:CurvedWorld(input.vertex, input.normal, input.tangent)]]
+
+				[[MODULE:VERTEX:Vertex Displacement(input.vertex)]]
 /// IF HOOK_VERTEX_POSITION
 				input.vertex.xyz = [[SAMPLE_VALUE_SHADER_PROPERTY:Vertex Position]];
 ///
 /// IF HOOK_VERTEX_POSITION_WORLD || APPLY_WORLD_POSITION || USE_WORLD_POSITION_FRAGMENT || USE_WORLD_POSITION_VERTEX
 				float3 worldPos = mul(unity_ObjectToWorld, input.vertex).xyz;
 ///
+				[[MODULE:VERTEX:Vertex Displacement:WORLD(worldPos)]]
 /// IF HOOK_VERTEX_POSITION_WORLD
 				worldPos.xyz = [[SAMPLE_VALUE_SHADER_PROPERTY:Vertex Position World]];
 ///
@@ -2142,6 +2185,12 @@ Shader "@%SHADER_NAME%@"
 
 				#if defined(DEPTH_ONLY_PASS)
 					output.positionCS = TransformObjectToHClip(input.vertex.xyz);
+/// IF ENABLE_DEPTH_NORMALS_PASS
+					#if defined(DEPTH_NORMALS_PASS)
+						float3 normalWS = TransformObjectToWorldNormal(input.normal);
+						output.normalWS = NormalizeNormalPerVertex(normalWS);
+					#endif
+///
 				#elif defined(SHADOW_CASTER_PASS)
 					output.positionCS = GetShadowPositionHClip(input);
 				#else
@@ -2213,6 +2262,12 @@ Shader "@%SHADER_NAME%@"
 
 				[[INJECTION_POINT:Depth + Shadow Caster Pass/Fragment Shader/End]]
 
+/// IF ENABLE_DEPTH_NORMALS_PASS
+				#if defined(DEPTH_NORMALS_PASS)
+					return float4(PackNormalOctRectEncode(TransformWorldToViewDir(input.normalWS, true)), 0.0, 0.0);
+				#endif
+///
+
 /// IF ALPHA_TESTING && ALPHA_TO_COVERAGE
 				return alpha;
 /// ELSE
@@ -2252,11 +2307,6 @@ Shader "@%SHADER_NAME%@"
 
 			// using simple #define doesn't work, we have to use this instead
 			#pragma multi_compile SHADOW_CASTER_PASS
-
-			// -------------------------------------
-			// Material Keywords
-			//#pragma shader_feature _ALPHATEST_ON
-			//#pragma shader_feature _GLOSSINESS_FROM_BASE_ALPHA
 
 			//--------------------------------------
 			// GPU Instancing
@@ -2310,11 +2360,6 @@ Shader "@%SHADER_NAME%@"
 			#pragma target 2.0
 			[[INJECTION_POINT:Depth Pass/Pragma]]
 
-			// -------------------------------------
-			// Material Keywords
-			// #pragma shader_feature _ALPHATEST_ON
-			// #pragma shader_feature _SMOOTHNESS_TEXTURE_ALBEDO_CHANNEL_A
-
 			//--------------------------------------
 			// GPU Instancing
 			#pragma multi_compile_instancing
@@ -2335,6 +2380,43 @@ Shader "@%SHADER_NAME%@"
 			[[MODULE:SHADER_FEATURES_BLOCK:Dissolve]]
 	#end_not_empty_block
 	#end_not_empty
+
+			ENDHLSL
+		}
+///
+
+/// IF ENABLE_DEPTH_NORMALS_PASS
+		Pass
+		{
+			Name "DepthNormals"
+			Tags
+			{
+				"LightMode" = "DepthNormals"
+				[[INJECTION_POINT:Depth Normals Pass/Tags]]
+			}
+
+			ZWrite On
+	/// IF CULLING
+			Cull [[VALUE:Face Culling]]
+	///
+			[[INJECTION_POINT:Depth Normals Pass/Shader States]]
+
+			HLSLPROGRAM
+			#pragma exclude_renderers gles gles3 glcore
+			#pragma target 2.0
+			[[INJECTION_POINT:Depth Normals Pass/Pragma]]
+
+			//--------------------------------------
+			// GPU Instancing
+			#pragma multi_compile_instancing
+			[[GPU_INSTANCING_OPTIONS]]
+
+			// using simple #define doesn't work, we have to use this instead
+			#pragma multi_compile DEPTH_ONLY_PASS
+			#pragma multi_compile DEPTH_NORMALS_PASS
+
+			#pragma vertex ShadowDepthPassVertex
+			#pragma fragment ShadowDepthPassFragment
 
 			ENDHLSL
 		}

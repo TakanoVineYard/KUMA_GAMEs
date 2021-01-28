@@ -1,5 +1,5 @@
 // Toony Colors Pro+Mobile 2
-// (c) 2014-2020 Jean Moreno
+// (c) 2014-2021 Jean Moreno
 
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -74,7 +74,7 @@ namespace ToonyColorsPro
 			void OnEnable()
 			{
 #if UNITY_2019_3_OR_NEWER
-				isURP  = GraphicsSettings.currentRenderPipeline.GetType().Name.Contains("Universal");
+				isURP  = GraphicsSettings.currentRenderPipeline != null && GraphicsSettings.currentRenderPipeline.GetType().Name.Contains("Universal");
 #endif
 
 #if UNITY_2019_3_OR_NEWER

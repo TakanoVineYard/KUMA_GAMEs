@@ -20,7 +20,7 @@ namespace ToonyColorsPro
 			public class Implementation
 			{
 				//Defines the order in which menu item will appear in the menu
-				static public Type[] MenuOrders = new Type[]
+				public static Type[] MenuOrders = new Type[]
 				{
 					typeof(Imp_ConstantValue),
 					typeof(Imp_ConstantFloat),
@@ -42,7 +42,7 @@ namespace ToonyColorsPro
 					typeof(Imp_GenericFromTemplate),
 				};
 
-				[Serialization.SerializeAs("guid")] public string guid;
+				[Serialization.SerializeAs("guid")] public readonly string guid;
 				[Serialization.SerializeAs("op")] public Operator @operator = Operator.Multiply;      //How this implementation is calculated compared to the previous one
 				[Serialization.SerializeAs("lbl"), ExcludeFromCopy] public string Label = "Property Label";
 				[Serialization.SerializeAs("gpu_inst")] public bool IsGpuInstanced = false;
@@ -793,7 +793,11 @@ namespace ToonyColorsPro
 						bool linkedSpErrors = UvSource == UvSourceType.OtherShaderProperty &&
 							( _linkedShaderProperty == null || (_linkedShaderProperty != null && !_linkedShaderProperty.IsVisible()) );
 
-						return base.HasErrors | linkedSpErrors | (UseTilingOffset && invalidTilingOffsetVariable) | (UseScrolling && invalidScrollingVariable);
+						return base.HasErrors
+						       | linkedSpErrors
+						       | (UseTilingOffset && invalidTilingOffsetVariable)
+						       | (UseScrolling && invalidScrollingVariable)
+						       | (SineAnimation && invalidSinAnimVariable);
 					}
 				}
 
@@ -892,6 +896,8 @@ namespace ToonyColorsPro
 				[Serialization.SerializeAs("roff")] public bool RandomOffset;
 				[Serialization.SerializeAs("goff")] public bool GlobalRandomOffset;
 				[Serialization.SerializeAs("sin_anm")] public bool SineAnimation;
+				[Serialization.SerializeAs("sin_anmv")] public string SineAnimationVariable = "";
+				[Serialization.SerializeAs("sin_anmv_lbl")] public string SineAnimationVariableLabel = "";
 				[Serialization.SerializeAs("notile")] public bool NoTile;
 				[Serialization.SerializeAs("triplanar_local")] public bool LocalSpaceTriplanar;
 				[Serialization.SerializeAs("def")] public string DefaultValue = SGUILayout.Constants.DefaultTextureValues[0];
@@ -1025,6 +1031,7 @@ namespace ToonyColorsPro
 				ProgramType program = ProgramType.Undefined;
 				public bool invalidTilingOffsetVariable = false;
 				public bool invalidScrollingVariable = false;
+				public bool invalidSinAnimVariable = false;
 
 				bool? _uvExpandedCache;
 				bool uvExpandedCache
@@ -1231,10 +1238,28 @@ namespace ToonyColorsPro
 
 				public string GetDefaultSineAnimVariable()
 				{
-					// x: speed, y: amplitude, z: frequency, w: unused
-					return FetchVariable(string.Format("{0}_SinAnimParams", PropertyName));
+					return FetchVariable(GetSineAnimVariableName());
 				}
 
+				public string GetSineAnimVariableName()
+				{
+					// x: speed, y: amplitude, z: frequency, w: unused
+					return string.Format("{0}_SinAnimParams", PropertyName);
+				}
+
+				// Uses a UV sin anim variable from another property
+				public bool UseCustomSineAnimVariable()
+				{
+					return !string.IsNullOrEmpty(SineAnimationVariable);
+				}
+
+				// Returns true if this property's UV sin anim variable can be referenced
+				public bool HasValidSineAnimVariable()
+				{
+					return this.SineAnimation && !this.UseCustomSineAnimVariable();
+				}
+
+				
 				/// <summary>
 				/// Verify that the tiling/offset & scrolling values are correct if they reference another implementation
 				/// </summary>
@@ -1257,6 +1282,16 @@ namespace ToonyColorsPro
 						if (!availableValues.Exists(av => av.value == ScrollingVariable && string.IsNullOrEmpty(av.disabled)))
 						{
 							invalidScrollingVariable = true;
+						}
+					}
+					
+					invalidSinAnimVariable = false;
+					if (SineAnimation && !string.IsNullOrEmpty(SineAnimationVariable))
+					{
+						var availableValues = FetchValidSinAnimValues();
+						if (!availableValues.Exists(av => av.value == SineAnimationVariable && string.IsNullOrEmpty(av.disabled)))
+						{
+							invalidSinAnimVariable = true;
 						}
 					}
 				}
@@ -1288,6 +1323,14 @@ namespace ToonyColorsPro
 				List<AvailableValue> FetchValidScrollingValues()
 				{
 					return FetchValidValuesGeneric(imp => imp.HasValidScrollingVariable(), imp => imp.GetDefaultScrollingVariable(), imp => imp.GetScrollingVariableName());
+				}
+
+				/// <summary>
+				/// Returns the currently available UV sin anim values
+				/// </summary>
+				List<AvailableValue> FetchValidSinAnimValues()
+				{
+					return FetchValidValuesGeneric(imp => imp.HasValidSineAnimVariable(), imp => imp.GetDefaultSineAnimVariable(), imp => imp.GetSineAnimVariableName());
 				}
 
 				// Generic function to return available tiling/offset or scrolling variables
@@ -1358,7 +1401,7 @@ namespace ToonyColorsPro
 						prop += string.Format("\n{0}[TCP2UVScrolling] {1}_SC (\"{2} UV Scrolling\", Vector) = (1,1,0,0)", indent, PropertyName, Label);
 					if (RandomOffset)
 						prop += string.Format("\n{0}{1} (\"{2} UV Offset Speed\", Float) = 120", indent, GetDefaultOffsetSpeedVariable(), Label);
-					if (SineAnimation)
+					if (SineAnimation && !UseCustomSineAnimVariable())
 						prop += string.Format("\n{0}[TCP2Vector4FloatsDrawer(Speed,Amplitude,Frequency,Offset)] {1} (\"{2} UV Sine Distortion Parameters\", Float) = (1, 0.05, 1, 0)", indent, GetDefaultSineAnimVariable(), Label);
 					if (MipProperty)
 						prop += string.Format("\n{0}{1}_Mip (\"{2} Mip Level\", Range(0,10)) = 0", indent, PropertyName, Label);
@@ -1379,7 +1422,7 @@ namespace ToonyColorsPro
 						properties += string.Format("{0}half4 {1}_SC;\n", indent, PropertyName);
 					if (RandomOffset)
 						properties += string.Format("{0}half {1};\n", indent, GetDefaultOffsetSpeedVariable());
-					if (SineAnimation)
+					if (SineAnimation && !UseCustomSineAnimVariable())
 						properties += string.Format("{0}half4 {1};\n", indent, GetDefaultSineAnimVariable());
 					if (MipProperty)
 						properties += string.Format("{0}fixed {1}_Mip;\n", indent, PropertyName);
@@ -1403,12 +1446,13 @@ namespace ToonyColorsPro
 					string uvSineMod;
 					if (SineAnimation)
 					{
+						string uvSinProperty = UseCustomSineAnimVariable() ? SineAnimationVariable : GetDefaultSineAnimVariable();
 						string uvSinVariable = string.Format("uvSinAnim_{0}", PropertyName);
 						string uvSinPos = UvSource == UvSourceType.WorldPosition ? "sinUvAnimVertexWorldPos" : "sinUvAnimVertexPos";
 						string uvSinInput = string.Format("{0}.{1}", inputSource, ShaderGenerator2.IsURP ? "[[INPUT_VALUE:" + uvSinPos + "]]" : uvSinPos);
-						string uvSinCalculation = string.Format("float2 {0} = ({1} * {2}.z) + (_Time.yy * {2}.x);", uvSinVariable, uvSinInput, GetDefaultSineAnimVariable());
+						string uvSinCalculation = string.Format("float2 {0} = ({1} * {2}.z) + (_Time.yy * {2}.x);", uvSinVariable, uvSinInput, uvSinProperty);
 						ShaderGenerator2.AppendLineBefore(uvSinCalculation);
-						uvSineMod = string.Format(" + (((sin(0.9 * {0} + {1}.w) + sin(1.33 * {0} + 3.14 * {1}.w) + sin(2.4 * {0} + 5.3 * {1}.w)) / 3) * {1}.y)", uvSinVariable, GetDefaultSineAnimVariable());
+						uvSineMod = string.Format(" + (((sin(0.9 * {0} + {1}.w) + sin(1.33 * {0} + 3.14 * {1}.w) + sin(2.4 * {0} + 5.3 * {1}.w)) / 3) * {1}.y)", uvSinVariable, uvSinProperty);
 					}
 					else
 					{
@@ -1492,11 +1536,12 @@ namespace ToonyColorsPro
 					string uvSineMod;
 					if (SineAnimation)
 					{
+						string uvSinProperty = UseCustomSineAnimVariable() ? SineAnimationVariable : GetDefaultSineAnimVariable();
 						string uvSinVariable = string.Format("uvSinAnim_{0}", PropertyName);
 						string uvSinInput = UvSource == UvSourceType.WorldPosition ? "sinUvAnimVertexWorldPos" : "sinUvAnimVertexPos";
-						string uvSinCalculation = string.Format("float2 {0} = ({1} * {2}.z) + (_Time.yy * {2}.x);", uvSinVariable, uvSinInput, GetDefaultSineAnimVariable());
+						string uvSinCalculation = string.Format("float2 {0} = ({1} * {2}.z) + (_Time.yy * {2}.x);", uvSinVariable, uvSinInput, uvSinProperty);
 						ShaderGenerator2.AppendLineBefore(uvSinCalculation);
-						uvSineMod = string.Format(" + (((sin(0.9 * {0} + {1}.w) + sin(1.33 * {0} + 3.14 * {1}.w) + sin(2.4 * {0} + 5.3 * {1}.w)) / 3) * {1}.y)", uvSinVariable, GetDefaultSineAnimVariable());
+						uvSineMod = string.Format(" + (((sin(0.9 * {0} + {1}.w) + sin(1.33 * {0} + 3.14 * {1}.w) + sin(2.4 * {0} + 5.3 * {1}.w)) / 3) * {1}.y)", uvSinVariable, uvSinProperty);
 					}
 					else
 					{
@@ -1960,6 +2005,90 @@ namespace ToonyColorsPro
 							}
 						}
 
+						bool showUvSinOptions = SineAnimation;
+						if ((GlobalOptions.data.ShowDisabledFeatures || showUvSinOptions))
+						{
+							using (new EditorGUI.DisabledGroupScope(!showUvSinOptions))
+							{
+								BeginHorizontal();
+								{
+									bool highlighted = !IsDefaultImplementation ? UseCustomSineAnimVariable() : SineAnimationVariable != GetDefaultImplementation<Imp_MaterialProperty_Texture>().SineAnimationVariable;
+									SGUILayout.InlineLabel("└   Variable", "Defines the tiling/offset uniform variable.\nBy default, a new property will be created for this texture, however you can use another texture's tiling/offset variable so that this texture will be linked with it. You would typically do that if you have a normal map coupled with an albedo map, for example.", highlighted);
+									var sinAnimVar = UseCustomSineAnimVariable() ? SineAnimationVariable : GetSineAnimVariableName();
+									if (SGUILayout.ButtonPopup(sinAnimVar))
+									{
+										var menu = new GenericMenu();
+										string label = string.Format("{0}: {1}", ParentShaderProperty.Name, GetSineAnimVariableName()); // note: has non-breaking space character
+										if (ParentShaderProperty.Name == "_CustomMaterialPropertyDummy") // TODO get rid of the dummy shader property for custom material properties?
+										{
+											label = GetSineAnimVariableName();
+										}
+
+										menu.AddItem(new GUIContent(label), !UseCustomSineAnimVariable(), () =>
+										{
+											SineAnimationVariable = "";
+											SineAnimationVariableLabel = "";
+											invalidSinAnimVariable = false;
+										});
+
+										// fetch available tiling/offset values and add them to the menu
+										var itemList = new List<MenuItem>();
+										var availableValues = FetchValidSinAnimValues();
+										foreach(var availableValue in availableValues)
+										{
+											if (availableValue.label == this.Label)
+											{
+												continue;
+											}
+
+											if (string.IsNullOrEmpty(availableValue.disabled))
+											{
+												itemList.Add(new MenuItem()
+												{
+													guiContent = new GUIContent(string.Format("{0}: {1}", availableValue.label, availableValue.valueLabel)), // note: has non-breaking space character
+													on = this.SineAnimationVariable == availableValue.value,
+													menuFunction = () =>
+													{
+														SineAnimationVariable = availableValue.value;
+														SineAnimationVariableLabel = availableValue.valueLabel;
+														invalidSinAnimVariable = false;
+													}
+												});
+											}
+											else
+											{
+												itemList.Add(new MenuItem()
+												{
+													guiContent = new GUIContent(string.Format("{0}: {1} {2}", availableValue.label, availableValue.valueLabel, availableValue.disabled)), // note: has non-breaking space character
+													on = this.SineAnimationVariable == availableValue.value,
+													disabled = true
+												});
+											}
+										}
+
+										if (itemList.Count > 0)
+										{
+											menu.AddSeparator("");
+											foreach (var item in itemList)
+											{
+												if (item.disabled)
+												{
+													menu.AddDisabledItem(item.guiContent);
+												}
+												else
+												{
+													menu.AddItem(item.guiContent, item.on, item.menuFunction);
+												}
+											}
+										}
+
+										menu.ShowAsContext();
+									}
+								}
+								EndHorizontal();
+							}
+						}
+
 						using (new EditorGUI.DisabledGroupScope(program != ProgramType.Fragment && !IsCustomMaterialProperty))
 						{
 							BeginHorizontal();
@@ -2056,6 +2185,15 @@ namespace ToonyColorsPro
 						}
 						EndHorizontal();
 					}
+					
+					if (SineAnimation && invalidSinAnimVariable)
+					{
+						BeginHorizontal();
+						{
+							TCP2_GUI.HelpBoxLayout("The UV Sin Animation variable is invalid.\nMaybe the original source has been removed or can't be used anymore?", MessageType.Error);
+						}
+						EndHorizontal();
+					}
 				}
 			}
 
@@ -2074,7 +2212,7 @@ namespace ToonyColorsPro
 				[Serialization.SerializeAs("f3v")] public Vector3 Float3Value = Vector3.one;
 				[Serialization.SerializeAs("f4v")] public Vector4 Float4Value = Vector4.one;
 				[Serialization.SerializeAs("cv")] public Color ColorValue = Color.white;
-
+				
 				public Imp_ConstantValue(ShaderProperty shaderProperty) : base(shaderProperty)
 				{
 					type = shaderProperty.Type;
@@ -2118,13 +2256,13 @@ namespace ToonyColorsPro
 								break;
 
 							case VariableType.float2:
-								highlighted = !IsDefaultImplementation ? FloatValue != 1.0f : FloatValue != GetDefaultImplementation<Imp_ConstantValue>().FloatValue;
-								break;
-							case VariableType.float3:
 								highlighted = !IsDefaultImplementation ? Float2Value != Vector2.one : Float2Value != GetDefaultImplementation<Imp_ConstantValue>().Float2Value;
 								break;
-							case VariableType.float4:
+							case VariableType.float3:
 								highlighted = !IsDefaultImplementation ? Float3Value != Vector3.one : Float3Value != GetDefaultImplementation<Imp_ConstantValue>().Float3Value;
+								break;
+							case VariableType.float4:
+								highlighted = !IsDefaultImplementation ? Float4Value != Vector4.one : Float4Value != GetDefaultImplementation<Imp_ConstantValue>().Float4Value;
 								break;
 							case VariableType.color:
 							case VariableType.color_rgba:

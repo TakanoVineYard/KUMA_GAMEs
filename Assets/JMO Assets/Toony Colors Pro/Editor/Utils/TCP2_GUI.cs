@@ -1,5 +1,5 @@
 // Toony Colors Pro+Mobile 2
-// (c) 2014-2020 Jean Moreno
+// (c) 2014-2021 Jean Moreno
 
 using System;
 using System.Collections.Generic;
@@ -1224,12 +1224,20 @@ namespace ToonyColorsPro
 
 		public class TCP2ColorNoAlphaDrawer : MaterialPropertyDrawer
 		{
+			readonly bool forceHdr;
+			
+			public TCP2ColorNoAlphaDrawer() { }
+			public TCP2ColorNoAlphaDrawer(string hdr)
+			{
+				forceHdr = hdr.ToUpperInvariant() == "HDR";
+			}
+			
 			public override void OnGUI(Rect position, MaterialProperty prop, GUIContent label, MaterialEditor editor)
 			{
 				//Code from ColorPropertyInternal, but with alpha turned off
 				EditorGUI.BeginChangeCheck();
 				EditorGUI.showMixedValue = prop.hasMixedValue;
-				bool hdr = (prop.flags & MaterialProperty.PropFlags.HDR) != MaterialProperty.PropFlags.None;
+				bool hdr = forceHdr || (prop.flags & MaterialProperty.PropFlags.HDR) != MaterialProperty.PropFlags.None;
 				bool showAlpha = false;
 #if UNITY_2018_1_OR_NEWER
 				Color colorValue = EditorGUI.ColorField(position, label, prop.colorValue, true, showAlpha, hdr);

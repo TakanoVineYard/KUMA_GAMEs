@@ -1,5 +1,5 @@
 // Toony Colors Pro+Mobile 2
-// (c) 2014-2020 Jean Moreno
+// (c) 2014-2021 Jean Moreno
 
 // Shader Generator Module: Triplanar Mapping
 
@@ -31,6 +31,8 @@ space	space=4							needs=TRIPLANAR
 	/// IF TRIPLANAR_CEILING
 		color_rgba	Ceiling Texture		fragment, imp(texture, label = "Ceiling", variable = "_TriCeiling", default = white, locked = true, locked_uv = true)
 	///
+	float4		Triplanar Parameters	fragment, imp(vector, variable = "_TriplanarBlendStrength", default = (2,8,2,0.5), drawer = "[TCP2Vector4Floats(Contrast X,Contrast Y,Contrast Z,Smoothing,1,16,1,16,1,16,0.01,1)]"), help = "Parameters that adjust the triplanar UVs: XYZ adjust the contrast for each UV plane, W adjusts the blend smoothing"
+	float3		Triplanar Normal		fragment, imp(hook, label = "triplanarNormal.xyz", toggles = HOOK_TRIPLANAR_NORMAL), help = "Hook for the Triplanar Normal that are used to calculate the UV weights"
 ///
 /// IF TRIPLANAR && TRIPLANAR_BUMP && !BUMP
 		color_rgba	Ground Texture Normal Map		fragment, imp(texture, label = "Ground Normal Map", variable = "_TriGroundBump", default = bump, locked = true, locked_uv = true, tiling_offset_var = "_TriGround_ST")
@@ -95,7 +97,7 @@ space	space=4							needs=TRIPLANAR
 		[Space]
 		///
 	///
-		[TCP2Vector4Floats(Contrast X,Contrast Y,Contrast Z,Smoothing,1,16,1,16,1,16,0.05,1)] _TriplanarBlendStrength ("Triplanar Parameters", Vector) = (2,8,2,0.5)
+		[[PROP:Triplanar Parameters]]
 	/// IF TRIPLANAR_HEIGHT_SIDES || TRIPLANAR_HEIGHT_GROUND
 		[[PROP:Triplanar Alpha Offset]]
 		[[PROP:Triplanar Alpha Smoothing]]
@@ -120,9 +122,6 @@ space	space=4							needs=TRIPLANAR
 //================================================================
 
 #VARIABLES
-/// IF TRIPLANAR
-	float4 _TriplanarBlendStrength;
-///
 #END
 
 //================================================================
@@ -151,6 +150,9 @@ space	space=4							needs=TRIPLANAR
 			half2 uv_sideX = worldPos.zy;
 			half2 uv_sideZ = worldPos.xy;
 			float3 triplanarNormal = worldNormal;
+	///
+	/// IF HOOK_TRIPLANAR_NORMAL
+			triplanarNormal.xyz = [[SAMPLE_VALUE_SHADER_PROPERTY:Triplanar Normal]];
 	///
 ///
 #END
@@ -183,8 +185,9 @@ space	space=4							needs=TRIPLANAR
 	///
 
 			//blending
-			half3 blendWeights = pow(abs(triplanarNormal), _TriplanarBlendStrength.xyz / _TriplanarBlendStrength.w);
+			half3 blendWeights = pow(abs(triplanarNormal), [[VALUE:Triplanar Parameters]].xyz / [[VALUE:Triplanar Parameters]].w);
 			blendWeights = blendWeights / (blendWeights.x + abs(blendWeights.y) + blendWeights.z);
+
 	/// IF TRIPLANAR_HEIGHT_SIDES
 
 			//height-based blending

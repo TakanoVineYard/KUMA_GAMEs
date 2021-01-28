@@ -1,5 +1,5 @@
 // Toony Colors Pro+Mobile 2
-// (c) 2014-2020 Jean Moreno
+// (c) 2014-2021 Jean Moreno
 
 #NAME=Default
 #ID=TEMPLATE_DEFAULT
@@ -31,6 +31,7 @@ AlbedoHSV
 Normal Mapping
 Texture Blending
 Triplanar
+Vertex Displacement
 
 # stylization:
 NdotL Stylization
@@ -87,6 +88,8 @@ dd_end
 
 dd_start	lbl="SURFACE"
 ---
+[[MODULE:FEATURES:Vertex Displacement]]
+---
 [[MODULE:FEATURES:AlbedoHSV]]
 ---
 [[MODULE:FEATURES:Normal Mapping]]
@@ -121,7 +124,7 @@ dd_start	lbl="TRANSPARENCY/BLENDING"
 sngl	lbl="Auto Optional Transparency"	kw=AUTO_TRANSPARENT_BLENDING	help="featuresreference/transparency/blending/autooptionaltransparency"		tt="Automatically handle transparency and add rendering mode options in the material inspector (opaque, transparent, fade), similar to how it is handled in the Hybrid Shader"
 ---
 mult	lbl="Blending"			excl=AUTO_TRANSPARENT_BLENDING		kw=Off|,Alpha Blending|ALPHA_BLENDING,Alpha Blending Premultiplied|ALPHA_BLENDING_PREMULT,Additive|ADDITIVE_BLENDING,Multiplicative|MULTIPLICATIVE_BLENDING,Custom Blending|CUSTOM_BLENDING	toggles=SHADER_BLENDING		tt="Enable blending on the shader"
-sngl		lbl="Dithered Shadows"	kw=DITHERED_SHADOWS		needs=CUSTOM_BLENDING		indent		tt="Enables dithered shadows for transparent materials"
+sngl		lbl="Dithered Shadows"	kw=DITHERED_SHADOWS		needs=SHADER_BLENDING		indent		tt="Enables dithered shadows for transparent materials"
 mult_fs		lbl="Blend Operation"		kw=BLEND_OP		options=Default|,Custom|Constant,Material Property|Material Property		shader_property="Blend Operation"		tt="Enable blend operation control"
 warning	msgType=info	needs=CUSTOM_BLENDING	lbl="Look at the <b>Shader Properties</b> tab to setup the custom blending states."
 space	space=4			needs=CUSTOM_BLENDING
@@ -210,10 +213,12 @@ color		Shadow Color		lighting, imp(color, label = "Shadow Color", variable = "_S
 
 [[MODULE:PROPERTIES_NEW:Specular]]
 [[MODULE:PROPERTIES_NEW:Rim Lighting]]
-/// IF GLOSSY_REFLECTIONS
-	header		Reflection Probes
+/// IF GLOSSY_REFLECTIONS || PLANAR_REFLECTION
+	header		Reflections
 	color		Reflection Color			lighting, imp(color, label = "Color", default = (1, 1, 1, 1))
+	/// IF GLOSSY_REFLECTIONS
 	float		Reflection Smoothness		lighting, imp(range, label = "Smoothness", default = 0.5, min = 0, max = 1)
+	///
 ///
 /// IF EMISSION
 	header		Emission
@@ -227,6 +232,7 @@ color		Shadow Color		lighting, imp(color, label = "Shadow Color", variable = "_S
 [[MODULE:PROPERTIES_NEW:Reflection]]
 [[MODULE:PROPERTIES_NEW:MatCap]]
 [[MODULE:PROPERTIES_NEW:Custom Ambient]]
+[[MODULE:PROPERTIES_NEW:Vertex Displacement]]
 [[MODULE:PROPERTIES_NEW:Normal Mapping]]
 [[MODULE:PROPERTIES_NEW:Triplanar]]
 [[MODULE:PROPERTIES_NEW:Texture Blending]]
@@ -478,8 +484,10 @@ Shader "@%SHADER_NAME%@"
 		[Toggle(TCP2_REFLECTIONS)] _UseReflections ("Enable Reflections", Float) = 0
 	///
 ///
-/// IF GLOSSY_REFLECTIONS
+/// IF GLOSSY_REFLECTIONS || PLANAR_REFLECTION
 		[[PROP:Reflection Color]]
+///
+/// IF GLOSSY_REFLECTIONS
 		[[PROP:Reflection Smoothness]]
 ///
 		[[MODULE:PROPERTIES_BLOCK:Reflection]]
@@ -499,6 +507,7 @@ Shader "@%SHADER_NAME%@"
 	#end_not_empty_block
 		[TCP2Separator]
 	#end_not_empty
+		[[MODULE:PROPERTIES_BLOCK:Vertex Displacement]]
 		[[MODULE:PROPERTIES_BLOCK:Triplanar]]
 		[[MODULE:PROPERTIES_BLOCK:Normal Mapping]]
 		[[MODULE:PROPERTIES_BLOCK:Texture Blending]]
@@ -725,12 +734,14 @@ Shader "@%SHADER_NAME%@"
 			[[MODULE:VERTEX:VertExmotion(v.vertex, v.normal, v.tangent)]]
 			[[MODULE:VERTEX:CurvedWorld(v.vertex, v.normal, v.tangent)]]
 
+			[[MODULE:VERTEX:Vertex Displacement(v.vertex)]]
 	/// IF HOOK_VERTEX_POSITION
 			v.vertex.xyz = [[SAMPLE_VALUE_SHADER_PROPERTY:Vertex Position]];
 	///
 	/// IF HOOK_VERTEX_POSITION_WORLD || APPLY_WORLD_POSITION || USE_WORLD_POSITION_FRAGMENT || USE_WORLD_POSITION_VERTEX
 			float3 worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
 	///
+			[[MODULE:VERTEX:Vertex Displacement:WORLD(worldPos)]]
 	/// IF HOOK_VERTEX_POSITION_WORLD
 			worldPos.xyz = [[SAMPLE_VALUE_SHADER_PROPERTY:Vertex Position World]];
 	///
@@ -789,6 +800,7 @@ Shader "@%SHADER_NAME%@"
 			[[SAMPLE_CUSTOM_PROPERTIES]]
 			[[SAMPLE_SHADER_PROPERTIES]]
 			[[MODULE:FRAGMENT:Outline(input)]]
+			[[MODULE:FRAGMENT:Dissolve(outlineColor.rgb)]]
 			[[MODULE:FRAGMENT:Vertical Fog(outlineColor.rgb, input.[[INPUT_VALUE:worldPos]])]]
 	/// IF ENABLE_FOG
 			UNITY_APPLY_FOG(input.fogCoord, outlineColor);
@@ -936,12 +948,14 @@ Shader "@%SHADER_NAME%@"
 				[[MODULE:VERTEX:VertExmotion(v.vertex, v.normal, v.tangent)]]
 				[[MODULE:VERTEX:CurvedWorld(v.vertex, v.normal, v.tangent)]]
 
+				[[MODULE:VERTEX:Vertex Displacement(v.vertex)]]
 	/// IF HOOK_VERTEX_POSITION
 				v.vertex.xyz = [[SAMPLE_VALUE_SHADER_PROPERTY:Vertex Position]];
 	///
 	/// IF HOOK_VERTEX_POSITION_WORLD || APPLY_WORLD_POSITION || USE_WORLD_POSITION_FRAGMENT || USE_WORLD_POSITION_VERTEX
 				float3 worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
 	///
+				[[MODULE:VERTEX:Vertex Displacement:WORLD(worldPos)]]
 	/// IF HOOK_VERTEX_POSITION_WORLD
 				worldPos.xyz = [[SAMPLE_VALUE_SHADER_PROPERTY:Vertex Position World]];
 	///
@@ -1108,12 +1122,14 @@ Shader "@%SHADER_NAME%@"
 				[[MODULE:VERTEX:VertExmotion(v.vertex, v.normal, v.tangent)]]
 				[[MODULE:VERTEX:CurvedWorld(v.vertex, v.normal, v.tangent)]]
 
+				[[MODULE:VERTEX:Vertex Displacement(v.vertex)]]
 	/// IF HOOK_VERTEX_POSITION
 				v.vertex.xyz = [[SAMPLE_VALUE_SHADER_PROPERTY:Vertex Position]];
 	///
 	/// IF HOOK_VERTEX_POSITION_WORLD || APPLY_WORLD_POSITION || USE_WORLD_POSITION_FRAGMENT || USE_WORLD_POSITION_VERTEX
 				float3 worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
 	///
+				[[MODULE:VERTEX:Vertex Displacement:WORLD(worldPos)]]
 	/// IF HOOK_VERTEX_POSITION_WORLD
 				worldPos.xyz = [[SAMPLE_VALUE_SHADER_PROPERTY:Vertex Position World]];
 	///
@@ -1248,6 +1264,7 @@ Shader "@%SHADER_NAME%@"
 
 	#start_not_empty_block
 		[[MODULE:SHADER_FEATURES_BLOCK:Specular]]
+		[[MODULE:SHADER_FEATURES_BLOCK:Vertex Displacement]]
 		[[MODULE:SHADER_FEATURES_BLOCK:Rim Lighting]]
 /// IF (GLOSSY_REFLECTIONS || REFLECTION_CUBEMAP || PLANAR_REFLECTION) && REFLECTION_SHADER_FEATURE
 		#pragma shader_feature TCP2_REFLECTIONS
@@ -1326,9 +1343,9 @@ Shader "@%SHADER_NAME%@"
 ///
 /// IF USE_WORLD_NORMAL_FRAGMENT
 			half3 worldNormal; INTERNAL_DATA
-	/// IF USE_WORLD_NORMAL_FRAGMENT_PER_VERTEX
+///
+/// IF USE_WORLD_NORMAL_FRAGMENT_PER_VERTEX
 			half3 worldNormalVertex;
-	///
 ///
 /// IF USE_SCREEN_POSITION_FRAGMENT
 			float4 screenPosition;
@@ -1388,12 +1405,14 @@ Shader "@%SHADER_NAME%@"
 			[[MODULE:VERTEX:CurvedWorld(v.vertex, v.normal, v.tangent)]]
 			[[MODULE:VERTEX:Aura2(v.vertex, output)]]
 
+			[[MODULE:VERTEX:Vertex Displacement(v.vertex)]]
 /// IF HOOK_VERTEX_POSITION
 			v.vertex.xyz = [[SAMPLE_VALUE_SHADER_PROPERTY:Vertex Position]];
 ///
 /// IF HOOK_VERTEX_POSITION_WORLD || APPLY_WORLD_POSITION || (USE_VIEW_DIRECTION_VERTEX || USE_VIEW_DIRECTION_FRAGMENT_PER_VERTEX) ||  USE_WORLD_POSITION_VERTEX
 			float3 worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
 ///
+			[[MODULE:VERTEX:Vertex Displacement:WORLD(worldPos)]]
 /// IF HOOK_VERTEX_POSITION_WORLD
 			worldPos.xyz = [[SAMPLE_VALUE_SHADER_PROPERTY:Vertex Position World]];
 ///
@@ -1430,7 +1449,7 @@ Shader "@%SHADER_NAME%@"
 			output.viewDirVertex = viewDir;
 	///
 ///
-/// IF USE_WORLD_NORMAL_VERTEX || (USE_WORLD_NORMAL_FRAGMENT && USE_WORLD_NORMAL_FRAGMENT_PER_VERTEX)
+/// IF USE_WORLD_NORMAL_VERTEX || USE_WORLD_NORMAL_FRAGMENT || USE_WORLD_NORMAL_FRAGMENT_PER_VERTEX
 			half3 worldNormal = UnityObjectToWorldNormal(v.normal);
 ///
 #ENABLE_IMPL: float ndv, lbl = "Special/N·V (Vertex)", help = "The dot product between the normal and view direction.", toggles = "USE_NDV_VERTEX", options = "(Use Min/Max Properties,USE_NDV_MIN_MAX_VERT,config),(Invert,USE_NDV_INVERT_VERT)"
@@ -1501,6 +1520,11 @@ Shader "@%SHADER_NAME%@"
 			#if defined(_NORMALMAP)
 ///
 			[[MODULE:FRAGMENT:Normal Mapping:PARALLAX_SURFACE(input.viewDir, input.texcoord0)]]
+/// IF WORLD_NORMAL_FROM_BUMP
+			[[SAMPLE_SHADER_PROPERTY:Normal Map]]
+			[[MODULE:FRAGMENT:Normal Mapping:BUMP_SAMPLE()]]
+			half3 worldNormal = WorldNormalVector(input, output.Normal);
+///
 /// IF BUMP && BUMP_SHADER_FEATURE
 			#endif
 ///
@@ -1513,16 +1537,22 @@ Shader "@%SHADER_NAME%@"
 /// IF BUMP && BUMP_SHADER_FEATURE
 			#if defined(_NORMALMAP)
 ///
+/// IF !WORLD_NORMAL_FROM_BUMP
 			[[MODULE:FRAGMENT:Normal Mapping:BUMP_SAMPLE()]]
+///
 			[[MODULE:FRAGMENT:Texture Blending:BUMP(normalMap)]]
 			[[MODULE:FRAGMENT:Normal Mapping:UNPACK_BUMP_SURFACE(output.Normal, normalMap, output.normalTS)]]
 /// IF BUMP && BUMP_SHADER_FEATURE
 			#endif
 ///
-		/// IF USE_WORLD_NORMAL_FRAGMENT
+/// IF USE_WORLD_NORMAL_FRAGMENT
+	/// IF !WORLD_NORMAL_FROM_BUMP
 			half3 worldNormal = WorldNormalVector(input, output.Normal);
+	/// ELSE
+			worldNormal = WorldNormalVector(input, output.Normal);
+	///
 			output.worldNormal = worldNormal;
-		///
+///
 
 #ENABLE_IMPL: float ndv, lbl = "Special/N·V", help = "The dot product between the normal and view direction.", toggles = "USE_NDV_FRAGMENT", options = "(Use Min/Max Properties,USE_NDV_MIN_MAX_FRAG,config),(Invert,USE_NDV_INVERT_FRAG),(Ignore Normal Map,USE_NDV_IGNORE_NORMAL_MAP)"
 /// IF USE_NDV_FRAGMENT
@@ -1751,8 +1781,8 @@ Shader "@%SHADER_NAME%@"
 	/// IF GLOSSY_REFLECTIONS && REFLECTION_SHADER_FEATURE
 				#if defined(TCP2_REFLECTIONS)
 	///
-					//Reflection probes/skybox
-					half3 reflections = gi.indirect.specular * occlusion * [[VALUE:Reflection Color]];
+					// Reflection probes/skybox
+					half3 reflections = gi.indirect.specular * occlusion;
 					[[MODULE:FRAGMENT:Reflection(reflections, surface.worldNormal, viewDir, surface.ndvRaw, surface.input.screenPosition, surface.normalTS)]]
 					color.rgb += reflections;
 	/// IF GLOSSY_REFLECTIONS && REFLECTION_SHADER_FEATURE
@@ -1765,6 +1795,9 @@ Shader "@%SHADER_NAME%@"
 	#start_not_empty_block
 			[[MODULE:FRAGMENT:Reflection(reflections, surface.worldNormal, viewDir, surface.ndvRaw, surface.input.screenPosition, surface.normalTS)]]
 	#end_not_empty_block
+	/// IF PLANAR_REFLECTION
+			reflections *= [[VALUE:Reflection Color]];
+	///
 			color.rgb += reflections;
 	#end_not_empty
 ///
@@ -1865,6 +1898,7 @@ Shader "@%SHADER_NAME%@"
 			#pragma multi_compile _ TCP2_UV_NORMALS_FULL TCP2_UV_NORMALS_ZW
 			#pragma multi_compile_instancing
 			[[GPU_INSTANCING_OPTIONS]]
+			[[MODULE:SHADER_FEATURES_BLOCK:Dissolve]]
 			ENDCG
 		}
 ///
@@ -1941,6 +1975,8 @@ Shader "@%SHADER_NAME%@"
 			[[MODULE:SHADER_FEATURES_BLOCK:CurvedWorld]]
 		#end_not_empty_block
 		#end_not_empty
+
+			[[MODULE:SHADER_FEATURES_BLOCK:Dissolve]]
 
 			[[INJECTION_POINT:Shadow Caster Pass/Pragma]]
 
@@ -2029,12 +2065,14 @@ Shader "@%SHADER_NAME%@"
 				[[MODULE:VERTEX:VertExmotion(v.vertex, v.normal, v.tangent)]]
 				[[MODULE:VERTEX:CurvedWorld(v.vertex, v.normal, v.tangent)]]
 
+				[[MODULE:VERTEX:Vertex Displacement(v.vertex)]]
 	/// IF HOOK_VERTEX_POSITION
 				v.vertex.xyz = [[SAMPLE_VALUE_SHADER_PROPERTY:Vertex Position]];
 	///
 	/// IF HOOK_VERTEX_POSITION_WORLD || APPLY_WORLD_POSITION || USE_WORLD_POSITION_FRAGMENT || USE_WORLD_POSITION_VERTEX
 				float3 worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
 	///
+				[[MODULE:VERTEX:Vertex Displacement:WORLD(worldPos)]]
 	/// IF HOOK_VERTEX_POSITION_WORLD
 				worldPos.xyz = [[SAMPLE_VALUE_SHADER_PROPERTY:Vertex Position World]];
 	///

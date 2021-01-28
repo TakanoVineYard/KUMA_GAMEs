@@ -1,5 +1,5 @@
 // Toony Colors Pro+Mobile 2
-// (c) 2014-2020 Jean Moreno
+// (c) 2014-2021 Jean Moreno
 
 // Shader Generator Module: Vertical Fog
 
@@ -41,13 +41,13 @@ sngl	lbl="Relative to Camera"			kw=VERTICAL_FOG_CAM								needs=VERTICAL_FOG		i
 #PROPERTIES_BLOCK
 /// IF VERTICAL_FOG
 
-	[TCP2HeaderHelp(Vertical Fog)]
+		[TCP2HeaderHelp(Vertical Fog)]
 		[[PROP:Vertical Fog Threshold]]
 		[[PROP:Vertical Fog Smoothness]]
 	/// IF !VERTICAL_FOG_COLOR
 		[[PROP:Vertical Fog Color]]
 	///
-	[TCP2Separator]
+		[TCP2Separator]
 ///
 #END
 
@@ -71,7 +71,7 @@ sngl	lbl="Relative to Camera"			kw=VERTICAL_FOG_CAM								needs=VERTICAL_FOG		i
 #LIGHTING(float3 color, float3 worldPos)
 /// IF VERTICAL_FOG
 
-		//Vertical Fog
+		// Vertical Fog
 		half vertFogThreshold = worldPos.y;
 	/// IF VERTICAL_FOG_CAM
 		vertFogThreshold -= _WorldSpaceCameraPos.y;
@@ -85,9 +85,9 @@ sngl	lbl="Relative to Camera"			kw=VERTICAL_FOG_CAM								needs=VERTICAL_FOG		i
 	/// ELSE
 		half4 fogColor = [[VALUE:Vertical Fog Color]];
 	///
-	#if defined(UNITY_PASS_FORWARDADD)
-		fogColor.rgb = half3(0, 0, 0);
-	#endif
+		#if defined(UNITY_PASS_FORWARDADD)
+			fogColor.rgb = half3(0, 0, 0);
+		#endif
 	/// IF VERTICAL_FOG_SMOOTHSTEP
 		half vertFogFactor = 1 - smoothstep(verticalFogMin, verticalFogMax, vertFogThreshold);
 	/// ELSE

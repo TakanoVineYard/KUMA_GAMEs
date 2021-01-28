@@ -87,6 +87,7 @@
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders\Standard PBS\TCP2_Standard PBS Outline.shader" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders\Legacy\Include\TCP2_Outline_Behind_SM2.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
+     <None Include="Assets\JMO Assets\Toony Colors Pro\Shader Templates 2\Modules\Module_VertexDisplacement.txt" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shader Templates 2\Modules\Module_Outline.txt" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders Generated\Examples\SG2\Stylized Water.shader" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders Generated\Examples\SG2\Detail Texture Simple.shader" />
@@ -753,6 +754,9 @@
     <Reference Include="Unity.TextMeshPro.Editor">
         <HintPath>D:/TakanoVineyard/MyWork/UnityProjects/KUMA_GAMEs/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.DeviceSimulator.Tests.Common">
+        <HintPath>D:/TakanoVineyard/MyWork/UnityProjects/KUMA_GAMEs/Library/ScriptAssemblies/Unity.DeviceSimulator.Tests.Common.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.UI">
         <HintPath>D:/TakanoVineyard/MyWork/UnityProjects/KUMA_GAMEs/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
@@ -764,6 +768,12 @@
     </Reference>
     <Reference Include="Unity.Rider.Editor">
         <HintPath>D:/TakanoVineyard/MyWork/UnityProjects/KUMA_GAMEs/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.DeviceSimulator.Editor">
+        <HintPath>D:/TakanoVineyard/MyWork/UnityProjects/KUMA_GAMEs/Library/ScriptAssemblies/Unity.DeviceSimulator.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Sprite.Editor">
+        <HintPath>D:/TakanoVineyard/MyWork/UnityProjects/KUMA_GAMEs/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
         <HintPath>D:/TakanoVineyard/MyWork/UnityProjects/KUMA_GAMEs/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>

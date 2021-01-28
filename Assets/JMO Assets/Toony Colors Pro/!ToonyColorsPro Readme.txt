@@ -1,6 +1,6 @@
 Toony Colors Pro, version 2.6
-2020/12/16
-© 2020 - Jean Moreno
+2021/01/09
+© 2021 - Jean Moreno
 =============================
 
 QUICK START
@@ -36,8 +36,36 @@ UPDATE NOTES
 
 See full and formatted changelog here: https://jeanmoreno.com/unity/toonycolorspro/doc/changelog
 
+2.6.4
+#### Fixed
+- [Shader Generator 2] (URP) Fixed "Vertex Displacement" error when loading the URP template
+- [Shader Generator 2] Removed serialization debug log
+
+2.6.3
+#### Added
+- [Hybrid Shader] (Default) (URP) Added "Main Light affects Shadow Color" option to have the main light color affect the shadow color (enabled by default, this was the old behavior before v2.6.1)
+- [Hybrid Shader] (Default) (URP) Added "Golbal Illumination" material flags options in the material inspector UI
+- [Hybrid Shader] (Default) (URP) Added "Meta Pass" to allow baking lighting when using the Hybrid Shader
+- [Hybrid Shader] (URP) Added support for SSAO and Depth Normals pass
+- [Shader Generator 2] (URP) Added support for SSAO ("Enable SSAO" in the "OPTIONS" section)
+- [Shader Generator 2] (URP) Added support for the Depth Normals pass ("Enable Depth Normals Pass" in the "OPTIONS" section)
+- [Shader Generator 2] (Default) (URP) Added "Vertex Displacement" feature in the "SURFACE" section (should be easier to use than the existing "Vertex Position" Hook)
+- [Shader Generator 2] "Sine Distortion" UV animation: added ability to use another texture's parameters for the animation, to synchronize both textures
+- [Shader Generator 2] Added "Reflection Color" Shader Property when using "Planar Reflections"
+#### Modified
+- [Shader Generator 2] (Default) (URP) Exposed "Triplanar Parameters" in Shader Properties, and added "Triplanar Normal" hook
+- [Shader Generator 2] (Default) (URP) "Dissolve" effect now works in the "Outline" pass as well (but it will likely have artifacts)
+- [Shader Generator 2] Overwrite prompt will always be called when generating a new shader over an existing path, even if the "don't prompt" option is enabled
+#### Fixed
+- Fixed possible null reference error in TCP2_PlanarReflection script
+- Fixed UI issue in the "Hybrid Shader Demo" at 1080p resolution (text was cropped)
+- Fixed serialization issue for vectors for environments where decimals separation is a comma
+- [Hybrid Shader] (Default) (URP) Fixed cast shadows when using "Alpha Clipping"
+- [Shader Generator 2] (URP) Fixed "VertExmotion" support for URP
+- [Shader Generator 2] (URP) Fixed "Directional Ambient" on mobile builds for URP
+
 2.6.2
-### Fixed
+#### Fixed
 - Fixed TCP2_PlanarReflection script compilation error in some Unity versions when URP isn't installed
 
 2.6.1

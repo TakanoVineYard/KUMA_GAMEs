@@ -1,5 +1,5 @@
 ﻿// Toony Colors Pro+Mobile 2
-// (c) 2014-2020 Jean Moreno
+// (c) 2014-2021 Jean Moreno
 
 /// #define fixed half
 /// #define fixed2 half2
@@ -92,6 +92,11 @@ sampler2D _SpecGlossMap;
 sampler2D _ShadowBaseMap;
 sampler2D _MatCapTex;
 sampler2D _MatCapMask;
+
+// Meta Pass
+#if defined(UNITY_PASS_META) && !defined(TCP2_HYBRID_URP)
+	#include "UnityMetaPass.cginc"
+#endif
 
 //Specular help functions (from UnityStandardBRDF.cginc)
 inline half3 TCP2_SafeNormalize(half3 inVec)
@@ -252,10 +257,10 @@ struct Attributes
 	float3 normal         : NORMAL;
 	float4 tangent        : TANGENT;
 	float4 texcoord0      : TEXCOORD0;
-	#if defined(LIGHTMAP_ON)
+	#if defined(LIGHTMAP_ON) || defined(UNITY_PASS_META)
 		float2 texcoord1  : TEXCOORD1;
 	#endif
-	#if defined(DYNAMICLIGHTMAP_ON)
+	#if defined(DYNAMICLIGHTMAP_ON) || defined(UNITY_PASS_META)
 		float2 texcoord2 : TEXCOORD2;
 	#endif
 	UNITY_VERTEX_INPUT_INSTANCE_ID
@@ -297,8 +302,31 @@ struct Varyings
 	UNITY_VERTEX_OUTPUT_STEREO
 };
 
-Varyings Vertex(Attributes input)
+struct Varyings_Meta
 {
+	float4 positionCS   : SV_POSITION;
+	float2 uv    : TEXCOORD0;
+};
+
+#if defined(UNITY_PASS_META)
+	#define VERTEX_OUTPUT Varyings_Meta
+#else
+	#define VERTEX_OUTPUT Varyings
+#endif
+
+VERTEX_OUTPUT Vertex(Attributes input)
+{
+	#if defined(UNITY_PASS_META)
+		Varyings_Meta meta_output;
+		#if defined(TCP2_HYBRID_URP)
+			meta_output.positionCS = MetaVertexPosition(input.vertex, input.texcoord1, input.texcoord2, unity_LightmapST, unity_DynamicLightmapST);
+		#else
+			meta_output.positionCS = UnityMetaVertexPosition(input.vertex, input.texcoord1, input.texcoord2, unity_LightmapST, unity_DynamicLightmapST);
+		#endif
+	meta_output.uv = TRANSFORM_TEX(input.texcoord0, _BaseMap);
+	return meta_output;
+	#else
+	
 	Varyings output = (Varyings)0;
 
 	UNITY_SETUP_INSTANCE_ID(input);
@@ -398,6 +426,8 @@ Varyings Vertex(Attributes input)
 	#endif
 
 	return output;
+
+	#endif
 }
 
 // Note: calculations from the main pass are defined with UNITY_PASS_FORWARDBASE
@@ -493,6 +523,12 @@ half4 Fragment (Varyings input, half vFace : VFACE) : SV_Target
 		#endif
 	#endif
 
+	#if defined(UNITY_PASS_META)
+		half3 meta_albedo = albedo.rgb; 
+		half3 meta_emission = emission.rgb;
+		half3 meta_specular = half3(0, 0, 0);
+	#endif
+	
 	// MatCap
 	#if defined(TCP2_MATCAP)
 		#if defined(_NORMALMAP)
@@ -564,12 +600,21 @@ half4 Fragment (Varyings input, half vFace : VFACE) : SV_Target
 	#endif
 
 	// Highlight/shadow colors
-	#if defined(TCP2_HYBRID_URP) || defined(UNITY_PASS_FORWARDBASE)
-		ramp = lerp(_SColor.rgb, _HColor.rgb * lightColor.rgb, ramp);
+	#if !defined(TCP2_SHADOW_LIGHT_COLOR)
+		half3 highlightColor = _HColor.rgb * lightColor.rgb;
 	#else
-		ramp = lerp(half3(0, 0, 0), _HColor.rgb * lightColor.rgb, ramp);
+		half3 highlightColor = _HColor.rgb;
+	#endif
+	#if defined(TCP2_HYBRID_URP) || defined(UNITY_PASS_FORWARDBASE)
+		ramp = lerp(_SColor.rgb, highlightColor, ramp);
+	#else
+		ramp = lerp(half3(0, 0, 0), highlightColor, ramp);
 	#endif
 
+	#if defined(TCP2_SHADOW_LIGHT_COLOR)
+		ramp *= lightColor.rgb;
+	#endif
+	
 	// Output color
 	half3 color = albedo.rgb * ramp;
 
@@ -579,7 +624,13 @@ half4 Fragment (Varyings input, half vFace : VFACE) : SV_Target
 	#else
 		half occlusion = 1.0;
 	#endif
-	
+
+	#if defined(TCP2_HYBRID_URP) && defined(_SCREEN_SPACE_OCCLUSION)
+		float2 normalizedScreenSpaceUV = GetNormalizedScreenSpaceUV(input.pos);
+		AmbientOcclusionFactor aoFactor = GetScreenSpaceAmbientOcclusion(normalizedScreenSpaceUV);
+		occlusion = min(occlusion, aoFactor.indirectAmbientOcclusion);
+	#endif
+
 	// Setup lighting environment (Built-In)
 	#if !defined(TCP2_HYBRID_URP) && defined(UNITY_PASS_FORWARDBASE)
 		UnityGI gi;
@@ -701,8 +752,33 @@ half4 Fragment (Varyings input, half vFace : VFACE) : SV_Target
 
 		half spec = CalculateSpecular(lightDir, viewDirWS, normalWS, specularMap);
 		emission.rgb += spec * atten * ndl * lightColor.rgb * _SpecularColor.rgb;
+
+		#if defined(UNITY_PASS_META)
+			meta_specular = specularMap * _SpecularColor.rgb;
+			meta_albedo += specularMap * _SpecularColor.rgb * max(0.00001, _SpecularRoughness * _SpecularRoughness) * 0.5;
+		#endif
+	
 	#endif
 
+	// Meta pass
+	#if defined(UNITY_PASS_META)
+		#if defined(TCP2_HYBRID_URP)
+			MetaInput metaInput;
+		#else
+			UnityMetaInput metaInput;
+			UNITY_INITIALIZE_OUTPUT(UnityMetaInput, metaInput);
+		#endif
+		metaInput.Albedo = meta_albedo.rgb;
+		metaInput.SpecularColor = meta_specular.rgb;
+		metaInput.Emission = meta_emission.rgb;
+
+		#if defined(TCP2_HYBRID_URP)
+			return MetaFragment(metaInput);
+		#else
+			return UnityMetaFragment(metaInput);
+		#endif
+	#endif
+	
 	// Additional lights loop
 	#if defined(TCP2_HYBRID_URP) && defined(_ADDITIONAL_LIGHTS)
 		uint additionalLightsCount = GetAdditionalLightsCount();
@@ -831,9 +907,9 @@ half4 Fragment (Varyings input, half vFace : VFACE) : SV_Target
 	#else
 		alpha = 1;
 	#endif
-
+	
 	color += emission;
-
+	
 	// Fog
 	#if defined(TCP2_HYBRID_URP)
 		color = MixFog(color, input.worldPos.w);
@@ -841,7 +917,7 @@ half4 Fragment (Varyings input, half vFace : VFACE) : SV_Target
 		UNITY_EXTRACT_FOG_FROM_WORLD_POS(input);
 		UNITY_APPLY_FOG(_unity_fogCoord, color);
 	#endif
-
+	
 	return half4(color, alpha);
 }
 

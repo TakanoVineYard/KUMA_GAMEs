@@ -1,5 +1,5 @@
 // Toony Colors Pro 2
-// (c) 2014-2020 Jean Moreno
+// (c) 2014-2021 Jean Moreno
 
 using System;
 using System.Collections.Generic;
@@ -22,11 +22,11 @@ namespace ToonyColorsPro
 		{
 			public static bool DebugMode = false;
 
-			internal const string TCP2_VERSION = "2.6.2";
+			internal const string TCP2_VERSION = "2.6.4";
 			internal const string DOCUMENTATION_URL = "https://jeanmoreno.com/unity/toonycolorspro/doc/shader_generator_2";
 			internal const string OUTPUT_PATH = "/JMO Assets/Toony Colors Pro/Shaders Generated/";
 
-			[MenuItem(Menu.MENU_PATH + "Shader Generator 2 (beta)", false, 500)]
+			[MenuItem(Menu.MENU_PATH + "Shader Generator 2", false, 500)]
 			static void OpenTool()
 			{
 				GetWindowTCP2();
@@ -41,7 +41,7 @@ namespace ToonyColorsPro
 
 			static ShaderGenerator2 GetWindowTCP2()
 			{
-				var window = GetWindow<ShaderGenerator2>(!GlobalOptions.data.DockableWindow, GlobalOptions.data.DockableWindow ? "Shader Generator" : "Shader Generator 2 (beta)", true);
+				var window = GetWindow<ShaderGenerator2>(!GlobalOptions.data.DockableWindow, GlobalOptions.data.DockableWindow ? "Shader Generator" : "Shader Generator 2", true);
 				window.minSize = new Vector2(375f, 400f);
 				window.maxSize = new Vector2(500f, 4000f);
 				return window;
@@ -377,6 +377,9 @@ namespace ToonyColorsPro
 						setUIFeaturesFoldoutStates(state.uiFeaturesFoldouts);
 						currentConfig.setHeadersExpanded(state.shaderPropertiesHeadersFoldouts);
 						currentConfig.setShaderPropertiesExpanded(state.shaderPropertiesFoldouts);
+
+						// update last hash
+						lashUndoHash = state.hash;
 
 						ignoreUndoPushes = false;
 					}
@@ -812,7 +815,7 @@ namespace ToonyColorsPro
 							Shader generatedShader = null;
 							try
 							{
-								generatedShader = Compile(currentConfig, currentShader, template, true, !ProjectOptions.data.OverwriteConfig);
+								generatedShader = Compile(currentConfig, currentShader, template, true, !ProjectOptions.data.OverwriteConfig || currentShader == null);
 							}
 							catch (Exception e)
 							{
@@ -1050,13 +1053,10 @@ namespace ToonyColorsPro
 				}
 
 				currentShader = null;
-				var oldConfig = currentConfig;
-				var newConfig = currentConfig.Copy();
-				newConfig.ShaderName += " Copy";
-				newConfig.Filename += " Copy";
-				LoadConfig(newConfig);
-				oldConfig.CopyCustomTexturesTo(newConfig);
-				oldConfig.CopyImplementationsTo(newConfig);
+
+				this.currentConfig.ShaderName += " Copy";
+				this.currentConfig.Filename += " Copy";
+				this.currentConfig.isModifiedExternally = false;
 
 				if (!string.IsNullOrEmpty(outputDir))
 				{
