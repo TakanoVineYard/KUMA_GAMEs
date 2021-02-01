@@ -11,7 +11,7 @@ public class KMGMs_SoundManager : MonoBehaviour
     bool KMHH_ResultOnSwitch =false;
     bool KMHH_OnSwitch =false;
 
-    bool lifeJudge = true;
+    public static bool lifeJudge = true;
 
     public AudioSource[] kmgms_AudioSources;
 
@@ -27,8 +27,10 @@ public class KMGMs_SoundManager : MonoBehaviour
         if((SceneManager.GetActiveScene().name == "KMGMs")&&(GameOnSwitch==true)&&(KMHH_ResultOnSwitch == false))
         {
 
-            if(lifeJudge == false){
-            Destroy(gameObject);
+            if (lifeJudge == false)
+            {
+                lifeJudge = true;
+                Destroy(gameObject);
             }
             else{
 
@@ -38,8 +40,7 @@ public class KMGMs_SoundManager : MonoBehaviour
 
             kmgms_AudioSources = gameObject.GetComponents<AudioSource>();
 
-            kmgms_AudioSources[2].Play();　//本ゲームの愉快なBGM流す
-            kmgms_AudioSources[0].Stop();　//本ゲームの愉快なBGM流す
+            Invoke("KMGMsStartBGMPlay",0.5f);
 
             GameOnSwitch=false;
 
@@ -97,6 +98,13 @@ public class KMGMs_SoundManager : MonoBehaviour
     {
         KMHH_ResultOnSwitch = false;
         GameOnSwitch = false ;
+    }
+
+    public void KMGMsStartBGMPlay()
+    {
+        kmgms_AudioSources[2].Play(); //本ゲームの愉快なBGM流す
+        kmgms_AudioSources[0].Stop(); //本ゲームの愉快なBGM流す
+
     }
 }
 

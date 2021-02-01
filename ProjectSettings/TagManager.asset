@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Sound_BGMVal
+  - Sound_SEVal
+  - Sound_MasterVal
+  - testtag
   layers:
   - Default
   - TransparentFX

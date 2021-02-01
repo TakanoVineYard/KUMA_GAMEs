@@ -36,8 +36,82 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
+     <Compile Include="Assets\Modern UI Pack\Scripts\Animated Icon\AnimatedIconHandler.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\Button\ButtonManager.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\Button\ButtonManagerBasic.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\Button\ButtonManagerBasicEditor.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\Button\ButtonManagerBasicIcon.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\Button\ButtonManagerBasicIconEditor.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\Button\ButtonManagerBasicWithIcon.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\Button\ButtonManagerBasicWithIconEditor.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\Button\ButtonManagerEditor.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\Button\ButtonManagerIcon.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\Button\ButtonManagerIconEditor.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\Button\ButtonManagerWithIcon.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\Button\ButtonManagerWithIconEditor.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\Context Menu\ContextMenuContent.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\Context Menu\ContextMenuManager.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\Context Menu\ContextMenuManagerEditor.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\Demo\DemoListShadow.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\Demo\LaunchURL.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\Dropdown\CustomDropdown.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\Dropdown\CustomDropdownEditor.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\Dropdown\DropdownMultiSelect.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\Dropdown\DropdownMultiSelectEditor.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\Fixes\UIElementInFront.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\Horizontal Selector\HorizontalSelector.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\Horizontal Selector\HorizontalSelectorEditor.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\Input Field\CustomInputField.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\Modal Window\ModalWindowManager.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\Modal Window\ModalWindowManagerEditor.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\Notification\NotificationManager.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\Notification\NotificationManagerEditor.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\Notification\NotificationStacking.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\Progress Bar\PBFilled.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\Progress Bar\ProgressBar.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\Progress Bar\ProgressBarEditor.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\Rendering\Ripple.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\Rendering\UIGradient.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\Rendering\UIGradientEditor.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\Slider\RadialSlider.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\Slider\RadialSliderEditor.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\Slider\RangeMaxSlider.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\Slider\RangeMinSlider.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\Slider\RangeSlider.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\Slider\SliderManager.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\Slider\SliderManagerEditor.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\Switch\SwitchManager.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\Switch\SwitchManagerEditor.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\Toggle\ToggleAnim.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\Tooltip\TooltipContent.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\Tooltip\TooltipManager.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\Tooltip\TooltipManagerEditor.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\UI Manager\UIManager.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\UI Manager\UIManagerAnimatedIcon.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\UI Manager\UIManagerButton.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\UI Manager\UIManagerButtonEditor.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\UI Manager\UIManagerContextMenu.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\UI Manager\UIManagerDropdown.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\UI Manager\UIManagerHSelector.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\UI Manager\UIManagerInputField.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\UI Manager\UIManagerModalWindow.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\UI Manager\UIManagerNotification.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\UI Manager\UIManagerProgressBar.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\UI Manager\UIManagerProgressBarLoop.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\UI Manager\UIManagerProgressBarLoopEditor.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\UI Manager\UIManagerScrollbar.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\UI Manager\UIManagerSlider.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\UI Manager\UIManagerSliderEditor.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\UI Manager\UIManagerSwitch.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\UI Manager\UIManagerToggle.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\UI Manager\UIManagerTooltip.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\Window\WindowDragger.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\Window\WindowManager.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\Window\WindowManagerButton.cs" />
+     <Compile Include="Assets\Modern UI Pack\Scripts\Window\WindowManagerEditor.cs" />
      <Compile Include="Assets\Resources\Scripts\KMGMs_MainManager.cs" />
      <Compile Include="Assets\Resources\Scripts\KMGMs_SoundManager.cs" />
+     <Compile Include="Assets\Resources\Scripts\KMGMs_SoundVolumeManager.cs" />
      <Compile Include="Assets\Resources\Scripts\KMGMs_TapManager.cs" />
      <Compile Include="Assets\Resources\Scripts\KMHH_CharaAnimationManager.cs" />
      <Compile Include="Assets\Resources\Scripts\KMHH_PlayerInputManager.cs" />
@@ -80,69 +154,105 @@
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\System.xml" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\System.DirectoryServices.xml" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\System.Web.Entity.xml" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shader Templates 2\SG2_Template_URP.txt" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shader Templates 2\Modules\Module_Triplanar Sampling.txt" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders Generated\Examples\Default\Dissolve.shader" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders\Standard PBS\TCP2_Standard PBS Outline.shader" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders\Legacy\Include\TCP2_Outline_Behind_SM2.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\System.ServiceModel.xml" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\System.Runtime.Remoting.xml" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\Microsoft.VisualC.STLCLR.xml" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\System.Data.Entity.xml" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shader Templates 2\Modules\Module_VertexDisplacement.txt" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shader Templates 2\Modules\Module_Outline.txt" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders Generated\Examples\SG2\Stylized Water.shader" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\System.Web.Abstractions.xml" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders Generated\Examples\SG2\Detail Texture Simple.shader" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders\Standard PBS\TCP2_PBS_Main.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shader Templates 2\Modules\Module_DepthTexture.txt" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders\Legacy\Variants Base\TCP2_Mobile_Specular_OutlineBlending.shader" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\System.Messaging.xml" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders Generated\Examples\SG2\Vertex Color Albedo.shader" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\System.Management.Instrumentation.xml" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shader Templates 2\Modules\Module_MatCap.txt" />
      <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Oswald-Bold - OFL.txt" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\System.ServiceModel.Web.xml" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\System.Web.DynamicData.Design.xml" />
      <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Anton OFL.txt" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders Generated\Examples\Default\HSV.shader" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders Generated\Examples\Default\Old School.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shader Templates 2\Modules\Module_Dissolve.txt" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\System.ComponentModel.DataAnnotations.xml" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\System.Data.Linq.xml" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders\Standard PBS\TCP2_Standard PBS Outline Blended (Specular).shader" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders Generated\Examples\SG2\Animated Dissolve.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders\Legacy\Variants Base\TCP2_Mobile_OutlineBlending.shader" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\mscorlib.xml" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders\Standard PBS\TCP2_Standard PBS Outline (Specular).shader" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\System.AddIn.Contract.xml" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders Generated\Examples\PBS\Sketch.shader" />
+     <None Include="Assets\Ludiq\Ludiq.Peek\LICENSES.txt" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shader Templates 2\Modules\Module_Texture Blending.txt" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shader Templates 2\Modules\Module_ShadowHSV.txt" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\System.Security.xml" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\System.DirectoryServices.AccountManagement.xml" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\System.Data.Services.Design.xml" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders\Legacy\Variants Base\TCP2_Desktop_OutlineBlending.shader" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shader Templates\TCP2_ShaderTemplate_Water.txt" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shader Templates 2\SG2_Template_Default.txt" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders Generated\Examples\Default\Snow Accumulation.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders\Legacy\TCP2_OutlineOnly Blended.shader" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\System.EnterpriseServices.xml" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shader Templates 2\Modules\Module_NdotL Stylization.txt" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shader Templates 2\Modules\Module_Water.txt" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders Generated\Examples\Default\Comic Book.shader" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\System.Runtime.Serialization.xml" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\System.Web.Entity.Design.xml" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shader Templates 2\Modules\Module_CurvedWorld.txt" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\System.Web.Services.xml" />
+     <None Include="Assets\Modern UI Pack\Read Me.txt" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\Microsoft.Build.Utilities.v3.5.xml" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\System.Web.DynamicData.xml" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders\Standard PBS\TCP2_PBS_Core.cginc" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders\Legacy\Variants Base\TCP2_Mobile_Specular.shader" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shader Templates 2\Modules\Module_Wind.txt" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shader Templates\TCP2_ShaderTemplate_SurfacePBS.txt" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\!ToonyColorsPro Readme.txt" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders\Legacy\Variants Base\TCP2_Desktop_Specular_OutlineBlending.shader" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\System.Xml.xml" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders\Legacy\Variants Base\TCP2_Desktop_Outline.shader" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders\Legacy\TCP2_OutlineOnly SM2.shader" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shader Templates 2\Modules\Module_Ramp Shading LWRP.txt" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders\Legacy\Include\TCP2_Include.cginc" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders\Legacy\TCP2_Desktop.shader" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\System.AddIn.xml" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders Generated\Examples\SG2\Hologram.shader" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\System.Data.Entity.Design.xml" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders\Hybrid\TCP2 Hybrid Include.cginc" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\System.Drawing.xml" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders\Legacy\TCP2_OutlineOnly Blended SM2.shader" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders Generated\Examples\Water\Realistic.shader" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders\Legacy\Include\TCP2_Outline_Include.cginc" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shader Templates 2\Modules\Module_AlbedoHSV.txt" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\System.Core.xml" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\Microsoft.Build.Framework.xml" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\System.Data.DataSetExtensions.xml" />
      <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\Microsoft.Build.Conversion.v3.5.xml" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders\Legacy\Include\TCP2_Outline_Behind.shader" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shader Templates 2\Modules\Module_Normal Mapping.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\System.Data.Services.xml" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF.shader" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders Generated\Examples\PBS\Blended Outline.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
@@ -150,17 +260,23 @@
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders\Standard PBS\TCP2_Standard PBS.shader" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shader Templates 2\Modules\Module_VertExmotion.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\System.Data.xml" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders\Legacy\Include\TCP2_Outline.shader" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders Generated\Examples\Default\Subsurface Scattering.shader" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\System.Web.Routing.xml" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shader Templates 2\Modules\Module_Vertical Fog.txt" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders Generated\Examples\Water\Water WindWaker2.shader" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shader Templates\TCP2_ShaderTemplate_Water_CurvedWorld.txt" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\System.Configuration.xml" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders Generated\Examples\PBS\Hand Painted.shader" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\System.Web.Extensions.xml" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders\Legacy\Include\TCP2_Outline_Stencil.shader" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shader Templates 2\Modules\Module_Ramp Shading.txt" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shader Templates 2\SG2_Template_LWRP.txt" />
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\System.ServiceProcess.xml" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\Microsoft.Build.Engine.xml" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders\Standard PBS\TCP2_Standard PBS Outline Blended.shader" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shader Templates 2\Modules\Module_Sketch.txt" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders\Legacy\Include\TCP2_Outline_SM2.shader" />
@@ -169,22 +285,32 @@
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders Generated\Examples\Water\Lava.shader" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shader Templates 2\Modules\Module_Screen Space UV.txt" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shader Templates 2\Modules\Module_Hash Functions.txt" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\System.Printing.xml" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shader Templates\TCP2_ShaderTemplate_Terrain.txt" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\System.Management.xml" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\System.Runtime.Serialization.Formatters.Soap.xml" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shader Templates\TCP2_ShaderTemplate_Default_CurvedWorld.txt" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shader Templates 2\Modules\Module_Triplanar.txt" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shader Templates\TCP2_ShaderTemplate_PBS.txt" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders Generated\Examples\Default\Sketch.shader" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders\Standard PBS\TCP2_PBS_ShadowMeta.shader" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\System.Transactions.xml" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\System.Data.SqlXml.xml" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders\Legacy\TCP2_Mobile.shader" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders Generated\Examples\Water\Lava Cartoon.shader" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders Generated\Examples\PBS\Outline Behind.shader" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\System.Windows.Forms.xml" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\System.Deployment.xml" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shader Templates 2\Modules\Module_HSV.txt" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\System.Net.xml" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders\Hybrid\TCP2 Hybrid URP Support.cginc" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders\Standard PBS\TCP2_Standard PBS (Specular).shader" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\System.Web.Extensions.Design.xml" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders\Legacy\Variants Base\TCP2_Mobile_Outline.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders\Legacy\Variants Base\TCP2_Desktop_Specular_Outline.shader" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\System.Data.Services.Client.xml" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shader Templates 2\Modules\Module_Rim Lighting.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders\Legacy\Variants Base\TCP2_Mobile_Specular_Outline.shader" />
@@ -200,14 +326,19 @@
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shader Templates 2\Modules\Module_CustomAmbient.txt" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders Generated\Examples\SG2\Wind Animation.shader" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shader Templates\TCP2_ShaderTemplate_Default.txt" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\System.Configuration.Install.xml" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\System.Xml.Linq.xml" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders Generated\Examples\Water\Poison.shader" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders\Hybrid\TCP2 Hybrid Shader.shader" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shader Templates 2\Modules\Module_Specular.txt" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\System.Windows.Presentation.xml" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders Generated\Examples\SG2\Detail Texture.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
      <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Bangers - OFL.txt" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shaders\Hybrid\TCP2 Hybrid Shader Outline.shader" />
      <None Include="Assets\JMO Assets\Toony Colors Pro\Shader Templates 2\Modules\Module_Reflection.txt" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\System.IdentityModel.xml" />
+     <None Include="Assets\Ludiq\Ludiq.PeekCore\DotNetDocumentation\System.WorkflowServices.xml" />
     <Reference Include="UnityEngine">
         <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.12f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
     </Reference>
@@ -384,6 +515,9 @@
     </Reference>
     <Reference Include="UnityEditor">
         <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.12f1/Editor/Data/Managed/UnityEditor.dll</HintPath>
+    </Reference>
+    <Reference Include="Ludiq.OdinSerializer">
+        <HintPath>D:/TakanoVineyard/MyWork/UnityProjects/KUMA_GAMEs/Assets/Ludiq/Ludiq.PeekCore/Runtime/Dependencies/OdinSerializer/EditorOnly/Ludiq.OdinSerializer.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
         <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.12f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
@@ -816,6 +950,21 @@
     <ProjectReference Include="Heureka_GlobalAssemblyDefinition.csproj">
       <Project>{5e206757-530b-5df7-dbe3-e49b217ac768}</Project>
       <Name>Heureka_GlobalAssemblyDefinition</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="Ludiq.PeekCore.Editor.csproj">
+      <Project>{8644cfed-b743-8bf1-929f-0507a84cdd34}</Project>
+      <Name>Ludiq.PeekCore.Editor</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="Ludiq.Peek.Editor.csproj">
+      <Project>{6f2878f6-f906-7fcd-2401-f3b1f48f36fd}</Project>
+      <Name>Ludiq.Peek.Editor</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+    <ProjectReference Include="Ludiq.PeekCore.Runtime.csproj">
+      <Project>{0a7a2d0b-812c-3830-fc51-9e497ea3e0f7}</Project>
+      <Name>Ludiq.PeekCore.Runtime</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
   </ItemGroup>

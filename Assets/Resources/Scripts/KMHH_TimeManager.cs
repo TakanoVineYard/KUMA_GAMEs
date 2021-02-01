@@ -21,7 +21,6 @@ public class KMHH_TimeManager : MonoBehaviour
 {
 
 
-
     public static bool debugTextSwitch = true; //デバッグテキストのオンオフ
 
 

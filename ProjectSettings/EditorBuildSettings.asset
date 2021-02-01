@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/KMHH_Result.unity
     guid: ef29bde08e68cf04999d96db149439be
+  - enabled: 1
+    path: Assets/Scenes/KMGMs_Option.unity
+    guid: ff6876c27a2633442aed94c3eca67989
   m_configObjects: {}

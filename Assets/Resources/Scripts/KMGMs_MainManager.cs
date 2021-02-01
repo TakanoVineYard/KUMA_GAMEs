@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using static KMHH_ScoreResultManager;
+using static KMGMs_SoundManager;
 
 using TMPro; //TextMeshPro用
 
@@ -23,6 +24,7 @@ public class KMGMs_MainManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
     }
         public void GoToOption()
     {
@@ -35,16 +37,28 @@ public class KMGMs_MainManager : MonoBehaviour
         Debug.Log("hoge");
         Invoke("DerayMoveKMHH", 1.0f);
     }
+    public void GoToKMGMs_Main()
+    {
+        Debug.Log("hoge");
+        Invoke("DerayMoveKMGMs_Main", 1.0f);
+    }
+
     public void DerayMoveKMHH()
     {
 
             SceneManager.LoadScene("KMHH");
     }
 
+    public void DerayMoveKMGMs_Main()
+    {
+
+        SceneManager.LoadScene("KMGMs");
+    }
     public void DerayMoveKMGMs_Option()
     {
 
-            SceneManager.LoadScene("KMGMs_Option");
+        SceneManager.LoadScene("KMGMs_Option");
+        KMGMs_SoundManager.lifeJudge = false;
     }
 
 

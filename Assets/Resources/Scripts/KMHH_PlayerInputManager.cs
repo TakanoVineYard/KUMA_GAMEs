@@ -57,11 +57,10 @@ public class KMHH_PlayerInputManager : MonoBehaviour
 public static void AnserResultCollect()
     {
 
-
-
     if(KMHH_TimeManager.editTimeScale <= 3.0f){ //速度頭打ち
-    KMHH_TimeManager.editTimeScale += 0.025f; 
-    }
+    KMHH_TimeManager.editTimeScale += 0.025f;
+        }
+    
     KMHH_ScoreManager.AddAnserResult(true);     //不正解で回答結果更新
 
     //Debug_AnserResultText.text ="SEIKAI";
