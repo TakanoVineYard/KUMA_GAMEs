@@ -61,7 +61,7 @@ public class KMHH_ScoreResultManager : MonoBehaviour
         resultScoreMiss = resultScoreMissObj.GetComponent<TextMeshProUGUI>();
 
 
-        resultMaxComboText.text =  "<bounce>" + KMHH_ScoreManager.maxCombo.ToString();
+        resultMaxComboText.text = "<bounce>" + KMHH_ScoreManager.maxCombo.ToString();
         resultScoreText.text = "<bounce>" + ((int)KMHH_ScoreManager.totalScore).ToString();
         resultScoreExcellent.text = "<bounce>" + KMHH_ScoreManager.scoreExcellent.ToString();
         resultScoreGreat.text = "<bounce>" + KMHH_ScoreManager.scoreGreat.ToString();
@@ -80,16 +80,37 @@ public class KMHH_ScoreResultManager : MonoBehaviour
     }
     public void Update()
     {
+
         if (HighsScoreSwitch)
         {
 
+            switch (KMGMs_GameLevelManager.kmhh_GameLevel)
+            {
+                case 0:
 
-            KmhhHighScore = PlayerPrefs.GetInt("KMHH_HighScore", 0);
+                    KmhhHighScore = PlayerPrefs.GetInt("KMHH_HighScoreNormal", 0);
+
+                    Debug.Log("のーまるのハイスコア:" + KmhhHighScore);
+                    break;
+                case 1:
+
+                    KmhhHighScore = PlayerPrefs.GetInt("KMHH_HighScoreEasy", 0);
+
+                    Debug.Log("いーじーのハイスコア:" + KmhhHighScore);
+                    break;
+                case 2:
+
+                    KmhhHighScore = PlayerPrefs.GetInt("KMHH_HighScoreHard", 0);
+
+                    Debug.Log("はーどのハイスコア:" + KmhhHighScore);
+                    break;
+
+            }
 
             KMHH_ScoreSave((int)KMHH_ScoreManager.totalScore);
 
             resultHighScoreText.text = "<bounce>" + KmhhHighScore.ToString();
-            Debug.Log("ハイスコア:" + KmhhHighScore);
+
             HighsScoreSwitch = false;
 
         }
@@ -100,51 +121,71 @@ public class KMHH_ScoreResultManager : MonoBehaviour
     {
         if (KmhhHighScore <= score)
         {
-            // スコアを保存
-            PlayerPrefs.SetInt("KMHH_HighScore", score);
-            PlayerPrefs.Save();
+            switch (KMGMs_GameLevelManager.kmhh_GameLevel)
+            {
+                case 0:
 
-            Debug.Log("ハイスコアセーブ" + score);
+                    // スコアを保存
+                    PlayerPrefs.SetInt("KMHH_HighScore", score);
+                    PlayerPrefs.Save();
+                    Debug.Log("のーまるのハイスコアセーブ" + score);
+                    break;
 
-            resultHighScoreMarkObj.SetActive(true);
+                case 1:
 
-            KmhhHighScore = score;
-            
+                    // スコアを保存
+                    PlayerPrefs.SetInt("KMHH_HighScoreEasy", score);
+                    PlayerPrefs.Save();
+                    Debug.Log("いーじーのハイスコアセーブ" + score);
+                    break;
+
+                case 2:
+                    // スコアを保存
+                    PlayerPrefs.SetInt("KMHH_HighScoreHard", score);
+                    PlayerPrefs.Save();
+                    Debug.Log("はーどのハイスコアセーブ" + score);
+                    break;
+            }
+
+                    resultHighScoreMarkObj.SetActive(true);
+
+                    KmhhHighScore = score;
+
+            }
+
+        }
+
+        ////////
+        public void BackToKMGMs()
+        {
+            Debug.Log("hogeOption");
+            Invoke("DerayMoveKMGMs", 1.0f);
+        }
+
+        public void ContinueKMHH()
+        {
+
+            Debug.Log("hoge");
+            Invoke("DerayMoveKMHH", 1.0f);
+        }
+        public void DerayMoveKMHH()
+        {
+            KMHH_TimeManager.gameStart = false;
+            KMHH_TimeManager.gameFinish = false;
+
+            SceneManager.LoadScene("KMHH");
+            Debug.Log("hogehoge");
+            HighsScoreSwitch = true;
+        }
+
+        public void DerayMoveKMGMs()
+        {
+            KMHH_TimeManager.gameStart = false;
+            KMHH_TimeManager.gameFinish = false;
+
+
+            SceneManager.LoadScene("KMGMs");
+            HighsScoreSwitch = true;
         }
 
     }
-
-    ////////
-    public void BackToKMGMs()
-    {
-        Debug.Log("hogeOption");
-        Invoke("DerayMoveKMGMs", 1.0f);
-    }
-
-    public void ContinueKMHH()
-    {
-        
-        Debug.Log("hoge");
-        Invoke("DerayMoveKMHH", 1.0f);
-    }
-    public void DerayMoveKMHH()
-    {
-        KMHH_TimeManager.gameStart = false;
-        KMHH_TimeManager.gameFinish = false;
-
-            SceneManager.LoadScene("KMHH");
-        Debug.Log("hogehoge");
-        HighsScoreSwitch = true;
-    }
-
-    public void DerayMoveKMGMs()
-    {
-        KMHH_TimeManager.gameStart = false;
-        KMHH_TimeManager.gameFinish = false;
-
-        
-            SceneManager.LoadScene("KMGMs");
-        HighsScoreSwitch = true;
-    }
-
-}

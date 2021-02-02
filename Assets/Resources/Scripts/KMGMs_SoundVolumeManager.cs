@@ -4,6 +4,7 @@ using UnityEngine.Audio;
 using UnityEngine;
 using static KMGMs_SoundManager;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement; 
 
 public class KMGMs_SoundVolumeManager : MonoBehaviour
 {
@@ -16,13 +17,15 @@ public class KMGMs_SoundVolumeManager : MonoBehaviour
     public  Slider Slider_BGM;
     public Slider Slider_Master;
 
+    public static bool soundVolumeLoad = true;
+
 
     public AudioMixer kmgms_audioMixer;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        soundVolumeLoad = true;
         //   slider_SE_Obj = GameObject.Find("Slider_SE");
         //   slider_BGM_Obj = GameObject.Find("Slider_BGM");
         //   slider_Master_Obj = GameObject.Find("Slider_Master");
@@ -32,9 +35,11 @@ public class KMGMs_SoundVolumeManager : MonoBehaviour
         //   Slider_Master = slider_Master_Obj.GetComponent<Slider>();
 
 
-        kmgms_audioMixer.SetFloat("MasterVolume", ((PlayerPrefs.GetFloat("KMHH_MasterVolSave", 0.0f)))); //, 0.0f)- 100.0f)* 0.8f));
-        kmgms_audioMixer.SetFloat("BGMVolume", ((PlayerPrefs.GetFloat("KMHH_BGMVolSave", 0.0f)))); //, 0.0f) - 100.0f) * 0.8f));
-        kmgms_audioMixer.SetFloat("SEVolume", ((PlayerPrefs.GetFloat("KMHH_SEVolSave", 0.0f)))); //, 0.0f) - 100.0f) * 0.8f));
+        //オーディオミキサーの値入れ　-80から0
+
+        kmgms_audioMixer.SetFloat("MasterVolume", (((PlayerPrefs.GetFloat("KMHH_MasterVolSave", 0.0f)) * 0.5f))); //, 0.0f)- 100.0f)* 0.8f));
+        kmgms_audioMixer.SetFloat("BGMVolume", (((PlayerPrefs.GetFloat("KMHH_BGMVolSave", 0.0f)) * 0.5f))); //, 0.0f) - 100.0f) * 0.8f));
+        kmgms_audioMixer.SetFloat("SEVolume", (((PlayerPrefs.GetFloat("KMHH_SEVolSave", 0.0f)) * 0.5f))); //, 0.0f) - 100.0f) * 0.8f));
 
 
         Slider_Master.value = (PlayerPrefs.GetFloat("KMHH_MasterVolSave", 0.0f));
@@ -46,6 +51,36 @@ public class KMGMs_SoundVolumeManager : MonoBehaviour
     void Update()
     {
 
+        //オプションのシーンが読まれてて、
+        if (SceneManager.GetActiveScene().name == "KMGMs_Option")
+        {
+            /*            Debug.Log("otoLoad");
+                        Debug.Log("SaveMaster:" + PlayerPrefs.GetFloat("KMHH_MasterVolSave"));
+                        Debug.Log("SaveBGM:" + PlayerPrefs.GetFloat("KMHH_BGMVolSave"));
+                        Debug.Log("SaveSE:" + PlayerPrefs.GetFloat("KMHH_SEVolSave"));
+            */
+
+            if (soundVolumeLoad)
+            {
+                kmgms_audioMixer.SetFloat("MasterVolume", (((PlayerPrefs.GetFloat("KMHH_MasterVolSave", 0.0f)) * 0.5f))); //, 0.0f)- 100.0f)* 0.8f));
+                kmgms_audioMixer.SetFloat("BGMVolume", (((PlayerPrefs.GetFloat("KMHH_BGMVolSave", 0.0f)) * 0.5f))); //, 0.0f) - 100.0f) * 0.8f));
+                kmgms_audioMixer.SetFloat("SEVolume", (((PlayerPrefs.GetFloat("KMHH_SEVolSave", 0.0f)) * 0.5f))); //, 0.0f) - 100.0f) * 0.8f));
+
+
+                Slider_Master.value = (PlayerPrefs.GetFloat("KMHH_MasterVolSave", 0.0f));
+                Slider_BGM.value = (PlayerPrefs.GetFloat("KMHH_BGMVolSave", 0.0f));
+                Slider_SE.value = (PlayerPrefs.GetFloat("KMHH_SEVolSave", 0.0f));
+            
+            soundVolumeLoad = false;
+            }
+
+            //オーディオミキサーの値入れ　-80から0
+
+        }
+
+
+
+
     }
 
     public void SetMaster(float volume)
@@ -56,15 +91,16 @@ public class KMGMs_SoundVolumeManager : MonoBehaviour
         }
         else
         {
-
             kmgms_audioMixer.SetFloat("MasterVolume", (volume * 0.5f));// - 100.0f) * 0.8f);
         }
 
 
-        Debug.Log("BGM" + volume);
+        Debug.Log("Master" + volume);
 
         PlayerPrefs.SetFloat("KMHH_MasterVolSave", volume);
         PlayerPrefs.Save();
+        
+        Debug.Log("MasterSave:" + PlayerPrefs.GetFloat("KMHH_MasterVolSave"));
     }
     public void SetBGM(float volume)
     {
@@ -83,6 +119,9 @@ public class KMGMs_SoundVolumeManager : MonoBehaviour
         
         PlayerPrefs.SetFloat("KMHH_BGMVolSave", volume);
         PlayerPrefs.Save();
+
+        Debug.Log("BGMSave:" + PlayerPrefs.GetFloat("KMHH_BGMVolSave"));
+
     }
     public void SetSE(float volume)
     {
@@ -100,5 +139,6 @@ public class KMGMs_SoundVolumeManager : MonoBehaviour
         
         PlayerPrefs.SetFloat("KMHH_SEVolSave", volume);
         PlayerPrefs.Save();
+        Debug.Log("SESave:" + PlayerPrefs.GetFloat("KMHH_SEVolSave"));
     }
 }

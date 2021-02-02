@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using static KMHH_ScoreResultManager;
 using static KMGMs_SoundManager;
+using static KMGMs_SoundVolumeManager;
 
 using TMPro; //TextMeshPro用
 
@@ -11,14 +12,19 @@ using UnityEngine.SceneManagement; //シーン切り替え
 
 public class KMGMs_MainManager : MonoBehaviour
 {
-    public Slider debug_kmhh_GameTimeSlider;
-    public TextMeshProUGUI debug_kmhh_GameTimeSliderVal;
-    public static int sliderKMHHGameTime;
 
     // Start is called before the first frame update
     void Start()
     {
+        
         //kmhh_GameTimeSlider = GetComponent<Slider>();
+
+        Debug.Log("MasterVolSave:" + PlayerPrefs.GetFloat("KMHH_MasterVolSave"));
+
+        Debug.Log("BGMVolSave:" + PlayerPrefs.GetFloat("KMHH_BGMVolSave"));
+
+        Debug.Log("SEVolSave:" + PlayerPrefs.GetFloat("KMHH_SEVolSave"));
+
     }
 
     // Update is called once per frame
@@ -28,44 +34,36 @@ public class KMGMs_MainManager : MonoBehaviour
     }
         public void GoToOption()
     {
-        Debug.Log("hogeOption");
         Invoke("DerayMoveKMGMs_Option", 1.0f);
     }
 
     public void GoToKMHH()
     {
-        Debug.Log("hoge");
         Invoke("DerayMoveKMHH", 1.0f);
     }
     public void GoToKMGMs_Main()
     {
-        Debug.Log("hoge");
         Invoke("DerayMoveKMGMs_Main", 1.0f);
     }
 
     public void DerayMoveKMHH()
     {
-
             SceneManager.LoadScene("KMHH");
     }
 
     public void DerayMoveKMGMs_Main()
     {
-
         SceneManager.LoadScene("KMGMs");
     }
     public void DerayMoveKMGMs_Option()
     {
+        KMGMs_SoundVolumeManager.soundVolumeLoad = true;
 
         SceneManager.LoadScene("KMGMs_Option");
         KMGMs_SoundManager.lifeJudge = false;
     }
 
 
-    public void GetKMHHGameTimeSliderVal(){
-       sliderKMHHGameTime = (int)debug_kmhh_GameTimeSlider.value;
-       debug_kmhh_GameTimeSliderVal.text = "GameTime\n" + sliderKMHHGameTime.ToString() + " sec";
 
-    }
 
 }

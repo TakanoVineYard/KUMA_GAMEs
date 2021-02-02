@@ -109,6 +109,7 @@
      <Compile Include="Assets\Modern UI Pack\Scripts\Window\WindowManager.cs" />
      <Compile Include="Assets\Modern UI Pack\Scripts\Window\WindowManagerButton.cs" />
      <Compile Include="Assets\Modern UI Pack\Scripts\Window\WindowManagerEditor.cs" />
+     <Compile Include="Assets\Resources\Scripts\KMGMs_GameLevelManager.cs" />
      <Compile Include="Assets\Resources\Scripts\KMGMs_MainManager.cs" />
      <Compile Include="Assets\Resources\Scripts\KMGMs_SoundManager.cs" />
      <Compile Include="Assets\Resources\Scripts\KMGMs_SoundVolumeManager.cs" />

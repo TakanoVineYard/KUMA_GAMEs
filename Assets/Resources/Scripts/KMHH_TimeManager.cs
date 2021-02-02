@@ -42,6 +42,7 @@ public class KMHH_TimeManager : MonoBehaviour
     public static bool gameFinish = false; //ゲームが終了しているかの判定
 
     public static float editTimeScale = 1.0f; //キャラの動き時間のスケール
+    public static float charaSpeed = 0.025f; //正解時のキャラスピードアップ倍率
 
     public static bool questionStatus = false; //出題状態かどうか
     public static float kmhhQuestionSpan = 5.0f;  //出題時間のスパン
@@ -92,8 +93,8 @@ public class KMHH_TimeManager : MonoBehaviour
     ////////////////////////////////////////////////////////////////////
 
     //デバッグ　スピードアップしない
-    bool debugSpeedUpONOFF = true;
-    public TextMeshProUGUI debugSpeedUpONOFFText;
+    bool kmhhSpeedUpONOFF = true;
+    public TextMeshProUGUI kmhhSpeedUpONOFFText;
 
     //public GameObject kmhh_CAM_Obj;
 
@@ -147,6 +148,9 @@ public class KMHH_TimeManager : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
+
+
+
         debugGameTimeText.text = "Debug Info" + "\n" +
         "gameStart:" + gameStart + "\n" +
         "gameFinish:" + gameFinish + "\n" +
@@ -187,6 +191,32 @@ public class KMHH_TimeManager : MonoBehaviour
 
         if ((switchStartMethod == true) && (gameFinish == false))
         {
+            //ゲームレベル
+            switch (KMGMs_GameLevelManager.kmhh_GameLevel)
+            {
+                case 0:
+                    gameSetTime = 75.0f;
+
+                    kmhhSpeedUpONOFF = true; //スピード上げる
+
+                    break;
+                case 1:
+                    gameSetTime = 50.0f;
+
+                    kmhhSpeedUpONOFF = false;　//スピード上げない
+                    break;
+                case 2:
+                    gameSetTime = 100.0f;
+
+                    kmhhSpeedUpONOFF = true; //スピード上げる
+
+                    charaSpeed = 0.05f; //正解時のキャラスピードアップ倍率
+
+                    break;
+            }
+
+
+
 
             dayHourNum = System.DateTime.Now.Hour;
 
@@ -226,13 +256,13 @@ public class KMHH_TimeManager : MonoBehaviour
             gameStart = false; //ゲームがスタートしているかの判定
             gameFinish = false; //ゲームが終了しているかの判定
             editTimeScale = 1.0f; //キャラの動き時間のスケール
+            charaSpeed = 0.025f; //正解時のキャラスピードアップ倍率
             questionStatus = false; //出題状態かどうか
             switchIdle = false; //条件 Idleのスイッチ
             switchQuestion = false; //条件 Questionのスイッチ
             questionNumOfTimes = 0;  //出題回数
 
             Time.timeScale = 1.0f;
-            debugSpeedUpONOFF = true;
 
 
             countDownStartTrigger = true;
@@ -267,7 +297,7 @@ public class KMHH_TimeManager : MonoBehaviour
         }
 
         getDeltaTime += Time.deltaTime;
-        
+
 
 
         ////////////////////////////////////////////////////////////////////
@@ -374,17 +404,22 @@ public class KMHH_TimeManager : MonoBehaviour
 
 
 
-            //デバッグ　スピードあげない
-            if (debugSpeedUpONOFF == true)
+            //スピードあげる？
+            if (kmhhSpeedUpONOFF == true)
             {
                 Time.timeScale = editTimeScale;
+
+                gameCurrentTime += (Time.deltaTime / editTimeScale); //ゲーム時間を更新
+
             }
-            else if (debugSpeedUpONOFF == false)
+            else if (kmhhSpeedUpONOFF == false)
             {
                 Time.timeScale = 1.0f;
+
+                gameCurrentTime += Time.deltaTime; //ゲーム時間を更新
+
             }
 
-            gameCurrentTime += (Time.deltaTime / editTimeScale); //ゲーム時間を更新
 
             gameTimePast = gameCurrentTime; //経過時間として現在の時間を上書く
             gameTimePastInt = (int)gameTimePast; //↑整数
@@ -510,7 +545,7 @@ public class KMHH_TimeManager : MonoBehaviour
         setFinish();
 
         Invoke("DerayGameTitleLoadRun", 4.0f);   // カウントダウン全部消す 
-        
+
     }
     public void DerayGameTitleLoadRun()
     {
@@ -678,16 +713,16 @@ public class KMHH_TimeManager : MonoBehaviour
     /// <returns></returns> 
     public void DebugCharaSpeedOnOff()
     {
-        debugSpeedUpONOFF = !debugSpeedUpONOFF;
+        kmhhSpeedUpONOFF = !kmhhSpeedUpONOFF;
 
-        if (debugSpeedUpONOFF == true)
+        if (kmhhSpeedUpONOFF == true)
         {
-            debugSpeedUpONOFFText.text = ("SpeedUp On");
+            kmhhSpeedUpONOFFText.text = ("SpeedUp On");
         }
-        else if (debugSpeedUpONOFF == false)
+        else if (kmhhSpeedUpONOFF == false)
         {
 
-            debugSpeedUpONOFFText.text = ("SpeedUp Off");
+            kmhhSpeedUpONOFFText.text = ("SpeedUp Off");
         }
 
     }

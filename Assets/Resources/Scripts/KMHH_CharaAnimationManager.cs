@@ -179,34 +179,81 @@ public class KMHH_CharaAnimationManager : MonoBehaviour
         //indicateBodyPartsSpeechBubble.SetActive(false); //　吹き出しけす
         //hideBodyParts();
 
-
-        if (KMHH_ScoreManager.comboCountNum < 5)
+        switch (KMGMs_GameLevelManager.kmhh_GameLevel)
         {
-            randomPoseNum = UnityEngine.Random.Range(0, 8);  //0～用意した分でランダム数値取り出し
-            Debug.Log("Level 1");
+            case 0:
 
-            KMHH_ScoreManager.baseScore = 100.0f;
-        }
-        else if ((KMHH_ScoreManager.comboCountNum >= 5) && (KMHH_ScoreManager.comboCountNum < 10))
-        {
-            randomPoseNum = UnityEngine.Random.Range(9, 20);  //0～用意した分でランダム数値取り出し
-            Debug.Log("Level 2");
+                if (KMHH_ScoreManager.comboCountNum < 5)
+                {
+                    randomPoseNum = UnityEngine.Random.Range(0, 8);  //0～用意した分でランダム数値取り出し
+                    Debug.Log("Level 1");
 
-            KMHH_ScoreManager.baseScore = 150.0f;
-        }
-        else if ((KMHH_ScoreManager.comboCountNum >= 10) && (KMHH_ScoreManager.comboCountNum < 15))
-        {
-            randomPoseNum = UnityEngine.Random.Range(21, 39);  //0～用意した分でランダム数値取り出し
-            Debug.Log("Level 3");
-            KMHH_ScoreManager.baseScore = 200.0f;
-        }
-        else if (KMHH_ScoreManager.comboCountNum >= 15)
-        {
-            randomPoseNum = UnityEngine.Random.Range(0, 39);  //0～用意した分でランダム数値取り出し
-            Debug.Log("Level 3");
+                    KMHH_ScoreManager.baseScore = 100.0f;
+                }
+                else if ((KMHH_ScoreManager.comboCountNum >= 5) && (KMHH_ScoreManager.comboCountNum < 10))
+                {
+                    randomPoseNum = UnityEngine.Random.Range(9, 20);  //0～用意した分でランダム数値取り出し
+                    Debug.Log("Level 2");
 
-            KMHH_ScoreManager.baseScore = 250.0f;
+                    KMHH_ScoreManager.baseScore = 150.0f;
+                }
+                else if ((KMHH_ScoreManager.comboCountNum >= 10) && (KMHH_ScoreManager.comboCountNum < 15))
+                {
+                    randomPoseNum = UnityEngine.Random.Range(21, 39);  //0～用意した分でランダム数値取り出し
+                    Debug.Log("Level 3");
+                    KMHH_ScoreManager.baseScore = 200.0f;
+                }
+                else if (KMHH_ScoreManager.comboCountNum >= 15)
+                {
+                    randomPoseNum = UnityEngine.Random.Range(0, 39);  //0～用意した分でランダム数値取り出し
+                    Debug.Log("Level 3");
+
+                    KMHH_ScoreManager.baseScore = 250.0f;
+                }
+
+                break;
+
+            case 1:
+
+                randomPoseNum = UnityEngine.Random.Range(0, 8);  //0～用意した分でランダム数値取り出し
+
+                KMHH_ScoreManager.baseScore = 100.0f;
+
+                break;
+                
+            case 2:
+
+                if (KMHH_ScoreManager.comboCountNum < 5)
+                {
+                    randomPoseNum = UnityEngine.Random.Range(0, 39);  //0～用意した分でランダム数値取り出し
+                    Debug.Log("Level 1");
+
+                    KMHH_ScoreManager.baseScore = 100.0f;
+                }
+                else if ((KMHH_ScoreManager.comboCountNum >= 5) && (KMHH_ScoreManager.comboCountNum < 10))
+                {
+                    randomPoseNum = UnityEngine.Random.Range(0, 39);  //0～用意した分でランダム数値取り出し
+                    Debug.Log("Level 2");
+
+                    KMHH_ScoreManager.baseScore = 150.0f;
+                }
+                else if ((KMHH_ScoreManager.comboCountNum >= 10) && (KMHH_ScoreManager.comboCountNum < 15))
+                {
+                    randomPoseNum = UnityEngine.Random.Range(0, 39);  //0～用意した分でランダム数値取り出し
+                    Debug.Log("Level 3");
+                    KMHH_ScoreManager.baseScore = 200.0f;
+                }
+                else if (KMHH_ScoreManager.comboCountNum >= 15)
+                {
+                    randomPoseNum = UnityEngine.Random.Range(0, 39);  //0～用意した分でランダム数値取り出し
+                    Debug.Log("Level 3");
+
+                    KMHH_ScoreManager.baseScore = 250.0f;
+                }
+                break;
+
         }
+
 
         //情報テキスト更新
         partsInfoText.text = ("PartsInfo" + '\n' +
