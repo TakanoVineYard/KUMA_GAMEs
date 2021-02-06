@@ -5,6 +5,7 @@ using UnityEngine.UI; //テキスト使うなら必要
 using static KMHH_TimeManager; //時間管理スクリプトを使う
 using static KMHH_PlayerInputManager; //インプット管理スクリプトを使う
 using static KMHH_SoundManager;
+using TMPro; //TextMeshPro用
 
 /// <summary>
 ///スコア関係の管理
@@ -50,8 +51,14 @@ public class KMHH_ScoreManager : MonoBehaviour
     [SerializeField] public static Animator KMHH_AnserResultAnimator; //リザルトアニメーター
 
 
-////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////
+
+    public GameObject kmhhGameLevelObj;
+    TextMeshProUGUI kmhhGameLevel;
+
+
+
+    ////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////
     // Start is called before the first frame update
     /// <summary>
     ///スコア関連
@@ -59,6 +66,24 @@ public class KMHH_ScoreManager : MonoBehaviour
     /// <returns></returns> 
     void Start()
     {
+
+        kmhhGameLevel = kmhhGameLevelObj.GetComponent<TextMeshProUGUI>();
+
+
+        switch (PlayerPrefs.GetInt("kmhhGameLevel", 0))
+        {
+            case 0:
+                kmhhGameLevel.text = "<color=#F9FF69>NORMAL";
+                break;
+            case 1:
+                kmhhGameLevel.text = "<color=#69E7FF>EASY";
+                break;
+            case 2:
+                kmhhGameLevel.text = "<color=#FF3200>HARD";
+                break;
+
+        }
+
 
         KMHH_AnserResultObj = GameObject.Find("ui_KMHH_AnserResult_Obj");
         KMHH_AnserResultAnimator = KMHH_AnserResultObj.GetComponentInChildren<Animator>();

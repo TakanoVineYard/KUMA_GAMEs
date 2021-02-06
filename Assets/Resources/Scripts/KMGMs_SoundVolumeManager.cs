@@ -22,9 +22,17 @@ public class KMGMs_SoundVolumeManager : MonoBehaviour
 
     public AudioMixer kmgms_audioMixer;
 
+
+    public AudioSource soundTestSE;
+    float seAudioPlayFrequency = 0.0f;
+
     // Start is called before the first frame update
     void Start()
     {
+
+        //  soundTestSE[0] = GameObject.Find("KMGMs_SoundVolumeManagerObj").GetComponent<AudioSource>();
+
+        Debug.Log("さうんどぼりゅーむ");
         soundVolumeLoad = true;
         //   slider_SE_Obj = GameObject.Find("Slider_SE");
         //   slider_BGM_Obj = GameObject.Find("Slider_BGM");
@@ -51,6 +59,8 @@ public class KMGMs_SoundVolumeManager : MonoBehaviour
     void Update()
     {
 
+
+
         //オプションのシーンが読まれてて、
         if (SceneManager.GetActiveScene().name == "KMGMs_Option")
         {
@@ -62,14 +72,14 @@ public class KMGMs_SoundVolumeManager : MonoBehaviour
 
             if (soundVolumeLoad)
             {
-                kmgms_audioMixer.SetFloat("MasterVolume", (((PlayerPrefs.GetFloat("KMHH_MasterVolSave", 0.0f)) * 0.5f))); //, 0.0f)- 100.0f)* 0.8f));
-                kmgms_audioMixer.SetFloat("BGMVolume", (((PlayerPrefs.GetFloat("KMHH_BGMVolSave", 0.0f)) * 0.5f))); //, 0.0f) - 100.0f) * 0.8f));
-                kmgms_audioMixer.SetFloat("SEVolume", (((PlayerPrefs.GetFloat("KMHH_SEVolSave", 0.0f)) * 0.5f))); //, 0.0f) - 100.0f) * 0.8f));
+            kmgms_audioMixer.SetFloat("MasterVolume", (((PlayerPrefs.GetFloat("KMHH_MasterVolSave", 0.0f)) * 0.5f))); //, 0.0f)- 100.0f)* 0.8f));
+            kmgms_audioMixer.SetFloat("BGMVolume", (((PlayerPrefs.GetFloat("KMHH_BGMVolSave", 0.0f)) * 0.5f))); //, 0.0f) - 100.0f) * 0.8f));
+            kmgms_audioMixer.SetFloat("SEVolume", (((PlayerPrefs.GetFloat("KMHH_SEVolSave", 0.0f)) * 0.5f))); //, 0.0f) - 100.0f) * 0.8f));
 
-
-                Slider_Master.value = (PlayerPrefs.GetFloat("KMHH_MasterVolSave", 0.0f));
-                Slider_BGM.value = (PlayerPrefs.GetFloat("KMHH_BGMVolSave", 0.0f));
-                Slider_SE.value = (PlayerPrefs.GetFloat("KMHH_SEVolSave", 0.0f));
+                
+            Slider_Master.value = (PlayerPrefs.GetFloat("KMHH_MasterVolSave", 0.0f));
+            Slider_BGM.value = (PlayerPrefs.GetFloat("KMHH_BGMVolSave", 0.0f));
+            Slider_SE.value = (PlayerPrefs.GetFloat("KMHH_SEVolSave", 0.0f));
             
             soundVolumeLoad = false;
             }
@@ -77,17 +87,19 @@ public class KMGMs_SoundVolumeManager : MonoBehaviour
             //オーディオミキサーの値入れ　-80から0
 
         }
+        /* 
 
-
-
-
+                Debug.Log("ますたーのおんりょう" + Slider_Master.value);
+                Debug.Log("BGMのおんりょう" + Slider_BGM.value);
+                Debug.Log("SEのおんりょう" + Slider_SE.value);
+          */
     }
 
     public void SetMaster(float volume)
     {
         if (volume <= -70.0f)
         {
-            kmgms_audioMixer.SetFloat("MasterVolume", -80.0f);// - 100.0f) * 0.8f);
+            kmgms_audioMixer.SetFloat("MasterVolume", -96.0f);// - 100.0f) * 0.8f);
         }
         else
         {
@@ -107,7 +119,7 @@ public class KMGMs_SoundVolumeManager : MonoBehaviour
 
         if (volume <= -70.0f)
         {
-            kmgms_audioMixer.SetFloat("BGMVolume", -80.0f);// - 100.0f) * 0.8f);
+            kmgms_audioMixer.SetFloat("BGMVolume", -96.0f);// - 100.0f) * 0.8f);
 
         }
         else
@@ -127,7 +139,7 @@ public class KMGMs_SoundVolumeManager : MonoBehaviour
     {
         if (volume <= -70.0f)
         {
-            kmgms_audioMixer.SetFloat("SEVolume", -80.0f);// - 100.0f) * 0.8f);
+            kmgms_audioMixer.SetFloat("SEVolume", -96.0f);// - 100.0f) * 0.8f);
 
         }
         else
@@ -136,9 +148,25 @@ public class KMGMs_SoundVolumeManager : MonoBehaviour
 
         }
         Debug.Log("SE" + volume);
-        
+
         PlayerPrefs.SetFloat("KMHH_SEVolSave", volume);
         PlayerPrefs.Save();
         Debug.Log("SESave:" + PlayerPrefs.GetFloat("KMHH_SEVolSave"));
+
+        if (soundVolumeLoad == false)
+        {
+            if (seAudioPlayFrequency > 0.075f)
+            {
+                soundTestSE.Play();
+
+                seAudioPlayFrequency = 0.0f;
+
+            }
+            else
+            {
+                seAudioPlayFrequency += Time.deltaTime;
+            }
+
+        }
     }
 }

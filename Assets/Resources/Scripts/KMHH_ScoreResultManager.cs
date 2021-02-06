@@ -21,6 +21,7 @@ public class KMHH_ScoreResultManager : MonoBehaviour
     public GameObject resultScoreNotGoodObj;
     public GameObject resultScorePoorObj;
     public GameObject resultScoreMissObj;
+    public GameObject kmhhGameLevelObj;
 
     TextMeshProUGUI resultMaxComboText;
     TextMeshProUGUI resultScoreText;
@@ -31,6 +32,7 @@ public class KMHH_ScoreResultManager : MonoBehaviour
     TextMeshProUGUI resultScoreNotGood;
     TextMeshProUGUI resultScorePoor;
     TextMeshProUGUI resultScoreMiss;
+    TextMeshProUGUI kmhhGameLevel;
 
     bool HighsScoreSwitch = false;
 
@@ -59,6 +61,7 @@ public class KMHH_ScoreResultManager : MonoBehaviour
         resultScoreNotGood = resultScoreNotGoodObj.GetComponent<TextMeshProUGUI>();
         resultScorePoor = resultScorePoorObj.GetComponent<TextMeshProUGUI>();
         resultScoreMiss = resultScoreMissObj.GetComponent<TextMeshProUGUI>();
+        kmhhGameLevel = kmhhGameLevelObj.GetComponent<TextMeshProUGUI>();
 
 
         resultMaxComboText.text = "<bounce>" + KMHH_ScoreManager.maxCombo.ToString();
@@ -69,6 +72,23 @@ public class KMHH_ScoreResultManager : MonoBehaviour
         resultScoreNotGood.text = "<bounce>" + KMHH_ScoreManager.scoreNotGood.ToString();
         resultScorePoor.text = "<bounce>" + KMHH_ScoreManager.scorePoor.ToString();
         resultScoreMiss.text = "<bounce>" + KMHH_ScoreManager.scoreMiss.ToString();
+
+
+        switch (PlayerPrefs.GetInt("kmhhGameLevel", 0))
+        {
+            case 0:
+                kmhhGameLevel.text = "<wave a=0.5><color=#F9FF69>NORMAL";
+                break;
+            case 1:
+                kmhhGameLevel.text = "<wave a=0.5><color=#69E7FF>EASY";
+                break;
+            case 2:
+                kmhhGameLevel.text = "<wave a=0.5><color=#FF3200>HARD";
+                break;
+
+        }
+
+
 
         HighsScoreSwitch = true;
 
@@ -126,7 +146,7 @@ public class KMHH_ScoreResultManager : MonoBehaviour
                 case 0:
 
                     // スコアを保存
-                    PlayerPrefs.SetInt("KMHH_HighScore", score);
+                    PlayerPrefs.SetInt("KMHH_HighScoreNormal", score);
                     PlayerPrefs.Save();
                     Debug.Log("のーまるのハイスコアセーブ" + score);
                     break;
@@ -147,45 +167,45 @@ public class KMHH_ScoreResultManager : MonoBehaviour
                     break;
             }
 
-                    resultHighScoreMarkObj.SetActive(true);
+            resultHighScoreMarkObj.SetActive(true);
 
-                    KmhhHighScore = score;
+            KmhhHighScore = score;
 
-            }
-
-        }
-
-        ////////
-        public void BackToKMGMs()
-        {
-            Debug.Log("hogeOption");
-            Invoke("DerayMoveKMGMs", 1.0f);
-        }
-
-        public void ContinueKMHH()
-        {
-
-            Debug.Log("hoge");
-            Invoke("DerayMoveKMHH", 1.0f);
-        }
-        public void DerayMoveKMHH()
-        {
-            KMHH_TimeManager.gameStart = false;
-            KMHH_TimeManager.gameFinish = false;
-
-            SceneManager.LoadScene("KMHH");
-            Debug.Log("hogehoge");
-            HighsScoreSwitch = true;
-        }
-
-        public void DerayMoveKMGMs()
-        {
-            KMHH_TimeManager.gameStart = false;
-            KMHH_TimeManager.gameFinish = false;
-
-
-            SceneManager.LoadScene("KMGMs");
-            HighsScoreSwitch = true;
         }
 
     }
+
+    ////////
+    public void BackToKMGMs()
+    {
+        Debug.Log("hogeOption");
+        Invoke("DerayMoveKMGMs", 1.0f);
+    }
+
+    public void ContinueKMHH()
+    {
+
+        Debug.Log("hoge");
+        Invoke("DerayMoveKMHH", 1.0f);
+    }
+    public void DerayMoveKMHH()
+    {
+        KMHH_TimeManager.gameStart = false;
+        KMHH_TimeManager.gameFinish = false;
+
+        SceneManager.LoadScene("KMHH");
+        Debug.Log("hogehoge");
+        HighsScoreSwitch = true;
+    }
+
+    public void DerayMoveKMGMs()
+    {
+        KMHH_TimeManager.gameStart = false;
+        KMHH_TimeManager.gameFinish = false;
+
+
+        SceneManager.LoadScene("KMGMs");
+        HighsScoreSwitch = true;
+    }
+
+}

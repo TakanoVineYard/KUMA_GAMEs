@@ -149,7 +149,16 @@ public class KMHH_TimeManager : MonoBehaviour
     public void Update()
     {
 
+#if UNITY_EDITOR || UNITY_STANDALONE
 
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
+        }
+
+
+#endif
 
         debugGameTimeText.text = "Debug Info" + "\n" +
         "gameStart:" + gameStart + "\n" +
@@ -730,4 +739,6 @@ public class KMHH_TimeManager : MonoBehaviour
     ////////////////////////////////////////////////////////////////////
 
 
+
 }
+

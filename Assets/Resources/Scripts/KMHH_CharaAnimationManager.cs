@@ -339,12 +339,20 @@ public class KMHH_CharaAnimationManager : MonoBehaviour
         NumID = randomPoseNum.ToString();
         //Debug.Log("アイドルIDナンバー:"+NumID.PadLeft(3,'0'));
 
-        KMHH_CharaAnimator.CrossFadeInFixedTime("armature|anm_kmhh_idle_" + (NumID.PadLeft(3, '0')), 0.175f);
+        if (KMHH_TimeManager.getDeltaTime < 0.1f)
+        {
+            KMHH_CharaAnimator.CrossFadeInFixedTime("armature|anm_kmhh_idle_" + (NumID.PadLeft(3, '0')), 0.0f);
+        }
+        else
+        {
+            KMHH_CharaAnimator.CrossFadeInFixedTime("armature|anm_kmhh_idle_" + (NumID.PadLeft(3, '0')), 0.175f);
+            
+        }
 
 
         if (KMHH_ScoreManager.comboCountNum == 0)
         {
-            kmhhLevelText.text = "<wave a =0.5>LEVEL <size=125><color=#008000>1</color></size>";
+            kmhhLevelText.text = "<wave a =0.05>LEVEL <size=125><color=#008000>1</color></size>";
         }
 
 
@@ -353,7 +361,7 @@ public class KMHH_CharaAnimationManager : MonoBehaviour
     ////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////
     /// <summary>
-    ///アニメーションステートを変える 待機
+    ///アニメーションステートを変える エモート
     /// </summary>
     /// <returns></returns> 
     public static void ChangeCharaStateToEmotion(bool anserResultEmo)
@@ -401,16 +409,16 @@ public class KMHH_CharaAnimationManager : MonoBehaviour
         switch (KMHH_ScoreManager.comboCountNum)
         {
             case 0:
-                kmhhLevelText.text = "<wave a =0.5>LEVEL <size=125><color=#008000>1</color></size>";
+                kmhhLevelText.text = "<wave a =0.05>LEVEL <size=125><color=#008000>1</color></size>";
                 break;
             case 5:
-                kmhhLevelText.text = "<wave a =0.5>LEVEL <size=125><color=blue>2</color></size>";
+                kmhhLevelText.text = "<wave a =0.05>LEVEL <size=125><color=blue>2</color></size>";
                 break;
             case 10:
-                kmhhLevelText.text = "<wave a =0.5>LEVEL <size=125><color=red>3</color></size>";
+                kmhhLevelText.text = "<wave a =0.05>LEVEL <size=125><color=red>3</color></size>";
                 break;
             case 15:
-                kmhhLevelText.text = "<wave a =0.5><size=55>LEVEL </size><size=120><rainb><cspace=-0.01em>MAX</cspace></rainb></size>";
+                kmhhLevelText.text = "<wave a =0.05><size=55>LEVEL </size><size=120><rainb><cspace=-0.01em>MAX</cspace></rainb></size>";
                 break;
             
         }
