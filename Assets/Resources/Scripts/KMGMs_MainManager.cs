@@ -32,7 +32,11 @@ public class KMGMs_MainManager : MonoBehaviour
     {
 
     }
-        public void GoToOption()
+    public void GoToInfo()
+    {
+        Invoke("DerayMoveKMGMs_Info", 1.0f);
+    }
+    public void GoToOption()
     {
         Invoke("DerayMoveKMGMs_Option", 1.0f);
     }
@@ -62,7 +66,11 @@ public class KMGMs_MainManager : MonoBehaviour
         SceneManager.LoadScene("KMGMs_Option");
         KMGMs_SoundManager.lifeJudge = false;
     }
-
+    public void DerayMoveKMGMs_Info()
+    {
+        SceneManager.LoadScene("KMGMs_Info");
+        KMGMs_SoundManager.lifeJudge = false;
+    }
 
 
 

@@ -9,12 +9,15 @@ EditorBuildSettings:
     path: Assets/Scenes/KMGMs.unity
     guid: 682755d60c5a5174e8521b4ba9060c8e
   - enabled: 1
+    path: Assets/Scenes/KMGMs_Option.unity
+    guid: ff6876c27a2633442aed94c3eca67989
+  - enabled: 1
+    path: Assets/Scenes/KMGMs_Info.unity
+    guid: dc20ba2c973c2944ab0cc3600b01803a
+  - enabled: 1
     path: Assets/Scenes/KMHH.unity
     guid: c9e24ed3316a91e4390ef300492bda75
   - enabled: 1
     path: Assets/Scenes/KMHH_Result.unity
     guid: ef29bde08e68cf04999d96db149439be
-  - enabled: 1
-    path: Assets/Scenes/KMGMs_Option.unity
-    guid: ff6876c27a2633442aed94c3eca67989
   m_configObjects: {}

@@ -107,7 +107,7 @@ public class KMHH_CharaAnimationManager : MonoBehaviour
 
         while (oldBodyPartNum == randomBodyPartNum)
         {
-            randomBodyPartNum = UnityEngine.Random.Range(0, 4);　　//0～4用意した分でランダム数値取り出し
+            randomBodyPartNum = UnityEngine.Random.Range(0, 5);　　//0～4用意した分でランダム数値取り出し
         }
         indicateBodyPartsSpeechBubble.SetActive(true); //　吹き出し出す
         bodyPart_ChangeTextObj.SetActive(true);

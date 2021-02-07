@@ -40,7 +40,7 @@ public class KMGMs_SoundManager : MonoBehaviour
 
             kmgms_AudioSources = gameObject.GetComponents<AudioSource>();
 
-            Invoke("KMGMsStartBGMPlay",0.5f);
+            Invoke("KMGMsStartBGMPlay",0.25f);
 
             GameOnSwitch=false;
 
