@@ -1,5 +1,6 @@
 {
 	"KmhhCharaPoseArray": [
+
 		{
 			"id": "0000",
 			"eye": "U",
@@ -74,7 +75,7 @@
 		},
 		{
 			"id": "0009",
-			"eye": "L",
+			"eye": "UL",
 			"hand_LSide": "U",
 			"hand_RSide": "R",
 			"leg_LSide": "D",
@@ -82,7 +83,7 @@
 		},
 		{
 			"id": "0010",
-			"eye": "R",
+			"eye": "UR",
 			"hand_LSide": "L",
 			"hand_RSide": "U",
 			"leg_LSide": "DL",
@@ -138,7 +139,7 @@
 		},
 		{
 			"id": "0017",
-			"eye": "L",
+			"eye": "UR",
 			"hand_LSide": "L",
 			"hand_RSide": "R",
 			"leg_LSide": "D",
@@ -146,7 +147,7 @@
 		},
 		{
 			"id": "0018",
-			"eye": "R",
+			"eye": "UL",
 			"hand_LSide": "L",
 			"hand_RSide": "R",
 			"leg_LSide": "DL",
