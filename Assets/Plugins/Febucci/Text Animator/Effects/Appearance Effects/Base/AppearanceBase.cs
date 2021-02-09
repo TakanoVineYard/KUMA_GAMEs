@@ -6,7 +6,7 @@
     /// </summary>
     public abstract class AppearanceBase : EffectsBase
     {
-        protected float effectDuration = .3f;
+        public float effectDuration = .3f;
         
         [System.Obsolete("This variable will be removed from next versions. Please use 'effectDuration' instead")]
         protected float showDuration => effectDuration;

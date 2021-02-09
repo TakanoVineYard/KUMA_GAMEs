@@ -23,10 +23,27 @@ namespace Febucci.UI.Core
 #endif
 
 
-    internal static class TAnimBuilder
+    public static class TAnimBuilder
     {
+
+        [System.Serializable]
+        internal struct TagFormatting
+        {
+            public TagFormatting(char openingChar, char closingChar)
+            {
+                this.charOpeningTag = openingChar;
+                this.charClosingTag = closingChar;
+            }
+
+            public char charOpeningTag;
+            public char charClosingTag;
+        }
+
+        internal static TagFormatting tag_behaviors = new TagFormatting('<', '>');
+        internal static TagFormatting tag_appearances = new TagFormatting('{', '}');
+
         static TAnimGlobalDataScriptable _data;
-        public static bool hasData { get; private set; }
+        static bool hasData;
         internal static TAnimGlobalDataScriptable data
         {
             get => _data;
@@ -41,7 +58,7 @@ namespace Febucci.UI.Core
         internal static string[] GetAllBehaviorsTags()
         {
             List<string> tags = new List<string>();
-            for(int i = 0; i < behaviorsData.Count; i++)
+            for (int i = 0; i < behaviorsData.Count; i++)
             {
                 tags.Add(behaviorsData.Keys.ElementAt(i));
             }
@@ -65,13 +82,17 @@ namespace Febucci.UI.Core
 
         static bool globalDatabaseInitialized;
 
-
-        internal static void InitializeGlobalDatabase()
+        /// <summary>
+        /// Initializes and Load TextAnimator's effects and global settings, in case it has not been loaded already.
+        /// </summary>
+        public static void InitializeGlobalDatabase()
         {
             if (globalDatabaseInitialized)
                 return;
 
             globalDatabaseInitialized = true;
+
+            TextUtilities.Initialize();
 
 
             #region Local Methods
@@ -142,6 +163,24 @@ namespace Febucci.UI.Core
             {
                 hasData = true;
 
+                #region Settings
+
+                if (data.customTagsFormatting)
+                {
+                    if (data.tagInfo_behaviors.charOpeningTag != data.tagInfo_appearances.charOpeningTag
+                        && data.tagInfo_behaviors.charClosingTag != data.tagInfo_appearances.charClosingTag)
+                    {
+                        tag_behaviors = data.tagInfo_behaviors;
+                        tag_appearances = data.tagInfo_appearances;
+                    }
+                    else
+                    {
+                        Debug.LogError("Not valid"); //todo error
+                    }
+                }
+
+                #endregion
+
                 #region Global Effects
                 //Adds global effects
                 for (int i = 0; i < data.globalBehaviorPresets.Length; i++)
@@ -157,7 +196,7 @@ namespace Febucci.UI.Core
 
                 #endregion
 
-                #region Custom Features
+                #region Custom Actions
 
                 if (data.customActions != null && data.customActions.Length > 0)
                 {

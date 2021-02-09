@@ -33,6 +33,14 @@ namespace Febucci.UI.Core
                 data.colors[i] = sources.colors[i];
             }
         }
+
+        public void Hide()
+        {
+            for (byte i = 0; i < sources.vertices.Length; i++)
+            {
+                data.vertices[i] = Vector3.zero;
+            }
+        }
     }
 
     //Original character data

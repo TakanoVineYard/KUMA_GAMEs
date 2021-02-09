@@ -14,6 +14,10 @@ namespace Febucci.UI.Core.Editors
         SerializedProperty appearancesPresets;
         SerializedProperty customActionsArray;
 
+        SerializedProperty customTagsFormatting;
+        SerializedProperty tagInfo_behaviors;
+        SerializedProperty tagInfo_appearances;
+
         TextAnimatorDrawer.UserPresetDrawer[] behaviorDrawers = new TextAnimatorDrawer.UserPresetDrawer[0];
         TextAnimatorDrawer.UserPresetDrawer[] appearancesDrawers = new TextAnimatorDrawer.UserPresetDrawer[0];
 
@@ -22,6 +26,11 @@ namespace Febucci.UI.Core.Editors
             behaviorPresets = serializedObject.FindProperty("globalBehaviorPresets");
             appearancesPresets = serializedObject.FindProperty("globalAppearancePresets");
             customActionsArray = serializedObject.FindProperty("customActions");
+
+            tagInfo_behaviors = serializedObject.FindProperty("tagInfo_behaviors");
+            tagInfo_appearances = serializedObject.FindProperty("tagInfo_appearances");
+            customTagsFormatting = serializedObject.FindProperty("customTagsFormatting");
+
             script = (TAnimGlobalDataScriptable)target;
 
 
@@ -60,12 +69,29 @@ namespace Febucci.UI.Core.Editors
                 EditorGUI.indentLevel--;
             }
 
+            EditorGUILayout.Space();
 
             {
                 EditorGUI.indentLevel++;
                 EditorGUILayout.LabelField("Actions", EditorStyles.boldLabel);
 
                 EditorGUILayout.PropertyField(customActionsArray, true);
+
+                EditorGUI.indentLevel--;
+            }
+
+            EditorGUILayout.Space();
+
+            {
+                EditorGUI.indentLevel++;
+                EditorGUILayout.LabelField("Tags Info", EditorStyles.boldLabel);
+
+                EditorGUILayout.PropertyField(customTagsFormatting, true);
+                if (customTagsFormatting.boolValue)
+                {
+                    EditorGUILayout.PropertyField(tagInfo_behaviors, true);
+                    EditorGUILayout.PropertyField(tagInfo_appearances, true);
+                }
 
                 EditorGUI.indentLevel--;
             }

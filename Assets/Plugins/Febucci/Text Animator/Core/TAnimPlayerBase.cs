@@ -166,7 +166,7 @@ namespace Febucci.UI.Core
                     if (time > 0)
                     {
                         float t = 0;
-                        while (t <= time)
+                        while (t <= time && !HasSkipped())
                         {
                             t += textAnimator.time.deltaTime;
                             yield return null;
@@ -177,7 +177,7 @@ namespace Febucci.UI.Core
                 float timeToWait;
                 char characterShown;
 
-                if(resetTypingSpeedAtStartup)
+                if (resetTypingSpeedAtStartup)
                     typewriterPlayerSpeed = 1;
 
                 float typewriterTagsSpeed = 1;
@@ -327,7 +327,7 @@ namespace Febucci.UI.Core
             if (string.IsNullOrEmpty(text))
             {
                 textToShow = string.Empty;
-                textAnimator.SyncText(string.Empty, true);
+                textAnimator.SetText(string.Empty, true);
                 return;
             }
 
@@ -335,7 +335,7 @@ namespace Febucci.UI.Core
 
             wantsToSkip = false;
 
-            textAnimator.SyncText(textToShow, useTypeWriter);
+            textAnimator.SetText(textToShow, useTypeWriter);
 
             if (!useTypeWriter)
             {

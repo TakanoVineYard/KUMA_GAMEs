@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using TagFormatting = Febucci.UI.Core.TAnimBuilder.TagFormatting;
 
 namespace Febucci.UI.Core
 {
@@ -24,6 +25,11 @@ namespace Febucci.UI.Core
 
         [SerializeField]
         internal string[] customActions = new string[0];
+
+
+        [SerializeField] internal bool customTagsFormatting = false;
+        [SerializeField] internal TagFormatting tagInfo_behaviors = new TagFormatting('<', '>');
+        [SerializeField] internal TagFormatting tagInfo_appearances = new TagFormatting('{', '}');
     }
 
 }

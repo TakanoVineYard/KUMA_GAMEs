@@ -112,6 +112,7 @@
      <Compile Include="Assets\Resources\Scripts\KMGMs_ExternalLinkManager.cs" />
      <Compile Include="Assets\Resources\Scripts\KMGMs_GameLevelManager.cs" />
      <Compile Include="Assets\Resources\Scripts\KMGMs_MainManager.cs" />
+     <Compile Include="Assets\Resources\Scripts\KMGMs_MonetizationManager.cs" />
      <Compile Include="Assets\Resources\Scripts\KMGMs_SoundManager.cs" />
      <Compile Include="Assets\Resources\Scripts\KMGMs_SoundVolumeManager.cs" />
      <Compile Include="Assets\Resources\Scripts\KMGMs_TapManager.cs" />
@@ -520,6 +521,30 @@
     </Reference>
     <Reference Include="Ludiq.OdinSerializer">
         <HintPath>D:/TakanoVineyard/MyWork/UnityProjects/KUMA_GAMEs/Assets/Ludiq/Ludiq.PeekCore/Runtime/Dependencies/OdinSerializer/EditorOnly/Ludiq.OdinSerializer.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Advertisements.Android">
+        <HintPath>D:/TakanoVineyard/MyWork/UnityProjects/KUMA_GAMEs/Assets/UnityAds/UnityEngine.Advertisements.Android.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Advertisements.Editor">
+        <HintPath>D:/TakanoVineyard/MyWork/UnityProjects/KUMA_GAMEs/Assets/UnityAds/UnityEngine.Advertisements.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Advertisements.iOS">
+        <HintPath>D:/TakanoVineyard/MyWork/UnityProjects/KUMA_GAMEs/Assets/UnityAds/UnityEngine.Advertisements.iOS.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Advertisements.Unsupported">
+        <HintPath>D:/TakanoVineyard/MyWork/UnityProjects/KUMA_GAMEs/Assets/UnityAds/UnityEngine.Advertisements.Unsupported.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Monetization.Android">
+        <HintPath>D:/TakanoVineyard/MyWork/UnityProjects/KUMA_GAMEs/Assets/UnityAds/UnityEngine.Monetization.Android.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Monetization.Editor">
+        <HintPath>D:/TakanoVineyard/MyWork/UnityProjects/KUMA_GAMEs/Assets/UnityAds/UnityEngine.Monetization.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Monetization.iOS">
+        <HintPath>D:/TakanoVineyard/MyWork/UnityProjects/KUMA_GAMEs/Assets/UnityAds/UnityEngine.Monetization.iOS.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.Monetization.Unsupported">
+        <HintPath>D:/TakanoVineyard/MyWork/UnityProjects/KUMA_GAMEs/Assets/UnityAds/UnityEngine.Monetization.Unsupported.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
         <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.12f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
