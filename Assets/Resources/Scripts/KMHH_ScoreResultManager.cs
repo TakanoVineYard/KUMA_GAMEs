@@ -34,7 +34,7 @@ public class KMHH_ScoreResultManager : MonoBehaviour
     TextMeshProUGUI resultScoreMiss;
     TextMeshProUGUI kmhhGameLevel;
 
-    bool HighsScoreSwitch = false;
+    public static bool HighsScoreSwitch = false;
 
     // Start is called before the first frame update
     public void Start()

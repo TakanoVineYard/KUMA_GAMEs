@@ -297,6 +297,12 @@
  <Reference Include="Ludiq.OdinSerializer">
  <HintPath>D:/TakanoVineyard/MyWork/UnityProjects/KUMA_GAMEs/Assets/Ludiq/Ludiq.PeekCore/Runtime/Dependencies/OdinSerializer/EditorOnly/Ludiq.OdinSerializer.dll</HintPath>
  </Reference>
+ <Reference Include="UnityEngine.Advertisements.Editor">
+ <HintPath>D:/TakanoVineyard/MyWork/UnityProjects/KUMA_GAMEs/Assets/UnityAds/UnityEngine.Advertisements.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.Monetization.Editor">
+ <HintPath>D:/TakanoVineyard/MyWork/UnityProjects/KUMA_GAMEs/Assets/UnityAds/UnityEngine.Monetization.Editor.dll</HintPath>
+ </Reference>
  <Reference Include="nunit.framework">
  <HintPath>D:/TakanoVineyard/MyWork/UnityProjects/KUMA_GAMEs/Library/PackageCache/com.unity.ext.nunit@1.0.0/net35/unity-custom/nunit.framework.dll</HintPath>
  </Reference>
