@@ -14,8 +14,26 @@ public class KMGMs_AdManager : MonoBehaviour, IUnityAdsListener
     private string rewardedVideoAd = "rewardedVideo";
     public bool isTestAd;
 
+    static public KMGMs_AdManager instance;
+
+    void Awake()
+    {
+        if (instance == null)
+        {
+
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+
+            Destroy(gameObject);
+        }
+    }
+
     private void Start()
     {
+
         Advertisement.AddListener(this);
         InitializeAdvertisement();
     }
@@ -90,14 +108,14 @@ public class KMGMs_AdManager : MonoBehaviour, IUnityAdsListener
     public void BackToKMGMs()
     {
         Debug.Log("hogeOption");
-        Invoke("DerayMoveKMGMs", 1.0f);
+        Invoke("DerayMoveKMGMs", 0.5f);
     }
 
     public void ContinueKMHH()
     {
 
         Debug.Log("hoge");
-        Invoke("DerayMoveKMHH", 1.0f);
+        Invoke("DerayMoveKMHH", 0.5f);
     }
     public void DerayMoveKMHH()
     {

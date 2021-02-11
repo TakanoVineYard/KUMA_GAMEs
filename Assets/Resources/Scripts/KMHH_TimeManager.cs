@@ -113,6 +113,7 @@ public class KMHH_TimeManager : MonoBehaviour
     void Start()
     {
 
+
         Debug.Log("さいしょのようい");
 
         getDeltaTime = 0.0f;
