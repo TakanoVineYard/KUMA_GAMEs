@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement; //シーン切り替え
 public class KMGMs_AdManager : MonoBehaviour, IUnityAdsListener
 {
 
+    
     private string playStoreID = "4006125";
     private string appStoreID = "4006124";
 
@@ -48,22 +49,38 @@ public class KMGMs_AdManager : MonoBehaviour, IUnityAdsListener
 #endif
     }
 
-    public void PlayInterstitialAd()
+    public void PlayInterstitialAd() //タイトル戻りのときはさしこみ広告
     {
-        if (!Advertisement.IsReady(interstitialAd))
+        if (((PlayerPrefs.GetInt("kmhh_PlayCount", 0)) % 1) == 3)
         {
-            return;
+
+            if (!Advertisement.IsReady(interstitialAd))
+            {
+                return;
+            }
+            Advertisement.Show(interstitialAd);
         }
-        Advertisement.Show(interstitialAd);
+        else{
+
+            BackToKMGMs();
+        }
     }
 
-    public void PlayRewardedVdeoAd()
+    public void PlayRewardedVdeoAd() //Continueのときは動画広告
     {
-        if (!Advertisement.IsReady(rewardedVideoAd))
+        if (((PlayerPrefs.GetInt("kmhh_PlayCount", 0)) % 1) == 0)
         {
-            return;
+
+            if (!Advertisement.IsReady(rewardedVideoAd))
+            {
+                return;
+            }
+            Advertisement.Show(rewardedVideoAd);
         }
-        Advertisement.Show(rewardedVideoAd);
+        else{
+
+            ContinueKMHH();
+        }
     }
 
     public void OnUnityAdsReady(string placementId)
@@ -86,19 +103,39 @@ public class KMGMs_AdManager : MonoBehaviour, IUnityAdsListener
         switch (showResult)
         {
             case ShowResult.Failed:
+                if (placementId == rewardedVideoAd)
+                {
+                    Debug.Log("Reward The Player");
+                    DerayMoveKMHH();
+                }
+                if (placementId == interstitialAd)
+                {
+                    Debug.Log("Finished interstitial");
+                    DerayMoveKMGMs();
+                }
                 break;
             case ShowResult.Skipped:
+                if (placementId == rewardedVideoAd)
+                {
+                    Debug.Log("Reward The Player");
+                    DerayMoveKMHH();
+                }
+                if (placementId == interstitialAd)
+                {
+                    Debug.Log("Finished interstitial");
+                    DerayMoveKMGMs();
+                }
                 break;
             case ShowResult.Finished:
                 if (placementId == rewardedVideoAd)
                 {
                     Debug.Log("Reward The Player");
-                    ContinueKMHH();
+                    DerayMoveKMHH();
                 }
                 if (placementId == interstitialAd)
                 {
                     Debug.Log("Finished interstitial");
-                    BackToKMGMs();
+                    DerayMoveKMGMs();
                 }
                 break;
 
