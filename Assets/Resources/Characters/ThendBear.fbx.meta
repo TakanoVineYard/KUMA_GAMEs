@@ -2,7 +2,100 @@ fileFormatVersion: 2
 guid: d5d4bada7fc80b645a0598d9fe1688aa
 ModelImporter:
   serializedVersion: 19301
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      74: -6468521418558324694
+    second: Body|temp
+  - first:
+      74: 7343634108053701228
+    second: Body|anm_kmhh_Emo_Bye_L_ThendBear_Poses_010.blend
+  - first:
+      74: -5523449568187521683
+    second: armature|temp
+  - first:
+      74: -6211789704652098428
+    second: armature|anm_kmhh_Emo_Bad_L_ThendBear_Poses_010.blend
+  - first:
+      74: 8003649125370047325
+    second: armature|anm_kmhh_Emo_Bow_L_ThendBear_Poses_010.blend
+  - first:
+      74: -107795364923111341
+    second: armature|anm_kmhh_Emo_Bye_L_ThendBear_Poses_010.blend
+  - first:
+      74: -3677774719393000976
+    second: armature|anm_kmhh_Emo_Excellent_L_ThendBear_Poses_010.blend
+  - first:
+      74: 6100956790744089413
+    second: armature|anm_kmhh_Emo_Good_L_ThendBear_Poses_010.blend
+  - first:
+      74: -3739441329614161312
+    second: armature|anm_kmhh_Emo_Great_L_ThendBear_Poses_010.blend
+  - first:
+      74: 4540616002317496874
+    second: armature|anm_kmhh_Emo_Happy_L_ThendBear_Poses_010.blend
+  - first:
+      74: 3911501974324074406
+    second: armature|anm_kmhh_Emo_JitaBata_L_ThendBear_Poses_010.blend
+  - first:
+      74: 8995419260677726526
+    second: armature|anm_kmhh_Emo_KnockDown_L_ThendBear_Poses_010.blend
+  - first:
+      74: 5710819274709579904
+    second: armature|anm_kmhh_Emo_Miss_L_ThendBear_Poses_010.blend
+  - first:
+      74: -3058111832226805597
+    second: armature|anm_kmhh_Emo_No_L_ThendBear_Poses_010.blend
+  - first:
+      74: -5147094388166900764
+    second: armature|anm_kmhh_Emo_NotGood_L_ThendBear_Poses_010.blend
+  - first:
+      74: 4811310645690398197
+    second: armature|anm_kmhh_Emo_Poor_L_ThendBear_Poses_010.blend
+  - first:
+      74: 4158895845156248758
+    second: armature|anm_kmhh_Emo_Poses_L_ThendBear_Poses_010.blend
+  - first:
+      74: 5240419145499261362
+    second: armature|anm_kmhh_Emo_Surprise_L_ThendBear_Poses_010.blend
+  - first:
+      74: -2887976819623873542
+    second: armature|anm_kmhh_Emo_Weird_L_ThendBear_Poses_010.blend
+  - first:
+      74: -4809916737910689368
+    second: armature|anm_kmhh_idle_000_L_ThendBear_Poses_010.blend
+  - first:
+      74: 387373766034481045
+    second: armature|anm_kmhh_idle_001_L_ThendBear_Poses_010.blend
+  - first:
+      74: -977518756984601232
+    second: armature|anm_kmhh_idle_002_L_ThendBear_Poses_010.blend
+  - first:
+      74: 6005275240880969056
+    second: armature|anm_kmhh_idle_003_L_ThendBear_Poses_010.blend
+  - first:
+      74: -8835201912865070441
+    second: armature|anm_kmhh_idle_004_L_ThendBear_Poses_010.blend
+  - first:
+      74: -2819526727121886460
+    second: armature|anm_kmhh_idle_005_L_ThendBear_Poses_010.blend
+  - first:
+      74: -5930245040818381840
+    second: armature|anm_kmhh_idle_006_L_ThendBear_Poses_010.blend
+  - first:
+      74: -4189923430834965566
+    second: armature|anm_kmhh_idle_007_L_ThendBear_Poses_010.blend
+  - first:
+      74: 5121540238769335085
+    second: armature|anm_kmhh_idle_008_L_ThendBear_Poses_010.blend
+  - first:
+      74: -1967357524835064612
+    second: armature|anm_kmhh_idle_009_L_ThendBear_Poses_010.blend
+  - first:
+      74: 1372915344805710389
+    second: EyeAndEyeblow|temp
+  - first:
+      74: 226111475316525884
+    second: EyeAndEyeblow|anm_kmhh_idle_004_L_ThendBear_Poses_010.blend
   externalObjects: {}
   materials:
     materialImportMode: 1
@@ -51,8 +144,8 @@ ModelImporter:
     weldVertices: 1
     preserveHierarchy: 0
     skinWeightsMode: 1
-    maxBonesPerVertex: 5
-    minBoneWeight: 0.001
+    maxBonesPerVertex: 8
+    minBoneWeight: 0.01
     meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
