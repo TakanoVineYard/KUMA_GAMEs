@@ -57,6 +57,7 @@ public class KMHH_CharaAnimationManager : MonoBehaviour
     public void Start()
     {
 
+
         GetCharaJSON();
         indicateBodyPartsSpeechBubble = GameObject.Find("ui_KMHH_SpeechBubble");
         kmhhSpeechBubbleAnimator = indicateBodyPartsSpeechBubble.GetComponentInChildren<Animator>();
@@ -85,6 +86,20 @@ public class KMHH_CharaAnimationManager : MonoBehaviour
 
 
         kmhh_CharaPoseChangeSound = gameObject.GetComponents<AudioSource>();
+    }
+
+
+    public void Update()
+    {
+
+        if ((KMHH_TimeManager.switchStartMethod == true) && (KMHH_TimeManager.gameFinish == false))
+        {
+
+            GetCharaJSON();
+            indicateBodyPartsSpeechBubble = GameObject.Find("ui_KMHH_SpeechBubble");
+            kmhhSpeechBubbleAnimator = indicateBodyPartsSpeechBubble.GetComponentInChildren<Animator>();
+        }
+
     }
 
 

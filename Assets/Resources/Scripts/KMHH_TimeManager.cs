@@ -88,7 +88,7 @@ public class KMHH_TimeManager : MonoBehaviour
     bool countDownTrigger2 = false; //カウントダウンのトリガー
     bool countDownTrigger1 = false; //カウントダウンのトリガー
 
-    [SerializeField] public static Animator KMHH_GameSceneChangeWallAnimator; //リザルトアニメーター
+    public Animator KMHH_GameSceneChangeWallAnimator; //リザルトアニメーター
 
     [SerializeField] public static Animator KMHH_countDownEffAnimator; //リザルトアニメーター
 
@@ -212,10 +212,9 @@ public class KMHH_TimeManager : MonoBehaviour
                     gameSetTime = 5.0f;
 
                     kmhhSpeedUpONOFF = true; //スピード上げる
-
                     break;
                 case 1: //イージー
-                    gameSetTime = 15.0f;
+                    gameSetTime = 10.0f;
 
                     kmhhSpeedUpONOFF = false;　//スピード上げない
                     break;
@@ -225,9 +224,12 @@ public class KMHH_TimeManager : MonoBehaviour
                     kmhhSpeedUpONOFF = true; //スピード上げる
 
                     charaSpeed = 0.05f; //正解時のキャラスピードアップ倍率
-
                     break;
+
+
             }
+
+            Debug.Log("ゲームじかん：" + gameSetTime);
 
 
 
@@ -288,6 +290,7 @@ public class KMHH_TimeManager : MonoBehaviour
             //            countDownEffObj_1 = GameObject.Find("eff_KMHH_CountDown_1");
             //            countDownEffObj_0 = GameObject.Find("eff_KMHH_CountDown_Start");
             //            countDownEffObj_Fin = GameObject.Find("eff_KMHH_CountDown_Finish");
+            
             GameSceneChangeWallObj = GameObject.Find("eff_SceneChange");
 
 
@@ -828,6 +831,38 @@ public class KMHH_TimeManager : MonoBehaviour
 
     public void GotoMain()
     {
+
+        Debug.Log("Updateのなかのさいしょのようい");
+        switchStartMethod = true; //ゲーム自体開始のスイッチ
+        getDeltaTime = 0.0f; //時間経過取得の大元
+        gameCurrentTime = 0.0f; //現在の時間
+        gameStandbyTime = 1.0f; //スタンバイの時間
+        gameTimePast = 0.0f; //時間の経過
+        gameTimePastInt = 0;  //時間の経過のInt化
+        gameFinishTime = 0.0f; //ゲーム終了時の時間を記録
+        anserTime = 0.0f; //回答時のカレントタイム。
+        recordAnserTime = 0.0f; //回答時のカレントタイム。
+        idleTime = 0.0f; //待機時のカレントタイム。
+        gameStart = false; //ゲームがスタートしているかの判定
+        gameFinish = false; //ゲームが終了しているかの判定
+        editTimeScale = 1.0f; //キャラの動き時間のスケール
+        charaSpeed = 0.025f; //正解時のキャラスピードアップ倍率
+        questionStatus = false; //出題状態かどうか
+        switchIdle = false; //条件 Idleのスイッチ
+        switchQuestion = false; //条件 Questionのスイッチ
+        questionNumOfTimes = 0;  //出題回数
+
+
+
+        countDownStartTrigger = true;
+
+
+        KMHH_ScoreResultManager.HighsScoreSwitch = true;
+
+        textReadyPose.text = "";
+
+
+
         kmhhGamePause = true;
 
         Debug.Log("Updateのなかのさいしょのようい");
@@ -851,7 +886,6 @@ public class KMHH_TimeManager : MonoBehaviour
         questionNumOfTimes = 0;  //出題回数
 
         Time.timeScale = 1.0f;
-
 
         countDownStartTrigger = true;
 
