@@ -6,6 +6,7 @@ using static KMHH_TimeManager; //時間管理スクリプトを使う
 using static KMHH_PlayerInputManager; //インプット管理スクリプトを使う
 using static KMHH_SoundManager;
 using TMPro; //TextMeshPro用
+using UnityEngine.SceneManagement; //シーン切り替え
 
 /// <summary>
 ///スコア関係の管理
@@ -68,6 +69,7 @@ public class KMHH_ScoreManager : MonoBehaviour
     {
 
         kmhhGameLevel = kmhhGameLevelObj.GetComponent<TextMeshProUGUI>();
+
 
 
         switch (PlayerPrefs.GetInt("kmhhGameLevel", 0))
@@ -142,6 +144,27 @@ public class KMHH_ScoreManager : MonoBehaviour
     /// <returns></returns> 
     void Update()
     {
+
+#if UNITY_EDITOR || UNITY_STANDALONE
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            //if (stopTest) { Time.timeScale = 0f; stopTest = false; }
+            //else { Time.timeScale = 1f; stopTest = true; }
+        }
+
+
+
+#endif
+
+
+
+
+        if (Mathf.Approximately(Time.timeScale, 0f))
+        {
+            return;
+        }
          //ゲーム始まってないし、終わってない間　リセット
         
         if((KMHH_TimeManager.gameStart==false)&&(KMHH_TimeManager.gameFinish==false)){

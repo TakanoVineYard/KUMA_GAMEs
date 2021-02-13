@@ -11,6 +11,7 @@ using UnityEngine.SceneManagement; //シーン切り替え
 
 using static KMGMs_SoundManager;
 
+
 using TMPro; //TextMeshPro用
 
 /// <summary>
@@ -55,10 +56,10 @@ public class KMHH_TimeManager : MonoBehaviour
 
     public static int questionNumOfTimes = 0;  //出題回数
 
-    public float gameSetTime = 100.0f; //ゲームが終了するまでの時間
+    float gameSetTime; //ゲームが終了するまでの時間
 
     GameObject upDateGameTimerObj; //ゲームタイマーオブジェクト入れ
-    public Text upDateGameTimerText; //ゲームタイマー数値をいれるテキスト
+    Text upDateGameTimerText; //ゲームタイマー数値をいれるテキスト
 
 
     public static TextMeshProUGUI textReadyPose; //出題時、待機時のテキスト表示
@@ -68,6 +69,8 @@ public class KMHH_TimeManager : MonoBehaviour
 
 
     public AudioSource[] kmhh_AudioSources; //リザルト音源
+
+    bool kmhhGamePause = true;
 
     ////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////
@@ -109,6 +112,12 @@ public class KMHH_TimeManager : MonoBehaviour
     ////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////
 
+    public GameObject kmhhGamePauseWindowObj;
+
+    ////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////
+
+
 
     void Start()
     {
@@ -130,7 +139,7 @@ public class KMHH_TimeManager : MonoBehaviour
 
 
         upDateGameTimerObj = GameObject.Find("ui_GameTimer"); //ゲーム時間経過用オブジェクト拾ってくるぜ  
-
+        upDateGameTimerText = upDateGameTimerObj.GetComponentInChildren<Text>();
         upDateGameTimerText.text = gameSetTime.ToString(); //　時間制限をテキスト更新
 
 
@@ -149,17 +158,11 @@ public class KMHH_TimeManager : MonoBehaviour
     // Update is called once per frame
     public void Update()
     {
-
-#if UNITY_EDITOR || UNITY_STANDALONE
-
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Mathf.Approximately(Time.timeScale, 0f))
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-
+            return;
         }
 
-
-#endif
 
         debugGameTimeText.text = "Debug Info" + "\n" +
         "gameStart:" + gameStart + "\n" +
@@ -201,22 +204,23 @@ public class KMHH_TimeManager : MonoBehaviour
 
         if ((switchStartMethod == true) && (gameFinish == false))
         {
+
             //ゲームレベル
             switch (KMGMs_GameLevelManager.kmhh_GameLevel)
             {
-                case 0:
-                    gameSetTime = 75.0f;
+                case 0:  //ノーマル
+                    gameSetTime = 5.0f;
 
                     kmhhSpeedUpONOFF = true; //スピード上げる
 
                     break;
-                case 1:
-                    gameSetTime = 50.0f;
+                case 1: //イージー
+                    gameSetTime = 15.0f;
 
                     kmhhSpeedUpONOFF = false;　//スピード上げない
                     break;
-                case 2:
-                    gameSetTime = 100.0f;
+                case 2:  //ハード
+                    gameSetTime = 15.0f;
 
                     kmhhSpeedUpONOFF = true; //スピード上げる
 
@@ -291,7 +295,7 @@ public class KMHH_TimeManager : MonoBehaviour
 
 
             upDateGameTimerObj = GameObject.Find("ui_GameTimer"); //ゲーム時間経過用オブジェクト拾ってくるぜ  
-
+            upDateGameTimerText = upDateGameTimerObj.GetComponentInChildren<Text>();
             upDateGameTimerText.text = gameSetTime.ToString(); //　時間制限をテキスト更新
             upDateGameTimerText.color = new Color(255f / 255f, 255f / 255f, 255f / 255f);
 
@@ -302,8 +306,11 @@ public class KMHH_TimeManager : MonoBehaviour
             debugTextSwitch = true;
             DebugTextOnOff();
 
+            upDateGameTimerText.text = gameSetTime.ToString(); //　時間制限をテキスト更新
 
             textReadyPose = GameObject.Find("ui_KMHH_Text_Ready_Pose").GetComponentInChildren<TextMeshProUGUI>(); //
+
+            Debug.Log("制限時間：" + gameSetTime);
         }
 
         getDeltaTime += Time.deltaTime;
@@ -556,6 +563,16 @@ public class KMHH_TimeManager : MonoBehaviour
 
         Invoke("DerayGameTitleLoadRun", 4.0f);   // カウントダウン全部消す 
 
+
+
+        //遊んだ回数加算
+
+        int kmhh_PlayCountAdd = PlayerPrefs.GetInt("kmhh_PlayCount", 0) + 1;
+
+        PlayerPrefs.SetInt("kmhh_PlayCount", kmhh_PlayCountAdd);
+        PlayerPrefs.Save();
+        Debug.Log("遊んだの" + kmhh_PlayCountAdd + "回目");
+
     }
     public void DerayGameTitleLoadRun()
     {
@@ -738,8 +755,109 @@ public class KMHH_TimeManager : MonoBehaviour
     }
     ////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////
+    ///
+
+    public void GameStartStop()
+    {
+        if ((gameStart == true) && (gameFinish == false))
+        {
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            if (kmhhGamePause)
+            {
+                kmhhGamePauseWindowObj.SetActive(true);
+                Time.timeScale = 0f;
+                kmhhGamePause = false;
+                kmhh_AudioSources[5].Pause();
+            }
+            else
+            {
+                kmhhGamePauseWindowObj.SetActive(false);
+                Time.timeScale = 1f;
+                kmhhGamePause = true;
+                if (!gameStart)
+                {
+                    kmhh_AudioSources[5].Play();
+                }
+            }
+
+        }
+    }
+    public void RestartKMHH()
+    {
+        Debug.Log("Updateのなかのさいしょのようい");
+        switchStartMethod = true; //ゲーム自体開始のスイッチ
+        getDeltaTime = 0.0f; //時間経過取得の大元
+        gameCurrentTime = 0.0f; //現在の時間
+        gameStandbyTime = 1.0f; //スタンバイの時間
+        gameTimePast = 0.0f; //時間の経過
+        gameTimePastInt = 0;  //時間の経過のInt化
+        gameFinishTime = 0.0f; //ゲーム終了時の時間を記録
+        anserTime = 0.0f; //回答時のカレントタイム。
+        recordAnserTime = 0.0f; //回答時のカレントタイム。
+        idleTime = 0.0f; //待機時のカレントタイム。
+        gameStart = false; //ゲームがスタートしているかの判定
+        gameFinish = false; //ゲームが終了しているかの判定
+        editTimeScale = 1.0f; //キャラの動き時間のスケール
+        charaSpeed = 0.025f; //正解時のキャラスピードアップ倍率
+        questionStatus = false; //出題状態かどうか
+        switchIdle = false; //条件 Idleのスイッチ
+        switchQuestion = false; //条件 Questionのスイッチ
+        questionNumOfTimes = 0;  //出題回数
 
 
 
+        countDownStartTrigger = true;
+
+
+        KMHH_ScoreResultManager.HighsScoreSwitch = true;
+
+        textReadyPose.text = "";
+
+
+
+
+        SceneManager.LoadScene("KMHH");
+
+        Debug.Log("hogehoge");
+
+
+
+
+
+    }
+
+    public void GotoMain()
+    {
+        kmhhGamePause = true;
+
+        Debug.Log("Updateのなかのさいしょのようい");
+        switchStartMethod = true; //ゲーム自体開始のスイッチ
+        getDeltaTime = 0.0f; //時間経過取得の大元
+        gameCurrentTime = 0.0f; //現在の時間
+        gameStandbyTime = 1.0f; //スタンバイの時間
+        gameTimePast = 0.0f; //時間の経過
+        gameTimePastInt = 0;  //時間の経過のInt化
+        gameFinishTime = 0.0f; //ゲーム終了時の時間を記録
+        anserTime = 0.0f; //回答時のカレントタイム。
+        recordAnserTime = 0.0f; //回答時のカレントタイム。
+        idleTime = 0.0f; //待機時のカレントタイム。
+        gameStart = false; //ゲームがスタートしているかの判定
+        gameFinish = false; //ゲームが終了しているかの判定
+        editTimeScale = 1.0f; //キャラの動き時間のスケール
+        charaSpeed = 0.025f; //正解時のキャラスピードアップ倍率
+        questionStatus = false; //出題状態かどうか
+        switchIdle = false; //条件 Idleのスイッチ
+        switchQuestion = false; //条件 Questionのスイッチ
+        questionNumOfTimes = 0;  //出題回数
+
+        Time.timeScale = 1.0f;
+
+
+        countDownStartTrigger = true;
+
+        KMGMs_SoundManager.lifeJudge = true;
+
+        SceneManager.LoadScene("KMGMs");
+    }
 }
 

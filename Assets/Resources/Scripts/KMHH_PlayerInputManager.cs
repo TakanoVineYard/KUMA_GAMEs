@@ -8,6 +8,7 @@ using static KMHH_TimeManager; //時間管理スクリプトを使う
 using static KMHH_CharaAnimationManager;
 using static KMHH_ScoreManager;//スコア管理スクリプトを使う
 using static KMHH_SoundManager;
+using UnityEngine.SceneManagement; //シーン切り替え
 
 
 public class KMHH_PlayerInputManager : MonoBehaviour
@@ -39,6 +40,11 @@ public class KMHH_PlayerInputManager : MonoBehaviour
     /// <returns></returns>   
     void Update()
     {
+
+        if (Mathf.Approximately(Time.timeScale, 0f))
+        {
+            return;
+        }
 
 
         if (switchResetAnserResult)

@@ -42,11 +42,14 @@ public class KMHH_ScoreResultManager : MonoBehaviour
 
     public static bool HighsScoreSwitch = false;
 
+
+    //public TextMeshProUGUI kumaCoinValueText;
+
     // Start is called before the first frame update
     public void Start()
     {
         // スコアのロード
-        KmhhHighScore = CryptoPlayerPrefs.GetInt("KMHH_HighScore", 0);
+        KmhhHighScore = PlayerPrefs.GetInt("KMHH_HighScore", 0);
         /*
         resultMaxComboObj = GameObject.Find("ResultMaxCombo");
         resultScoreTextObj = GameObject.Find("ResultScore");
@@ -117,19 +120,19 @@ public class KMHH_ScoreResultManager : MonoBehaviour
             {
                 case 0:
 
-                    KmhhHighScore = CryptoPlayerPrefs.GetInt("KMHH_HighScoreNormal", 0);
+                    KmhhHighScore = PlayerPrefs.GetInt("KMHH_HighScoreNormal", 0);
 
                     Debug.Log("のーまるのハイスコア:" + KmhhHighScore);
                     break;
                 case 1:
 
-                    KmhhHighScore = CryptoPlayerPrefs.GetInt("KMHH_HighScoreEasy", 0);
+                    KmhhHighScore = PlayerPrefs.GetInt("KMHH_HighScoreEasy", 0);
 
                     Debug.Log("いーじーのハイスコア:" + KmhhHighScore);
                     break;
                 case 2:
 
-                    KmhhHighScore = CryptoPlayerPrefs.GetInt("KMHH_HighScoreHard", 0);
+                    KmhhHighScore = PlayerPrefs.GetInt("KMHH_HighScoreHard", 0);
 
                     Debug.Log("はーどのハイスコア:" + KmhhHighScore);
                     break;
@@ -155,23 +158,23 @@ public class KMHH_ScoreResultManager : MonoBehaviour
                 case 0:
 
                     // スコアを保存
-                    CryptoPlayerPrefs.SetInt("KMHH_HighScoreNormal", score);
-                    CryptoPlayerPrefs.Save();
+                    PlayerPrefs.SetInt("KMHH_HighScoreNormal", score);
+                    PlayerPrefs.Save();
                     Debug.Log("のーまるのハイスコアセーブ" + score);
                     break;
 
                 case 1:
 
                     // スコアを保存
-                    CryptoPlayerPrefs.SetInt("KMHH_HighScoreEasy", score);
-                    CryptoPlayerPrefs.Save();
+                    PlayerPrefs.SetInt("KMHH_HighScoreEasy", score);
+                    PlayerPrefs.Save();
                     Debug.Log("いーじーのハイスコアセーブ" + score);
                     break;
 
                 case 2:
                     // スコアを保存
-                    CryptoPlayerPrefs.SetInt("KMHH_HighScoreHard", score);
-                    CryptoPlayerPrefs.Save();
+                    PlayerPrefs.SetInt("KMHH_HighScoreHard", score);
+                    PlayerPrefs.Save();
                     Debug.Log("はーどのハイスコアセーブ" + score);
                     break;
             }
@@ -232,6 +235,8 @@ public class KMHH_ScoreResultManager : MonoBehaviour
         Debug.Log("今回のスコア→クマコイン:" + exchangeToKumaCoin);
         Debug.Log("前回までのクマコイン:" + oldTotalKumaCoinValue);
         Debug.Log("トータルのクマコイン:" + newTotalKumaCoinValue);
+
+        //kumaCoinValueText.text = (newTotalKumaCoinValue).ToString();
 
 
 

@@ -31,6 +31,10 @@ public class KMGMs_MainManager : MonoBehaviour
     void Update()
     {
 
+        if(!GameObject.Find("KMGMs_SoundManagerObj")){
+            
+        }
+
     }
     public void GoToInfo()
     {

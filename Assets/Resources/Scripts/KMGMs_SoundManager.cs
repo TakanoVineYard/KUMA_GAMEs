@@ -8,8 +8,8 @@ public class KMGMs_SoundManager : MonoBehaviour
     public GameObject kmgms_SoundManager;
 
     bool GameOnSwitch = true;
-    bool KMHH_ResultOnSwitch =false;
-    bool KMHH_OnSwitch =false;
+    bool KMHH_ResultOnSwitch = false;
+    bool KMHH_OnSwitch = false;
 
     public static bool lifeJudge = true;
 
@@ -19,8 +19,67 @@ public class KMGMs_SoundManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        kmgms_AudioSources = gameObject.GetComponents<AudioSource>();
+        DontDestroyOnLoad(this);
+
+        if (SceneManager.GetActiveScene().name == "KMGMs")
+        {
+            if (lifeJudge == false)
+            {
+                lifeJudge = true;
+                Destroy(gameObject);
+            }
+            else
+            {
+                lifeJudge = false; //次回死ぬ
+
+                Invoke("KMGMsStartBGMPlay", 0.25f);
+            }
+            
+        }
+
+        /*
+        else if (SceneManager.GetActiveScene().name == "KMHH_Result")
+        {
+            if (lifeJudge == false)
+            {
+                lifeJudge = true;
+                Destroy(gameObject);
+            }
+            else
+            {
+                kmgms_AudioSources[0].Stop();
+                kmgms_AudioSources[1].Play();
+            }
+
+        }
+        */
+
+
     }
 
+    void Update()
+    {
+        if (SceneManager.GetActiveScene().name == "KMHH")
+        {
+
+            Destroy(gameObject);
+
+        }
+    }
+
+
+    public void KMGMsStartBGMPlay()
+    {
+        kmgms_AudioSources[2].Play(); //本ゲームの愉快なBGM流す
+        kmgms_AudioSources[0].Stop(); //本ゲームの愉快なBGM流す
+
+        kmgms_AudioSources[1].Stop();
+
+    }
+}
+
+/*
     // Update is called once per frame
     void Update()
     {
@@ -45,6 +104,7 @@ public class KMGMs_SoundManager : MonoBehaviour
             GameOnSwitch=false;
 
             DontDestroyOnLoad(this);
+
 
 
             }
@@ -104,6 +164,8 @@ public class KMGMs_SoundManager : MonoBehaviour
     {
         kmgms_AudioSources[2].Play(); //本ゲームの愉快なBGM流す
         kmgms_AudioSources[0].Stop(); //本ゲームの愉快なBGM流す
+
+        kmgms_AudioSources[1].Stop();
 
     }
 }
