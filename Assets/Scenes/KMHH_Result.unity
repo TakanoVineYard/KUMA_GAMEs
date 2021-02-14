@@ -131,7 +131,6 @@ GameObject:
   m_Component:
   - component: {fileID: 54928879}
   - component: {fileID: 54928877}
-  - component: {fileID: 54928878}
   m_Layer: 12
   m_Name: Camera_Tap
   m_TagString: Untagged
@@ -182,14 +181,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &54928878
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 54928876}
-  m_Enabled: 1
 --- !u!4 &54928879
 Transform:
   m_ObjectHideFlags: 0

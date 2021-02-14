@@ -210,17 +210,17 @@ public class KMHH_TimeManager : MonoBehaviour
             switch (KMGMs_GameLevelManager.kmhh_GameLevel)
             {
                 case 0:  //ノーマル
-                    gameSetTime = 6.0f;
+                    gameSetTime = 60.0f;
 
                     kmhhSpeedUpONOFF = true; //スピード上げる
                     break;
                 case 1: //イージー
-                    gameSetTime = 5.0f;
+                    gameSetTime = 50.0f;
 
                     kmhhSpeedUpONOFF = false;　//スピード上げない
                     break;
                 case 2:  //ハード
-                    gameSetTime = 4.0f;
+                    gameSetTime = 80.0f;
 
                     kmhhSpeedUpONOFF = true; //スピード上げる
 
@@ -229,10 +229,6 @@ public class KMHH_TimeManager : MonoBehaviour
 
 
             }
-
-            Debug.Log("ゲームじかん：" + gameSetTime);
-
-
 
 
             dayHourNum = System.DateTime.Now.Hour;
@@ -314,7 +310,6 @@ public class KMHH_TimeManager : MonoBehaviour
 
             textReadyPose = GameObject.Find("ui_KMHH_Text_Ready_Pose").GetComponentInChildren<TextMeshProUGUI>(); //
 
-            Debug.Log("制限時間：" + gameSetTime);
         }
 
         getDeltaTime += Time.deltaTime;
@@ -326,7 +321,6 @@ public class KMHH_TimeManager : MonoBehaviour
         //カウントダウン中
         if ((gameStart == false) && (gameFinish == false))
         {
-            Debug.Log("制限時間_カウントダウン中" + gameSetTime);
             upDateGameTimerText.text = (((gameSetTime - gameTimePastInt).ToString()).PadLeft(2, '0')); //時間文字列更新
 
             if (getDeltaTime < 0.1f)
@@ -360,7 +354,6 @@ public class KMHH_TimeManager : MonoBehaviour
                         Debug.Log("3");
                         countDown_Animator.CrossFadeInFixedTime("anm_UI_KMHH_CountDown3", 0.0f);
                         //countDownEffObj_3.SetActive (true);
-                        Debug.Log("カウントダウン中" + gameSetTime);
                     }
                 }
             }
@@ -418,7 +411,6 @@ public class KMHH_TimeManager : MonoBehaviour
         //ゲーム開始。ゲームが終わってないとき,ゲーム中の時間を記録
         if ((gameStart == true) && (gameFinish == false))
         {
-            Debug.Log("制限時間_ゲーム開始中" + gameSetTime);
 
             //スピードあげる？
             if (kmhhSpeedUpONOFF == true)
@@ -694,17 +686,11 @@ public class KMHH_TimeManager : MonoBehaviour
         questionStatus = false;
         switchIdle = false;
         switchQuestion = false;
+        switchStartMethod = true;
 
     }
     ////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////
-
-    public void ReLoadKMHH()
-    {
-        GameParamReset();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-
-    }
 
 
 
@@ -767,23 +753,17 @@ public class KMHH_TimeManager : MonoBehaviour
     {
         if ((gameStart == true) && (gameFinish == false))
         {
-            //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             if (kmhhGamePause)
             {
                 kmhhGamePauseWindowObj.SetActive(true);
                 Time.timeScale = 0f;
                 kmhhGamePause = false;
-                kmhh_AudioSources[5].Pause();
             }
             else
             {
                 kmhhGamePauseWindowObj.SetActive(false);
                 Time.timeScale = 1f;
                 kmhhGamePause = true;
-                if (!gameStart)
-                {
-                    kmhh_AudioSources[5].Play();
-                }
             }
 
         }
@@ -834,41 +814,11 @@ public class KMHH_TimeManager : MonoBehaviour
 
     public void GotoMain()
     {
-
-/*
-        Debug.Log("Updateのなかのさいしょのようい");
-        switchStartMethod = true; //ゲーム自体開始のスイッチ
-        getDeltaTime = 0.0f; //時間経過取得の大元
-        gameCurrentTime = 0.0f; //現在の時間
-        gameStandbyTime = 1.0f; //スタンバイの時間
-        gameTimePast = 0.0f; //時間の経過
-        gameTimePastInt = 0;  //時間の経過のInt化
-        gameFinishTime = 0.0f; //ゲーム終了時の時間を記録
-        anserTime = 0.0f; //回答時のカレントタイム。
-        recordAnserTime = 0.0f; //回答時のカレントタイム。
-        idleTime = 0.0f; //待機時のカレントタイム。
-        gameStart = false; //ゲームがスタートしているかの判定
-        gameFinish = false; //ゲームが終了しているかの判定
-        editTimeScale = 1.0f; //キャラの動き時間のスケール
-        charaSpeed = 0.025f; //正解時のキャラスピードアップ倍率
-        questionStatus = false; //出題状態かどうか
-        switchIdle = false; //条件 Idleのスイッチ
-        switchQuestion = false; //条件 Questionのスイッチ
-        questionNumOfTimes = 0;  //出題回数
-
-*/
-
         countDownStartTrigger = true;
-
 
         KMHH_ScoreResultManager.HighsScoreSwitch = true;
 
-
-
-
         countDownStartTrigger = true;
-
-
 
         Time.timeScale = 1.0f;
         KMGMs_SoundManager.lifeJudge = true;
@@ -879,6 +829,7 @@ public class KMHH_TimeManager : MonoBehaviour
 
     public void GotoMainDeray()
     {
+        GameParamReset();
         SceneManager.LoadScene("KMGMs");
 
     }

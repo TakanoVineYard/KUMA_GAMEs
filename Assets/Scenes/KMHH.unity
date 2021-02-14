@@ -685,6 +685,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1236425821}
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!82 &149327829
 AudioSource:
   m_ObjectHideFlags: 0
@@ -792,7 +803,6 @@ GameObject:
   m_Component:
   - component: {fileID: 171104492}
   - component: {fileID: 171104490}
-  - component: {fileID: 171104491}
   m_Layer: 12
   m_Name: Camera_Tap
   m_TagString: Untagged
@@ -843,14 +853,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &171104491
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 171104489}
-  m_Enabled: 1
 --- !u!4 &171104492
 Transform:
   m_ObjectHideFlags: 0
@@ -15102,7 +15104,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 123.09546, y: -226.90002}
+  m_AnchoredPosition: {x: 123.09546, y: -219.9}
   m_SizeDelta: {x: 320, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1033227281
@@ -15233,7 +15235,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'Score:'
+  m_Text: Score:00
 --- !u!222 &1036895162
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -15945,6 +15947,16 @@ PrefabInstance:
         type: 3}
       propertyPath: ColorModule.gradient.maxGradient.key0.a
       value: 0.7764706
+      objectReference: {fileID: 0}
+    - target: {fileID: 144840619441734251, guid: e1e8eac343d69884bbe59cb8e344e549,
+        type: 3}
+      propertyPath: EmissionModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 144840619441734251, guid: e1e8eac343d69884bbe59cb8e344e549,
+        type: 3}
+      propertyPath: ShapeModule.enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 850996134942838997, guid: e1e8eac343d69884bbe59cb8e344e549,
         type: 3}
@@ -16723,6 +16735,12 @@ MonoBehaviour:
   m_EffectColor: {r: 1, g: 1, b: 1, a: 1}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
+--- !u!199 &1236425821 stripped
+ParticleSystemRenderer:
+  m_CorrespondingSourceObject: {fileID: 5439976312288592028, guid: e1e8eac343d69884bbe59cb8e344e549,
+    type: 3}
+  m_PrefabInstance: {fileID: 1136077962}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1242918463
 GameObject:
   m_ObjectHideFlags: 0
@@ -32960,7 +32978,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1674736914}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 1153.0585}
+  m_LocalPosition: {x: 0, y: 0, z: 1153.1947}
   m_LocalScale: {x: 0.92, y: 0.92, z: 0.92}
   m_Children:
   - {fileID: 359744329}
@@ -36851,7 +36869,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 89.29999, y: 754.7}
+  m_AnchoredPosition: {x: 106.100006, y: 754.1}
   m_SizeDelta: {x: 175, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1925202299
@@ -36948,6 +36966,17 @@ MonoBehaviour:
       - m_Target: {fileID: 1925202303}
         m_MethodName: Play
         m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1236425821}
+        m_MethodName: set_enabled
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
