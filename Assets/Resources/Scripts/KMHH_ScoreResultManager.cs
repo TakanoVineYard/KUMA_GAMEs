@@ -42,9 +42,6 @@ public class KMHH_ScoreResultManager : MonoBehaviour
 
     public static bool HighsScoreSwitch = false;
 
-
-    //public TextMeshProUGUI kumaCoinValueText;
-
     // Start is called before the first frame update
     public void Start()
     {
@@ -151,7 +148,7 @@ public class KMHH_ScoreResultManager : MonoBehaviour
 
     public void KMHH_ScoreSave(int score)
     {
-        if (KmhhHighScore <= score)
+        if (KmhhHighScore < score)
         {
             switch (KMGMs_GameLevelManager.kmhh_GameLevel)
             {
@@ -235,8 +232,6 @@ public class KMHH_ScoreResultManager : MonoBehaviour
         Debug.Log("今回のスコア→クマコイン:" + exchangeToKumaCoin);
         Debug.Log("前回までのクマコイン:" + oldTotalKumaCoinValue);
         Debug.Log("トータルのクマコイン:" + newTotalKumaCoinValue);
-
-        //kumaCoinValueText.text = (newTotalKumaCoinValue).ToString();
 
 
 

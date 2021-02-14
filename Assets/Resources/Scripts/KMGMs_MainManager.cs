@@ -16,7 +16,7 @@ public class KMGMs_MainManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
         //kmhh_GameTimeSlider = GetComponent<Slider>();
 
         Debug.Log("MasterVolSave:" + PlayerPrefs.GetFloat("KMHH_MasterVolSave"));
@@ -25,14 +25,20 @@ public class KMGMs_MainManager : MonoBehaviour
 
         Debug.Log("SEVolSave:" + PlayerPrefs.GetFloat("KMHH_SEVolSave"));
 
+        Debug.Log("KMHH_Normal:" + PlayerPrefs.GetInt("KMHH_HighScoreNormal", 0));
+        Debug.Log("KMHH_Easy:" + PlayerPrefs.GetInt("KMHH_HighScoreEasy", 0));
+        Debug.Log("KMHH_Hard:" + PlayerPrefs.GetInt("KMHH_HighScoreHard", 0));
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        if(!GameObject.Find("KMGMs_SoundManagerObj")){
-            
+        if (!GameObject.Find("KMGMs_SoundManagerObj"))
+        {
+
         }
 
     }
@@ -56,7 +62,8 @@ public class KMGMs_MainManager : MonoBehaviour
 
     public void DerayMoveKMHH()
     {
-            SceneManager.LoadScene("KMHH");
+        SceneManager.LoadScene("KMHH");
+
     }
 
     public void DerayMoveKMGMs_Main()

@@ -51,7 +51,7 @@ public class KMGMs_AdManager : MonoBehaviour, IUnityAdsListener
 
     public void PlayInterstitialAd() //タイトル戻りのときはさしこみ広告
     {
-        if (((PlayerPrefs.GetInt("kmhh_PlayCount", 0)) % 1) == 3)
+        if (((PlayerPrefs.GetInt("kmhh_PlayCount", 0)) % 2) == 0)
         {
 
             if (!Advertisement.IsReady(interstitialAd))
@@ -68,7 +68,7 @@ public class KMGMs_AdManager : MonoBehaviour, IUnityAdsListener
 
     public void PlayRewardedVdeoAd() //Continueのときは動画広告
     {
-        if (((PlayerPrefs.GetInt("kmhh_PlayCount", 0)) % 1) == 0)
+        if (((PlayerPrefs.GetInt("kmhh_PlayCount", 0)) % 2) == 0)
         {
 
             if (!Advertisement.IsReady(rewardedVideoAd))
@@ -106,36 +106,36 @@ public class KMGMs_AdManager : MonoBehaviour, IUnityAdsListener
                 if (placementId == rewardedVideoAd)
                 {
                     Debug.Log("Reward The Player");
-                    DerayMoveKMHH();
+                    ContinueKMHH();
                 }
                 if (placementId == interstitialAd)
                 {
                     Debug.Log("Finished interstitial");
-                    DerayMoveKMGMs();
+                    BackToKMGMs();
                 }
                 break;
             case ShowResult.Skipped:
                 if (placementId == rewardedVideoAd)
                 {
                     Debug.Log("Reward The Player");
-                    DerayMoveKMHH();
+                    ContinueKMHH();
                 }
                 if (placementId == interstitialAd)
                 {
                     Debug.Log("Finished interstitial");
-                    DerayMoveKMGMs();
+                    BackToKMGMs();
                 }
                 break;
             case ShowResult.Finished:
                 if (placementId == rewardedVideoAd)
                 {
                     Debug.Log("Reward The Player");
-                    DerayMoveKMHH();
+                    ContinueKMHH();
                 }
                 if (placementId == interstitialAd)
                 {
                     Debug.Log("Finished interstitial");
-                    DerayMoveKMGMs();
+                    BackToKMGMs();
                 }
                 break;
 
@@ -144,14 +144,13 @@ public class KMGMs_AdManager : MonoBehaviour, IUnityAdsListener
 
     public void BackToKMGMs()
     {
-        Debug.Log("hogeOption");
+            KMGMs_SoundManager.lifeJudge = true;
         Invoke("DerayMoveKMGMs", 0.5f);
     }
 
     public void ContinueKMHH()
     {
-
-        Debug.Log("hoge");
+        KMGMs_SoundManager.lifeJudge = true;
         Invoke("DerayMoveKMHH", 0.5f);
     }
     public void DerayMoveKMHH()

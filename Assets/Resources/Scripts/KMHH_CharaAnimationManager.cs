@@ -33,7 +33,8 @@ public class KMHH_CharaAnimationManager : MonoBehaviour
     public static Text partsInfoText;
 
     public static GameObject indicateBodyPartsSpeechBubble;
-    public static GameObject bodyPart_ChangeTextObj;
+    public static GameObject bodyPartChangeTextObj;
+    public static TextMeshProUGUI bodyPartChangeText;
     public static Animator kmhhSpeechBubbleAnimator;
 
     //public static GameObject indicateBodyPartEye;
@@ -57,12 +58,12 @@ public class KMHH_CharaAnimationManager : MonoBehaviour
     public void Start()
     {
 
-
         GetCharaJSON();
         indicateBodyPartsSpeechBubble = GameObject.Find("ui_KMHH_SpeechBubble");
         kmhhSpeechBubbleAnimator = indicateBodyPartsSpeechBubble.GetComponentInChildren<Animator>();
 
-        bodyPart_ChangeTextObj = GameObject.Find("ui_BodyPart_ChangeText");
+        bodyPartChangeTextObj = GameObject.Find("ui_BodyPart_ChangeText");
+        bodyPartChangeText = bodyPartChangeTextObj.GetComponentInChildren<TextMeshProUGUI>();
 
         //indicateBodyPartEye = GameObject.Find("ui_BodyPart_Eye");
         //indicateBodyPartLsideHand = GameObject.Find("ui_BodyPart_LsideHand");
@@ -89,17 +90,17 @@ public class KMHH_CharaAnimationManager : MonoBehaviour
     }
 
 
-    public void Update()
-    {
+    public void Update(){
 
-        if ((KMHH_TimeManager.switchStartMethod == true) && (KMHH_TimeManager.gameFinish == false))
+
+        if ((KMHH_TimeManager.gameStart == false) && (KMHH_TimeManager.gameFinish == false))
         {
-
             GetCharaJSON();
             indicateBodyPartsSpeechBubble = GameObject.Find("ui_KMHH_SpeechBubble");
             kmhhSpeechBubbleAnimator = indicateBodyPartsSpeechBubble.GetComponentInChildren<Animator>();
+            bodyPartChangeTextObj = GameObject.Find("ui_BodyPart_ChangeText");
+            bodyPartChangeText = bodyPartChangeTextObj.GetComponentInChildren<TextMeshProUGUI>();
         }
-
     }
 
 
@@ -125,7 +126,7 @@ public class KMHH_CharaAnimationManager : MonoBehaviour
             randomBodyPartNum = UnityEngine.Random.Range(0, 5);　　//0～4用意した分でランダム数値取り出し
         }
         indicateBodyPartsSpeechBubble.SetActive(true); //　吹き出し出す
-        bodyPart_ChangeTextObj.SetActive(true);
+        bodyPartChangeText.text = "change!";
 
         switch (randomBodyPartNum)
         {
@@ -344,7 +345,8 @@ public class KMHH_CharaAnimationManager : MonoBehaviour
             }
             else
             {
-                bodyPart_ChangeTextObj.SetActive(false); //変更なしなのでChange文字けす
+
+                bodyPartChangeText.text = ""; //変更なしなのでChange文字けす
             }
 
         }

@@ -14,5 +14,6 @@ public class KMGMs_TapManager : MonoBehaviour
             tapEffect.transform.position = pos;
             tapEffect.Emit(10);
         }
+        
     }
 }
