@@ -326,7 +326,7 @@ public class KMHH_TimeManager : MonoBehaviour
         //カウントダウン中
         if ((gameStart == false) && (gameFinish == false))
         {
-            Debug.Log("aaa" + gameSetTime);
+            Debug.Log("制限時間_カウントダウン中" + gameSetTime);
             upDateGameTimerText.text = (((gameSetTime - gameTimePastInt).ToString()).PadLeft(2, '0')); //時間文字列更新
 
             if (getDeltaTime < 0.1f)
@@ -360,6 +360,7 @@ public class KMHH_TimeManager : MonoBehaviour
                         Debug.Log("3");
                         countDown_Animator.CrossFadeInFixedTime("anm_UI_KMHH_CountDown3", 0.0f);
                         //countDownEffObj_3.SetActive (true);
+                        Debug.Log("カウントダウン中" + gameSetTime);
                     }
                 }
             }
@@ -417,6 +418,7 @@ public class KMHH_TimeManager : MonoBehaviour
         //ゲーム開始。ゲームが終わってないとき,ゲーム中の時間を記録
         if ((gameStart == true) && (gameFinish == false))
         {
+            Debug.Log("制限時間_ゲーム開始中" + gameSetTime);
 
             //スピードあげる？
             if (kmhhSpeedUpONOFF == true)
