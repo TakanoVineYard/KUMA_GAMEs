@@ -1,0 +1,205 @@
+fileFormatVersion: 2
+guid: fb78caeccdaa3454d92b38a5ad745a15
+ModelImporter:
+  serializedVersion: 19301
+  internalIDToNameTable:
+  - first:
+      74: -4928062194199919749
+    second: Body|23
+  - first:
+      74: -6940371382067070679
+    second: "Body|\u30AB\u30E1\u30E9Action"
+  - first:
+      74: -8229517900774611302
+    second: Body|temp_L_ThendBear.blend
+  - first:
+      74: -1262730204808716278
+    second: armature|02
+  - first:
+      74: 1433220142814682416
+    second: armature|03
+  - first:
+      74: -2943845767100319891
+    second: armature|04
+  - first:
+      74: -1386413703417619732
+    second: armature|05
+  - first:
+      74: 109225189261696148
+    second: armature|06
+  - first:
+      74: -357607809081187000
+    second: armature|07
+  - first:
+      74: -3481924147456920826
+    second: armature|08
+  - first:
+      74: 7039209008742991493
+    second: armature|09
+  - first:
+      74: -4238161790562838320
+    second: armature|10
+  - first:
+      74: -5985371892229461463
+    second: armature|11
+  - first:
+      74: -815761777590347439
+    second: armature|12
+  - first:
+      74: -4981452207996704821
+    second: armature|13
+  - first:
+      74: -7360823384768190747
+    second: armature|14
+  - first:
+      74: 6431566912801415039
+    second: armature|15
+  - first:
+      74: -1243509305801510809
+    second: armature|16
+  - first:
+      74: 2920384487787113128
+    second: armature|17
+  - first:
+      74: 5027757079647460764
+    second: armature|18
+  - first:
+      74: -3190971439463556209
+    second: armature|19
+  - first:
+      74: -5290870398167324970
+    second: armature|20
+  - first:
+      74: 453290559659007103
+    second: armature|21
+  - first:
+      74: -2596558713974557788
+    second: armature|22
+  - first:
+      74: -2721719913396576321
+    second: armature|23
+  - first:
+      74: 7641992999972177599
+    second: armature|24
+  - first:
+      74: -6069265275594417727
+    second: armature|25
+  - first:
+      74: -4725896514668640767
+    second: "armature|\u30AB\u30E1\u30E9Action"
+  - first:
+      74: 6982378743363345479
+    second: armature|temp_L_ThendBear.blend
+  - first:
+      74: -1952360317008554409
+    second: armature|Poses_L_ThendBear_Poses_002.blend
+  - first:
+      74: -107795364923111341
+    second: armature|anm_kmhh_Emo_Bye_L_ThendBear_Poses_010.blend
+  - first:
+      74: -8835201912865070441
+    second: armature|anm_kmhh_idle_004_L_ThendBear_Poses_010.blend
+  - first:
+      74: 1160457849780980663
+    second: "EyeAndEyeblow|\u30AB\u30E1\u30E9Action"
+  - first:
+      74: -4814792114685757200
+    second: EyeAndEyeblow|temp_L_ThendBear.blend
+  - first:
+      74: 226111475316525884
+    second: EyeAndEyeblow|anm_kmhh_idle_004_L_ThendBear_Poses_010.blend
+  - first:
+      74: 5617569103097956250
+    second: armature|01
+  externalObjects: {}
+  materials:
+    materialImportMode: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

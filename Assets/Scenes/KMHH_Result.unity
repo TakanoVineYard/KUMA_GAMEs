@@ -14702,7 +14702,7 @@ PrefabInstance:
     - target: {fileID: 5341914312600743527, guid: ddf7c1cb3abf8c74d8092bff2dc3d116,
         type: 3}
       propertyPath: m_Name
-      value: KMGMs_AdManagerObj
+      value: KMHH_Result_AdManagerObj
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ddf7c1cb3abf8c74d8092bff2dc3d116, type: 3}

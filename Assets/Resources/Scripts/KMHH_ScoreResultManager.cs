@@ -220,7 +220,7 @@ public class KMHH_ScoreResultManager : MonoBehaviour
     public void KMHHExchangeToKumaCoin()　　//スコアからクマコイン作るよ    
     {
 
-        exchangeToKumaCoin = (int)(Math.Round((KMHH_ScoreManager.totalScore) / 1000));
+        exchangeToKumaCoin = (int)(Math.Round((KMHH_ScoreManager.totalScore) / 10000));
 
         oldTotalKumaCoinValue = PlayerPrefs.GetInt("KumaCoinValue", 0);
 
