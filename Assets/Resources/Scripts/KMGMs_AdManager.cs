@@ -2,12 +2,11 @@
 using UnityEngine.Advertisements;
 using static KMHH_ScoreResultManager;
 using UnityEngine.SceneManagement; //シーン切り替え
-using static KMHH_TimeManager;
 
-public class KMHH_AdManager : MonoBehaviour, IUnityAdsListener
+public class KMGMs_AdManager : MonoBehaviour, IUnityAdsListener
 {
 
-
+    
     private string playStoreID = "4006125";
     private string appStoreID = "4006124";
 
@@ -16,7 +15,7 @@ public class KMHH_AdManager : MonoBehaviour, IUnityAdsListener
     private string rewardedVideoAd = "rewardedVideo";
     public bool isTestAd;
 
-    static public KMHH_AdManager instance;
+    static public KMGMs_AdManager instance;
 
     void Awake()
     {
@@ -50,17 +49,38 @@ public class KMHH_AdManager : MonoBehaviour, IUnityAdsListener
 #endif
     }
 
+    public void PlayInterstitialAd() //タイトル戻りのときはさしこみ広告
+    {
+        if (((PlayerPrefs.GetInt("kmhh_PlayCount", 0)) % 2) == 0)
+        {
+
+            if (!Advertisement.IsReady(interstitialAd))
+            {
+                return;
+            }
+            Advertisement.Show(interstitialAd);
+        }
+        else{
+
+            BackToKMGMs();
+        }
+    }
 
     public void PlayRewardedVdeoAd() //Continueのときは動画広告
     {
-
-        if (!Advertisement.IsReady(rewardedVideoAd))
+        if (((PlayerPrefs.GetInt("kmhh_PlayCount", 0)) % 2) == 0)
         {
-            return;
+
+            if (!Advertisement.IsReady(rewardedVideoAd))
+            {
+                return;
+            }
+            Advertisement.Show(rewardedVideoAd);
         }
-        Advertisement.Show(rewardedVideoAd);
+        else{
 
-
+            ContinueKMHH();
+        }
     }
 
     public void OnUnityAdsReady(string placementId)
@@ -86,35 +106,70 @@ public class KMHH_AdManager : MonoBehaviour, IUnityAdsListener
                 if (placementId == rewardedVideoAd)
                 {
                     Debug.Log("Reward The Player");
+                    ContinueKMHH();
                 }
                 if (placementId == interstitialAd)
                 {
                     Debug.Log("Finished interstitial");
+                    BackToKMGMs();
                 }
                 break;
             case ShowResult.Skipped:
                 if (placementId == rewardedVideoAd)
                 {
                     Debug.Log("Reward The Player");
+                    ContinueKMHH();
                 }
                 if (placementId == interstitialAd)
                 {
                     Debug.Log("Finished interstitial");
+                    BackToKMGMs();
                 }
                 break;
             case ShowResult.Finished:
                 if (placementId == rewardedVideoAd)
                 {
                     Debug.Log("Reward The Player");
+                    ContinueKMHH();
                 }
                 if (placementId == interstitialAd)
                 {
                     Debug.Log("Finished interstitial");
+                    BackToKMGMs();
                 }
                 break;
 
         }
     }
 
+    public void BackToKMGMs()
+    {
+            KMGMs_SoundManager.lifeJudge = true;
+        Invoke("DerayMoveKMGMs", 0.5f);
+    }
 
+    public void ContinueKMHH()
+    {
+        KMGMs_SoundManager.lifeJudge = true;
+        Invoke("DerayMoveKMHH", 0.5f);
+    }
+    public void DerayMoveKMHH()
+    {
+        KMHH_TimeManager.gameStart = false;
+        KMHH_TimeManager.gameFinish = false;
+
+        SceneManager.LoadScene("KMHH");
+        Debug.Log("hogehoge");
+        KMHH_ScoreResultManager.HighsScoreSwitch = true;
+    }
+
+    public void DerayMoveKMGMs()
+    {
+        KMHH_TimeManager.gameStart = false;
+        KMHH_TimeManager.gameFinish = false;
+
+
+        SceneManager.LoadScene("KMGMs");
+        KMHH_ScoreResultManager.HighsScoreSwitch = true;
+    }
 }

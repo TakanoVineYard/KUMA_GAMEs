@@ -800,8 +800,6 @@ public class KMHH_TimeManager : MonoBehaviour
         textReadyPose.text = "";
 
 
-
-
         SceneManager.LoadScene("KMHH");
 
         Debug.Log("hogehoge");
@@ -833,5 +831,7 @@ public class KMHH_TimeManager : MonoBehaviour
         SceneManager.LoadScene("KMGMs");
 
     }
+
+    
 }
 

@@ -10,6 +10,7 @@ public class ThendBearTatchedManager : MonoBehaviour
 
     public GameObject clickedGameObject;
 
+    public AudioSource kmgms_TouchedAudioSource;
 
 
     // Update is called once per frame
@@ -27,6 +28,7 @@ public class ThendBearTatchedManager : MonoBehaviour
             if (Physics.Raycast(ray, out hit))
             {
                 clickedGameObject = hit.collider.gameObject;
+                kmgms_TouchedAudioSource.Play();
                 PlayEmo();
             }
 

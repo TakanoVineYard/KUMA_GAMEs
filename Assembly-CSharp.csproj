@@ -109,6 +109,7 @@
      <Compile Include="Assets\Modern UI Pack\Scripts\Window\WindowManager.cs" />
      <Compile Include="Assets\Modern UI Pack\Scripts\Window\WindowManagerButton.cs" />
      <Compile Include="Assets\Modern UI Pack\Scripts\Window\WindowManagerEditor.cs" />
+     <Compile Include="Assets\Resources\Scripts\KMGMs_AdManager.cs" />
      <Compile Include="Assets\Resources\Scripts\KMGMs_ExternalLinkManager.cs" />
      <Compile Include="Assets\Resources\Scripts\KMGMs_GameLevelManager.cs" />
      <Compile Include="Assets\Resources\Scripts\KMGMs_InfoManager.cs" />
