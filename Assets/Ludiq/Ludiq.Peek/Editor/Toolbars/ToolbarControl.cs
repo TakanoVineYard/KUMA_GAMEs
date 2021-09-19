@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
 using UnityEditor;
 using UnityEngine;
 #if UNITY_2019_1_OR_NEWER
@@ -32,29 +31,19 @@ namespace Ludiq.Peek
 		}
 
 		public ToolbarWindow window { get; private set; }
-		
-		private Rect _screenPosition;
 
-		private Rect _guiPosition;
+		private Rect _screenPosition;
 
 		public Rect screenPosition
 		{
 			get => _screenPosition;
-			set
-			{
-				_screenPosition = value;
-				_guiPosition = GUIUtility.ScreenToGUIRect(screenPosition);
-			}
+			set => _screenPosition = value;
 		}
 
 		public Rect guiPosition
 		{
-			get => _guiPosition;
-			set
-			{
-				_guiPosition = value;
-				_screenPosition = LudiqGUIUtility.GUIToScreenRect(screenPosition);
-			}
+			get => GUIUtility.ScreenToGUIRect(screenPosition);
+			set => screenPosition = LudiqGUIUtility.GUIToScreenRect(value);
 		}
 
 		public bool isDraggable { get; set; }
@@ -377,7 +366,7 @@ namespace Ludiq.Peek
 			}
 
 			var combination = mapping.keyCombinationSequence.FirstOrDefault();
-			
+
 			if (combination.keyCode == KeyCode.None)
 			{
 				return null;

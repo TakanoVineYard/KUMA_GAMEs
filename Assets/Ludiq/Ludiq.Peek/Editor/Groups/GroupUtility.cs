@@ -96,6 +96,7 @@ namespace Ludiq.Peek
 
 			foreach (var target in targets.OrderBy(t => t.GetSiblingIndex()))
 			{
+				Undo.SetTransformParent(target.transform, null, "Group");
 				Undo.MoveGameObjectToScene(target.gameObject, scene.Value, "Group");
 				Undo.SetTransformParent(target.transform, group.transform, "Group");
 			}
@@ -130,6 +131,7 @@ namespace Ludiq.Peek
 
 			foreach (var target in targets.OrderBy(t => t.GetSiblingIndex()))
 			{
+				Undo.SetTransformParent(target.transform, null, "Group");
 				Undo.MoveGameObjectToScene(target.gameObject, scene, "Group");
 				Undo.SetTransformParent(target.transform, group.transform, "Group");
 			}

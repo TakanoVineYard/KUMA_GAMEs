@@ -28,7 +28,7 @@ namespace Ludiq.Peek
 
 		public override string copyrightHolder => "Ludiq";
 		
-		public override SemanticVersion version => "1.3.2";
+		public override SemanticVersion version => "1.4.0";
 
 		public const string ID = "Peek";
 

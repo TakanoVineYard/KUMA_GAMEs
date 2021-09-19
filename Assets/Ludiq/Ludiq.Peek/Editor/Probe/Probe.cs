@@ -653,7 +653,7 @@ namespace Ludiq.Peek
 
 				if (renderer is MeshRenderer meshRenderer)
 				{
-					var mesh = renderer.GetComponent<MeshFilter>()?.sharedMesh;
+					var mesh = renderer.GetComponent<MeshFilter>().AsUnityNull()?.sharedMesh;
 
 					if (mesh == null)
 					{

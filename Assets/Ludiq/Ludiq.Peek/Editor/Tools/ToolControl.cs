@@ -16,31 +16,21 @@ namespace Ludiq.Peek
 
 		private Rect _screenPosition;
 
-		private Rect _guiPosition;
-
 		public Rect screenPosition
 		{
 			get => _screenPosition;
-			set
-			{
-				_screenPosition = value;
-				_guiPosition = GUIUtility.ScreenToGUIRect(value);
-			}
+			set => _screenPosition = value;
 		}
 
 		public Rect guiPosition
 		{
-			get => _guiPosition;
-			set
-			{
-				_guiPosition = value;
-				_screenPosition = LudiqGUIUtility.GUIToScreenRect(value);
-			}
+			get => GUIUtility.ScreenToGUIRect(screenPosition);
+			set => screenPosition = LudiqGUIUtility.GUIToScreenRect(value);
 		}
 
 		public EventModifiers shortcutModifiers = EventModifiers.None;
 
-		public int? shortcutIndex { get; set; }
+		public int? shortcutIndex { get; set; } 
 
 		public string shortcutLabel { get; set; }
 		
