@@ -60,6 +60,15 @@ public class KMGMs_MainManager : MonoBehaviour
         Invoke("DerayMoveKMGMs_Main", 1.0f);
     }
 
+
+    public void GoToPryvacyPolicy()
+    {
+        var uri = new System.Uri("https://sites.google.com/view/takanovineyard/kmgms");
+        Application.OpenURL(uri.AbsoluteUri);
+
+
+    }
+
     public void DerayMoveKMHH()
     {
         SceneManager.LoadScene("KMHH");

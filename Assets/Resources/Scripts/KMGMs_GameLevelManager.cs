@@ -14,7 +14,7 @@ public class KMGMs_GameLevelManager : MonoBehaviour
     public GameObject kmhh_GameLevelObj;
     public static TMP_Dropdown kmhh_GameLevelDropdown;
     public AudioSource seSelectLevel;
-    public TextMeshProUGUI LevelHighScoreText;
+    public TextMeshProUGUI kmhh_LevelHighScoreText;
     float countDeltaTime = 0.0f;
 
     // Start is called before the first frame update
@@ -49,15 +49,15 @@ public class KMGMs_GameLevelManager : MonoBehaviour
         {
             case 0:
                 KMHHLevelNormal();
-                LevelHighScoreText.text = (PlayerPrefs.GetInt("KMHH_HighScoreNormal",0)).ToString();
+                kmhh_LevelHighScoreText.text = (PlayerPrefs.GetInt("KMHH_HighScoreNormal",0)).ToString();
                 break;
             case 1:
                 KMHHLevelEasy();
-                LevelHighScoreText.text = (PlayerPrefs.GetInt("KMHH_HighScoreEasy",0)).ToString();
+                kmhh_LevelHighScoreText.text = (PlayerPrefs.GetInt("KMHH_HighScoreEasy",0)).ToString();
                 break;
             case 2:
                 KMHHLevelHard();
-                LevelHighScoreText.text = (PlayerPrefs.GetInt("KMHH_HighScoreHard",0)).ToString();
+                kmhh_LevelHighScoreText.text = (PlayerPrefs.GetInt("KMHH_HighScoreHard",0)).ToString();
                 break;
         }
     }

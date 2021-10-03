@@ -6164,7 +6164,7 @@ GameObject:
   - component: {fileID: 1477048789}
   - component: {fileID: 1477048788}
   m_Layer: 11
-  m_Name: LevelHighScoreText
+  m_Name: kmhh_LevelHighScoreText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7752,6 +7752,11 @@ PrefabInstance:
     - target: {fileID: 798728423181448800, guid: 695062973341c074dbc2955cb1aca598,
         type: 3}
       propertyPath: LevelHighScoreText
+      value: 
+      objectReference: {fileID: 1477048788}
+    - target: {fileID: 798728423181448800, guid: 695062973341c074dbc2955cb1aca598,
+        type: 3}
+      propertyPath: kmhh_LevelHighScoreText
       value: 
       objectReference: {fileID: 1477048788}
     - target: {fileID: 798728423181448801, guid: 695062973341c074dbc2955cb1aca598,
