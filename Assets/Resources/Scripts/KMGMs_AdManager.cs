@@ -51,6 +51,12 @@ public class KMGMs_AdManager : MonoBehaviour, IUnityAdsListener
 
     public void PlayInterstitialAd() //タイトル戻りのときはさしこみ広告
     {
+
+        //もしWinスタンドアロンアプリなら広告スキップ
+#if UNITY_STANDALONE_WIN
+        BackToKMGMs();
+#endif
+
         if (((PlayerPrefs.GetInt("kmhh_PlayCount", 0)) % 2) == 0)
         {
 
@@ -67,7 +73,10 @@ public class KMGMs_AdManager : MonoBehaviour, IUnityAdsListener
     }
 
     public void PlayRewardedVdeoAd() //Continueのときは動画広告
-    {
+    {         //もしWinスタンドアロンアプリなら広告スキップ
+#if UNITY_STANDALONE_WIN
+        ContinueKMHH();
+#endif
         if (((PlayerPrefs.GetInt("kmhh_PlayCount", 0)) % 2) == 0)
         {
 
@@ -81,6 +90,7 @@ public class KMGMs_AdManager : MonoBehaviour, IUnityAdsListener
 
             ContinueKMHH();
         }
+
     }
 
     public void OnUnityAdsReady(string placementId)
