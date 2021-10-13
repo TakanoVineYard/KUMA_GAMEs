@@ -283,14 +283,14 @@
     <Reference Include="Ludiq.OdinSerializer">
         <HintPath>D:/TakanoVineyard/MyWork/UnityProjects/KUMA_GAMEs/Assets/Ludiq/Ludiq.PeekCore/Runtime/Dependencies/OdinSerializer/EditorOnly/Ludiq.OdinSerializer.dll</HintPath>
     </Reference>
+    <Reference Include="Ludiq.OdinAOTSupport">
+        <HintPath>D:/TakanoVineyard/MyWork/UnityProjects/KUMA_GAMEs/Assets/Ludiq/Ludiq.PeekCore/Runtime/Dependencies/OdinSerializer/Generated/Ludiq.OdinAOTSupport.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.Advertisements.Editor">
         <HintPath>D:/TakanoVineyard/MyWork/UnityProjects/KUMA_GAMEs/Assets/UnityAds/UnityEngine.Advertisements.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.Monetization.Editor">
         <HintPath>D:/TakanoVineyard/MyWork/UnityProjects/KUMA_GAMEs/Assets/UnityAds/UnityEngine.Monetization.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Ludiq.OdinAOTSupport">
-        <HintPath>D:/TakanoVineyard/MyWork/UnityProjects/KUMA_GAMEs/Assets/Ludiq/Ludiq.PeekCore/Runtime/Dependencies/OdinSerializer/Generated/Ludiq.OdinAOTSupport.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">
         <HintPath>C:/Program Files/Unity/Hub/Editor/2019.4.12f1/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
@@ -687,12 +687,6 @@
     </Reference>
     <Reference Include="UnityEditor.UI">
         <HintPath>D:/TakanoVineyard/MyWork/UnityProjects/KUMA_GAMEs/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Monetization">
-        <HintPath>D:/TakanoVineyard/MyWork/UnityProjects/KUMA_GAMEs/Library/ScriptAssemblies/UnityEngine.Monetization.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Advertisements">
-        <HintPath>D:/TakanoVineyard/MyWork/UnityProjects/KUMA_GAMEs/Library/ScriptAssemblies/UnityEngine.Advertisements.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
