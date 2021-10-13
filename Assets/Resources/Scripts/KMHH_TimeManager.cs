@@ -51,7 +51,7 @@ public class KMHH_TimeManager : MonoBehaviour
     public static bool switchIdle = false; //条件 Idleのスイッチ
     public static bool switchQuestion = false; //条件 Questionのスイッチ
 
-
+    public bool countdownTimerSwitch = true;
 
     public static int questionNumOfTimes = 0;  //出題回数
 
@@ -441,10 +441,20 @@ public class KMHH_TimeManager : MonoBehaviour
 
                 upDateGameTimerText.color = new Color(255f / 255f, 0f / 255f, 0f / 255f);
 
-                if ((gameSetTime - gameTimePastInt) == 4)
+                if ((gameSetTime - gameTimePastInt) == 3)
                 {
-                    kmhh_AudioSources[5].Play();　//カウントダウンBGM
+                    if (countdownTimerSwitch) //カウントダウン鳴らす処理がTrueなら
+                    {
+                        kmhh_AudioSources[5].Play();　//カウントダウンBGM
+                    }
+                    countdownTimerSwitch = false;//オフにする
                 }
+                if ((gameSetTime - gameTimePastInt) < 3)　//四秒未満ならTrueに戻す
+                {
+                    countdownTimerSwitch = true;
+                }
+
+
             }
 
             ////////////////////////////////////////////////////////////////////
